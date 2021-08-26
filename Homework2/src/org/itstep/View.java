@@ -1,7 +1,9 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
+/*
+ * Java Autumn 2021 - 02. Arrays + Intro in Testing - homework2 - the Number Guessing game
+ *
+ * View
+ *
+ */
 
 package org.itstep;
 

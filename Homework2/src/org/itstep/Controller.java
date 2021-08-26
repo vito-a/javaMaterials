@@ -1,8 +1,9 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
+/*
+ * Java Autumn 2021 - 02. Arrays + Intro in Testing - homework2 - the Number Guessing game
+ *
+ * Controller
+ *
+ */
 package org.itstep;
 
 import java.util.Scanner;
@@ -20,19 +21,19 @@ public class Controller {
     public void processUser() {
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
-        int randomIntValue = rand.nextInt(101);
 
         StringBuilder var2 = new StringBuilder();
-        while (this.model.getIntValue() != randomIntValue) {
+        this.model.setRandomIntValue(rand.nextInt(this.model.MAX_RANDOM_VALUE + 1));
+        while (this.model.getIntValue() != this.model.getRandomIntValue()) {
             this.model.setIntValue(this.inputIntValueWithScanner(sc));
             this.view.printMessage(var2.append("INT value = ").append(this.model.getIntValue()).append("\r\n").toString());
-            if (this.model.getIntValue() > randomIntValue) {
+            if (this.model.getIntValue() > this.model.getRandomIntValue()) {
                 view.printMessage(view.BIGGER + this.model.getIntValue());
-            } else if (this.model.getIntValue() < randomIntValue) {
+            } else if (this.model.getIntValue() < this.model.getRandomIntValue()) {
                 view.printMessage(view.SMALLER + this.model.getIntValue());
             }
         }
-        view.printMessage(View.SUCCESS + randomIntValue);
+        view.printMessage(View.SUCCESS + this.model.getRandomIntValue());
     }
 
     private String inputStringValueWithScanner(Scanner sc) {
