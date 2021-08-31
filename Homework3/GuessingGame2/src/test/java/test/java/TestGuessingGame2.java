@@ -5,6 +5,7 @@ import ua.training.GlobalConstants;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestGuessingGame2 {
@@ -56,8 +57,11 @@ public class TestGuessingGame2 {
     }
     @Test
     public void testGetYourWay() {
+        List<Integer> expectedResult = new ArrayList<Integer>();
+        expectedResult.add(TEST_CHECK_VALUE);
+        testModel.checkValue(TEST_CHECK_VALUE);
         List<Integer> res = testModel.getYourWay();
-        Assert.assertEquals(res.getClass().getName(), "java.util.ArrayList");
+        Assert.assertArrayEquals(expectedResult.toArray(), res.toArray());
     }
 }
 
