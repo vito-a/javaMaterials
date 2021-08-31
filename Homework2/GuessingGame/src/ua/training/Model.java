@@ -5,7 +5,7 @@
  *
  */
 
-package org.itstep;
+package ua.training;
 
 public class Model {
     public static final int MAX_RANDOM_VALUE = 100;

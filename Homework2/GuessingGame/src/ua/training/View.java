@@ -5,7 +5,7 @@
  *
  */
 
-package org.itstep;
+package ua.training;
 
 public class View {
     public static final String INPUT_INT_DATA = "Input INT value = ";

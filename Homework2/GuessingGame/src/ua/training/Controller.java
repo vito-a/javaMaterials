@@ -4,7 +4,7 @@
  * Controller
  *
  */
-package org.itstep;
+package ua.training;
 
 import java.util.Scanner;
 import java.util.Random;
