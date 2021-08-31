@@ -1,4 +1,4 @@
-package test;
+package test.java;
 
 import ua.training.Model;
 import ua.training.GlobalConstants;
