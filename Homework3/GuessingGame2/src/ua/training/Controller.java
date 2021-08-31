@@ -1,14 +1,10 @@
-/*
- * Java Autumn 2021 - 02. Arrays + Intro in Testing - homework2 - the Number Guessing game
- *
- * Controller
- *
- */
 package ua.training;
 
 import java.util.Scanner;
-import java.util.Random;
 
+/**
+ * Created by Student on 22.02.2017.
+ */
 public class Controller {
     private Model model;
     private View view;
@@ -18,52 +14,48 @@ public class Controller {
         this.view = view;
     }
 
-    public void processUser() {
+    // The Work method
+    public void processUser(){
         Scanner sc = new Scanner(System.in);
-        Random rand = new Random();
 
-        StringBuilder var2 = new StringBuilder();
-        this.model.setRandomIntValue(rand.nextInt(this.model.MAX_RANDOM_VALUE + 1));
-        while (this.model.getIntValue() != this.model.getRandomIntValue()) {
-            this.model.setIntValue(this.inputIntValueWithScanner(sc));
-            this.view.printMessage(var2.append("INT value = ").append(this.model.getIntValue()).append("\r\n").toString());
-            if (this.model.getIntValue() > this.model.getRandomIntValue()) {
-                view.printMessage(view.BIGGER + this.model.getIntValue());
-            } else if (this.model.getIntValue() < this.model.getRandomIntValue()) {
-                view.printMessage(view.SMALLER + this.model.getIntValue());
+        model.setPrimaryBarrier(GlobalConstants.PRIMARY_MIN_BARRIER,
+                                GlobalConstants.PRIMARY_MAX_BARRIER);
+
+        model.setSecretValue();
+        System.out.println(model.getSecretValue());
+
+        while (model.checkValue(inputIntValueWithScanner(sc)));
+
+        view.printMessage(View.CONGRATULATION + model.getSecretValue());
+        view.printMessage(View.YOUR_WAY + String.valueOf(model.getYourWay()));
+    }
+
+    private int inputIntValueWithScanner(Scanner sc) {
+        int res = 0;
+        view.printMessage(getInputIntMessage());
+        while (true) {
+            // check int-value
+            while (!sc.hasNextInt()) {
+                view.printMessage(View.WRONG_INPUT_INT_DATA + getInputIntMessage());
+                sc.next();
             }
+            // check value into diapason
+            if ((res = sc.nextInt()) <= model.getMinBarrier() ||
+                    res >= model.getMaxBarrier()) {
+                view.printMessage(View.WRONG_INPUT_INT_DATA + getInputIntMessage());
+                continue;
+            }
+            break;
         }
-        view.printMessage(View.SUCCESS + this.model.getRandomIntValue());
+        return res;
     }
 
-    private String inputStringValueWithScanner(Scanner sc) {
-        this.view.printMessage("Input STRING value = ");
-        return sc.next();
-    }
-
-    private double inputDoubleValueWithScanner(Scanner sc) {
-        this.view.printMessage("Input DOUBLE value = ");
-
-        while(!sc.hasNextDouble()) {
-            StringBuilder var2 = new StringBuilder();
-            var2.append("Wrong input! Repeat please! ");
-            this.view.printMessage(var2.append("Input DOUBLE value = ").toString());
-            sc.next();
-        }
-
-        return sc.nextDouble();
-    }
-
-    public int inputIntValueWithScanner(Scanner sc) {
-        this.view.printMessage("Input INT value = ");
-
-        while(!sc.hasNextInt()) {
-            StringBuilder var2 = new StringBuilder();
-            var2.append("Wrong input! Repeat please! ");
-            this.view.printMessage(var2.append("Input INT value = ").toString());
-            sc.next();
-        }
-
-        return sc.nextInt();
+    private String getInputIntMessage() {
+        return view.concatenationString(
+                View.INPUT_INT_DATA, View.OPENS_SQUARE_BRACKET,
+                String.valueOf(model.getMinBarrier()), View.SPACE_SING,
+                String.valueOf(model.getMaxBarrier()),
+                View.CLOSING_SQUARE_BRACKET, View.SPACE_SING,
+                View.EQUAL_SING, View.SPACE_SING );
     }
 }

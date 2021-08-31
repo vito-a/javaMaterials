@@ -1,28 +1,30 @@
-/*
- * Java Autumn 2021 - 02. Arrays + Intro in Testing - homework2 - the Number Guessing game
- *
- * View
- *
- */
-
 package ua.training;
 
+/**
+ * Created by Student on 22.02.2017.
+ */
 public class View {
-    public static final String INPUT_INT_DATA = "Input INT value = ";
-    public static final String INPUT_DOUBLE_DATA = "Input DOUBLE value = ";
-    public static final String INPUT_STRING_DATA = "Input STRING value = ";
-    public static final String WRONG_INPUT_DATA = "Wrong input! Repeat please! ";
-    public static final String OUR_INT = "INT value = ";
-    public static final String OUR_DOUBLE = "DOUBLE value = ";
-    public static final String OUR_STRING = "STRING value = ";
-    public static final String SMALLER = "Your number is lower than a random one, please retry: ";
-    public static final String BIGGER = "Your number is bigger than a random one, please retry: ";
-    public static final String SUCCESS = "You have correctly guessed the number: ";
+    // text constants
+    public static final String EQUAL_SING = "=";
+    public static final String SPACE_SING = " ";
+    public static final String OPENS_SQUARE_BRACKET = "]";
+    public static final String CLOSING_SQUARE_BRACKET = "[";
 
-    public View() {
+    public static final String INPUT_INT_DATA = "Input INT value ";
+    public static final String WRONG_INPUT_INT_DATA = "Wrong input! Repeat please! ";
+    public static final String CONGRATULATION = "CONGRATULATION! You WIN! Secret value = ";
+    public static final String YOUR_WAY = "YOUR WAY = ";
+
+    // Utilities methods
+    public void printMessage (String message){
+        System.out.println(message);
     }
 
-    public void printMessage(String message) {
-        System.out.println(message);
+    public String concatenationString (String... message){
+        StringBuilder concatString = new StringBuilder();
+        for (String v : message){
+            concatString = concatString.append(v);
+        }
+        return new String(concatString);
     }
 }

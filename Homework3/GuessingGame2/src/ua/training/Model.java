@@ -1,34 +1,54 @@
-/*
- * Java Autumn 2021 - 02. Arrays + Intro in Testing - homework2 - the Number Guessing game
- *
- * Model
- *
- */
-
 package ua.training;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Student on 22.02.2017.
+ */
 public class Model {
-    public static final int MAX_RANDOM_VALUE = 100;
+    // Data
+    private int minBarrier;
+    private int maxBarrier;
 
-    private int intValue = -1;
-    private int randomIntValue = -2;
+    private int secretValue;
 
-    public Model() {
+    private List<Integer> yourWay = new ArrayList<Integer>();
+
+    // [1-99]
+    public void setSecretValue(){
+        secretValue = (int)Math.ceil(Math.random()*
+                (maxBarrier - minBarrier - 1) + minBarrier);
     }
 
-    public int getIntValue() {
-        return this.intValue;
+    public boolean checkValue (int value){
+        yourWay.add(value);
+        if (value == secretValue){
+            return false;
+        } else if (value > secretValue){
+            maxBarrier = value;
+        } else {
+            minBarrier = value;
+        }
+        return true;
     }
 
-    public void setIntValue(int value) {
-        this.intValue = value;
+    public void setPrimaryBarrier(int minBarrier, int maxBarrier){
+        this.minBarrier = minBarrier;
+        this.maxBarrier = maxBarrier;
     }
 
-    public int getRandomIntValue() {
-        return this.randomIntValue;
+    public int getSecretValue() {
+        return secretValue;
+    }
+    public int getMinBarrier() {
+        return minBarrier;
+    }
+    public int getMaxBarrier() {
+        return maxBarrier;
+    }
+    public List<Integer> getYourWay() {
+        return yourWay;
     }
 
-    public void setRandomIntValue(int value) {
-        this.randomIntValue = value;
-    }
 }
