@@ -33,4 +33,8 @@ public interface RegexContainer {
     String REGEX_HOUSE = "^[0-9]{0,7}$";
     String REGEX_APARTMENT = "^[0-9]{0,7}$";
     String REGEX_DATE = "^\\d{1,2}\\/\\d{1,2}\\/\\d{4}$";
+
+    default String getRegex(String regexName) throws NoSuchFieldException {
+        return this.getClass().getField(regexName).toString();
+    }
 }

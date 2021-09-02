@@ -8,24 +8,21 @@ package ua.training.controller;
 
 import ua.training.view.View;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import static ua.training.controller.RegexContainer.*;
 import static ua.training.view.TextConstant.*;
 
 /**
  *
  */
-public class InputNoteNoteBook {
+public class InputNoteNoteBook implements RegexContainer {
     private View view;
     private Scanner sc;
 
     private String lastName;
     private String firstName;
     private String familyName;
-    private String fullName; // 4. Сформировать из введенных данных: Фамилия + Пробел + Первая буква Имени + точка
+    private String fullName;
     private String nickName;
     private String comment;
     private UserGroup group;
@@ -48,15 +45,11 @@ public class InputNoteNoteBook {
         this.sc = sc;
     }
 
-    public void inputNote() {
-        UtilityController utilityController =
-                new UtilityController(sc, view);
+    public void inputNote() throws NoSuchFieldException {
+        UtilityController utilityController = new UtilityController(sc, view);
 
-        String country = view.app_bundle.getString(APP_SETTINGS_COUNTRY);
-//        String str = RegexContainer.class.getDeclaredField("REGEX_NAME_" + country).get(null).toString();
-
-        String str = (String.valueOf(View.bundle.getLocale()).equals("ua"))
-                ? REGEX_NAME_UA : REGEX_NAME_EN;
+        String country = View.app_bundle.getString(APP_SETTINGS_COUNTRY);
+        String str = this.getRegex("REGEX_NAME_" + country);
 
         this.lastName = utilityController.inputStringValueWithScanner(LAST_NAME, str);
         this.firstName = utilityController.inputStringValueWithScanner(FIRST_NAME, str);
