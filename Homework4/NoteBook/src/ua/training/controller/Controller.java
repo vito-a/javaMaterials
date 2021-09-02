@@ -23,7 +23,7 @@ public class Controller {
         this.view = view;
     }
 
-    public void processUser() throws NoSuchFieldException {
+    public void processUser() {
         Scanner sc = new Scanner(System.in);
         InputNoteNoteBook inputNoteNoteBook =
                 new InputNoteNoteBook(view, sc);

@@ -45,11 +45,13 @@ public class InputNoteNoteBook implements RegexContainer {
         this.sc = sc;
     }
 
-    public void inputNote() throws NoSuchFieldException {
-        UtilityController utilityController = new UtilityController(sc, view);
+    public void inputNote() {
+        UtilityController utilityController =
+                new UtilityController(sc, view);
 
-        String country = View.app_bundle.getString(APP_SETTINGS_COUNTRY);
-        String str = this.getRegex("REGEX_NAME_" + country);
+        String country = view.app_bundle.getString(APP_SETTINGS_COUNTRY);
+
+        String str = (String.valueOf(View.bundle.getLocale()).equals("ua")) ? REGEX_NAME_UA : REGEX_NAME_EN;
 
         this.lastName = utilityController.inputStringValueWithScanner(LAST_NAME, str);
         this.firstName = utilityController.inputStringValueWithScanner(FIRST_NAME, str);

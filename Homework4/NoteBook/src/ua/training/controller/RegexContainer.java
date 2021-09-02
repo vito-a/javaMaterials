@@ -11,9 +11,9 @@ package ua.training.controller;
  */
 public interface RegexContainer {
     // Ukrainian name
-    String REGEX_NAME_UA = "^[А-ЩЬЮЯҐІЇЄ][а-щьюяґіїє']{1,20}$";
+    final public static String REGEX_NAME_UA = "^[А-ЩЬЮЯҐІЇЄ][а-щьюяґіїє']{1,20}$";
     // English name
-    String REGEX_NAME_EN = "^[A-Z][a-z]{1,20}$";
+    final public static String REGEX_NAME_EN = "^[A-Z][a-z]{1,20}$";
     // Nickname
     String REGEX_NICKNAME = "^[A-Za-z0-9_-]{8,20}$";
     // User group
@@ -33,8 +33,4 @@ public interface RegexContainer {
     String REGEX_HOUSE = "^[0-9]{0,7}$";
     String REGEX_APARTMENT = "^[0-9]{0,7}$";
     String REGEX_DATE = "^\\d{1,2}\\/\\d{1,2}\\/\\d{4}$";
-
-    default String getRegex(String regexName) throws NoSuchFieldException {
-        return this.getClass().getField(regexName).toString();
-    }
 }
