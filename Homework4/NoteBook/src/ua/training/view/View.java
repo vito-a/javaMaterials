@@ -53,7 +53,7 @@ public class View {
 
     public void printStringInput(String message) {
         printMessage(concatenationString(
-                bundle.getString(INPUT_STRING_DATA),
+                bundle.getString(INPUT_STRING_DATA) + " ",
                 bundle.getString(message)));
     }
 

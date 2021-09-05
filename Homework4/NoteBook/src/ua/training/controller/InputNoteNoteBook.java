@@ -11,11 +11,12 @@ import ua.training.view.View;
 import java.util.Scanner;
 
 import static ua.training.view.TextConstant.*;
+import static ua.training.controller.RegexContainer.*;
 
 /**
  *
  */
-public class InputNoteNoteBook implements RegexContainer {
+public class InputNoteNoteBook {
     private View view;
     private Scanner sc;
 
@@ -25,7 +26,7 @@ public class InputNoteNoteBook implements RegexContainer {
     private String fullName;
     private String nickName;
     private String comment;
-    private UserGroup group;
+    public userGroup group;
     private String homePhone;
     private String mobilePhone;
     private String mobilePhone2;
@@ -58,8 +59,8 @@ public class InputNoteNoteBook implements RegexContainer {
         this.familyName = utilityController.inputStringValueWithScanner(FAMILY_NAME, str);
         this.fullName = this.lastName + " " + this.firstName.substring(0, 1) + ".";
         this.nickName = utilityController.inputStringValueWithScanner(NICKNAME_DATA, REGEX_NICKNAME);
-        this.comment = utilityController.inputStringValueWithScanner(COMMENT_DATA, REGEX_COMMENT);
-        this.group = (UserGroup) utilityController.inputEnumValueWithScanner(this.group, GROUP_DATA, REGEX_GROUP);
+        this.comment = utilityController.inputTextValueWithScanner(COMMENT_DATA, REGEX_COMMENT);
+        this.group = utilityController.inputUserGroupValueWithScanner(GROUP_DATA, REGEX_GROUP);
         this.homePhone = utilityController.inputStringValueWithScanner(HOME_PHONE_DATA, REGEX_PHONE);
         this.mobilePhone = utilityController.inputStringValueWithScanner(MOBILE_PHONE_DATA, REGEX_PHONE);
         this.mobilePhone2 = utilityController.inputStringValueWithScanner(MOBILE_PHONE2_DATA, REGEX_PHONE);

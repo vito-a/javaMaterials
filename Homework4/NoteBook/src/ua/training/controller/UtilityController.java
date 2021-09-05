@@ -33,12 +33,21 @@ public class UtilityController {
         return res;
     }
 
-    Enum inputEnumValueWithScanner(Enum enumType, String message, String regex) {
+    String inputTextValueWithScanner(String message, String regex) {
+        String res;
+        view.printStringInput(message);
+        while( !(scanner.hasNext() && (res = scanner.nextLine()).matches(regex))) {
+            view.printWrongStringInput(message);
+        }
+        return res;
+    }
+
+    userGroup inputUserGroupValueWithScanner(String message, String regex) {
         String res;
         view.printStringInput(message);
         while( !(scanner.hasNext() && (res = scanner.next()).matches(regex))) {
             view.printWrongStringInput(message);
         }
-        return Enum.valueOf(enumType.getClass(),res);
+        return userGroup.valueOf(res.toUpperCase());
     }
 }

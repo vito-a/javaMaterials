@@ -17,13 +17,13 @@ public interface RegexContainer {
     // Nickname
     String REGEX_NICKNAME = "^[A-Za-z0-9_-]{8,20}$";
     // User group
-    enum UserGroup {
+    enum userGroup {
         VIP,
         REGULAR,
         EMPLOYEE
     }
-    String REGEX_COMMENT = "[A-Z][a-z]{1,100}";
-    String REGEX_GROUP = "(VIP)|(REGULAR)|(EMPLOYEE)";
+    String REGEX_COMMENT = "[A-Za-z\\s]{1,100}";
+    String REGEX_GROUP = "(VIP|REGULAR|EMPLOYEE)";
     String REGEX_PHONE = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$";
     String REGEX_EMAIL = "/[^\\s]*@[a-z0-9.-]*/i";
     String REGEX_SKYPE = "[a-zA-Z][a-zA-Z0-9\\.,\\-_]{5,31}";
