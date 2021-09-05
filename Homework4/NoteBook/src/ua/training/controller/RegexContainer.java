@@ -22,14 +22,16 @@ public interface RegexContainer {
         REGULAR,
         EMPLOYEE
     }
-    String REGEX_COMMENT = "[A-Za-z\\s]{1,100}";
+    String REGEX_COMMENT = "^[A-Za-z ]{1,100}$";
     String REGEX_GROUP = "(VIP|REGULAR|EMPLOYEE)";
     String REGEX_PHONE = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$";
-    String REGEX_EMAIL = "/[^\\s]*@[a-z0-9.-]*/i";
+    String REGEX_EMAIL = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
     String REGEX_SKYPE = "[a-zA-Z][a-zA-Z0-9\\.,\\-_]{5,31}";
-    String REGEX_POSTCODE = "([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\\s?[0-9][A-Za-z]{2})";
-    String REGEX_CITY = "^[a-zA-Z]+(?:(?:\\s+|-)[a-zA-Z]+)*$";
-    String REGEX_STREET = "^([\\w\\s\\W]+[\\w\\W]?)$";
+    String REGEX_POSTCODE = "^[0-9]{5}$";
+    String REGEX_CITY_EN = "^[A-Z][a-z]+(\\s[A-Z][a-z]+)?+$";
+    String REGEX_STREET_EN = "^[A-Z][a-z]+(\\s[A-Z][a-z]+)?+$";
+    String REGEX_CITY_UA = "^[А-ЩЬЮЯҐІЇЄ][а-щьюяґіїє']+(\\s[А-ЩЬЮЯҐІЇЄ][а-щьюяґіїє']+)?+$";
+    String REGEX_STREET_UA = "^[А-ЩЬЮЯҐІЇЄ][а-щьюяґіїє']+(\\s[А-ЩЬЮЯҐІЇЄ][а-щьюяґіїє']+)?+$";
     String REGEX_HOUSE = "^[0-9]{0,7}$";
     String REGEX_APARTMENT = "^[0-9]{0,7}$";
     String REGEX_DATE = "^\\d{1,2}\\/\\d{1,2}\\/\\d{4}$";

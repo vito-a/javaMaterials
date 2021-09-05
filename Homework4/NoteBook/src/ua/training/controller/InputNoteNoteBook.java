@@ -7,6 +7,7 @@
 package ua.training.controller;
 
 import ua.training.view.View;
+import ua.training.model.Model;
 
 import java.util.Scanner;
 
@@ -18,6 +19,7 @@ import static ua.training.controller.RegexContainer.*;
  */
 public class InputNoteNoteBook {
     private View view;
+    private Model model;
     private Scanner sc;
 
     private String lastName;
@@ -41,9 +43,10 @@ public class InputNoteNoteBook {
     private String createdDate;
     private String updatedDate;
 
-    public InputNoteNoteBook(View view, Scanner sc) {
+    public InputNoteNoteBook(View view, Scanner sc, Model model) {
         this.view = view;
         this.sc = sc;
+        this.model = model;
     }
 
     public void inputNote() {
@@ -67,12 +70,38 @@ public class InputNoteNoteBook {
         this.email = utilityController.inputStringValueWithScanner(EMAIL_DATA, REGEX_EMAIL);
         this.skypeAddress = utilityController.inputStringValueWithScanner(SKYPE_DATA, REGEX_SKYPE);
         this.postCode = utilityController.inputStringValueWithScanner(POSTCODE_DATA, REGEX_POSTCODE);
-        this.city = utilityController.inputStringValueWithScanner(CITY_DATA, REGEX_CITY);
-        this.streetName = utilityController.inputStringValueWithScanner(STREET_DATA, REGEX_STREET);
+
+        str = (String.valueOf(View.bundle.getLocale()).equals("ua")) ? REGEX_CITY_UA : REGEX_CITY_EN;
+        this.city = utilityController.inputTextValueWithScanner(CITY_DATA, str);
+
+        str = (String.valueOf(View.bundle.getLocale()).equals("ua")) ? REGEX_STREET_UA : REGEX_STREET_EN;
+        this.streetName = utilityController.inputTextValueWithScanner(STREET_DATA, str);
+
         this.houseNumber = utilityController.inputStringValueWithScanner(HOUSE_DATA, REGEX_HOUSE);
         this.apartmentNumber = utilityController.inputStringValueWithScanner(APARTMENT_DATA, REGEX_APARTMENT);
         this.fullAddress = this.postCode + " " + this.city + " " + this.streetName + " " + this.houseNumber + " " + this.apartmentNumber;
         this.createdDate = utilityController.inputStringValueWithScanner(CREATED_DATA, REGEX_DATE);
         this.updatedDate = utilityController.inputStringValueWithScanner(UPDATED_DATA, REGEX_DATE);
+
+        model.setFieldValue("lastName",        this.lastName);
+        model.setFieldValue("firstName",       this.firstName);
+        model.setFieldValue("familyName",      this.familyName);
+        model.setFieldValue("fullName",        this.fullName);
+        model.setFieldValue("nickName",        this.nickName);
+        model.setFieldValue("comment",         this.comment);
+        model.setFieldValue("homePhone",       this.homePhone);
+        model.setFieldValue("mobilePhone",     this.mobilePhone);
+        model.setFieldValue("mobilePhone2",    this.mobilePhone2);
+        model.setFieldValue("email",           this.email);
+        model.setFieldValue("skypeAddress",    this.skypeAddress);
+        model.setFieldValue("postCode",        this.postCode);
+        model.setFieldValue("city",            this.city);
+        model.setFieldValue("streetName",      this.streetName);
+        model.setFieldValue("houseNumber",     this.houseNumber);
+        model.setFieldValue("apartmentNumber", this.apartmentNumber);
+        model.setFieldValue("fullAddress",     this.fullAddress);
+        model.setFieldValue("createdDate",     this.createdDate);
+        model.setFieldValue("updatedDate",     this.updatedDate);
+        model.setGroup(this.group);
     }
 }

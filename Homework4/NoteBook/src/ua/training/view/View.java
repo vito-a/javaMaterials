@@ -59,8 +59,8 @@ public class View {
 
     public void printWrongStringInput(String message) {
         printMessage(concatenationString(
-                bundle.getString(WRONG_INPUT_DATA),
-                bundle.getString(INPUT_STRING_DATA),
+                bundle.getString(WRONG_INPUT_DATA) + " ",
+                bundle.getString(INPUT_STRING_DATA) + " ",
                 bundle.getString(message)));
     }
 
