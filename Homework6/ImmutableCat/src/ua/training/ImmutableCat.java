@@ -1,3 +1,9 @@
+/*
+ *  Java Autumn 2021 - 07. Class Object. Nested classes. Enums - ImmutableObject - the immutable object adding
+ *
+ * ImmutableCat
+ *
+ */
 package ua.training;
 
 public final class ImmutableCat {
