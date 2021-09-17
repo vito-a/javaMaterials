@@ -8,16 +8,31 @@ public class Employee {
     private String familyName;
     private String email;
     private Date createdDate;
+    private Date birthday;
+    private int salary;
 
     public Employee() {
     }
 
-    public Employee(String lastName, String firstName, String familyName, String email, Date createdDate) {
+    public Employee(String lastName, String firstName, String familyName, String email, Date createdDate, int salary) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.familyName = familyName;
         this.email = email;
         this.createdDate = createdDate;
+        this.salary = salary;
+    }
+
+    public String getFullName() {
+        return this.lastName + " " + this.firstName + " " + this.familyName;
+    }
+
+    void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    int getSalary() {
+        return this.salary;
     }
 
     void setLastName(String lastName) {
