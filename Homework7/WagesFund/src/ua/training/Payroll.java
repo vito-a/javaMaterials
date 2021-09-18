@@ -25,14 +25,15 @@ public class Payroll {
 
     int getSalary(Department department, Employee e) {
         int salary = 0;
-        int remainder = this.salaryTotal - department.getDepartmentSalary();
+        int departmentSalary = department.getDepartmentSalary();
+        int remainder = this.salaryTotal - departmentSalary;
 
         switch (type) {
             case EQUAL:
                 salary = e.getSalary() + (int) Math.floor(remainder / department.getEmployeesCount());
                 break;
             case PROPORTIONAL:
-                salary = e.getSalary() + (int) Math.floor(remainder / department.getEmployeesCount());
+                salary = e.getSalary() + (int) Math.floor(e.getSalary() * (departmentSalary / remainder));
                 break;
             default:
                 break;
