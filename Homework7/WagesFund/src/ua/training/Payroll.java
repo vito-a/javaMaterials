@@ -2,7 +2,12 @@ package ua.training;
 
 public class Payroll {
     private PayrollTypes type;
-    private int salaryTotal;
+    private long salaryTotal;
+
+    public Payroll(long salaryTotal, PayrollTypes payrollType) {
+        this.salaryTotal = salaryTotal;
+        this.type = payrollType;
+    }
 
     public Payroll(int salaryTotal) {
         this.salaryTotal = salaryTotal;
@@ -15,25 +20,34 @@ public class Payroll {
         this.type = payrollType;
     }
 
-    void setSalaryTotal(int salaryTotal) {
+    void setSalaryTotal(long salaryTotal) {
         this.salaryTotal = salaryTotal;
     }
 
-    void getSalaryTotal(int salaryTotal) {
+    void getSalaryTotal(long salaryTotal) {
         this.salaryTotal = salaryTotal;
     }
 
-    int getSalary(Department department, Employee e) {
-        int salary = 0;
-        int departmentSalary = department.getDepartmentSalary();
-        int remainder = this.salaryTotal - departmentSalary;
+    long getSalary(Department department, Employee e) throws IllegalArgumentException {
+        if (salaryTotal <= 0 ) {
+           throw new IllegalArgumentException("The total salary for the '" + department.getDepartmentName() + "' department is incorrect.");
+        }
+        if (type == null) {
+            throw new IllegalArgumentException("The payroll type for the '" + department.getDepartmentName() + "' department is incorrect.");
+        }
+
+        long salary = 0;
+        long departmentSalary = department.getDepartmentSalary();
+        long remainder = this.salaryTotal - departmentSalary;
+        double proportion;
 
         switch (type) {
             case EQUAL:
-                salary = e.getSalary() + (int) Math.floor(remainder / department.getEmployeesCount());
+                salary = e.getSalary() + (int) remainder / department.getEmployeesCount();
                 break;
             case PROPORTIONAL:
-                salary = e.getSalary() + (int) Math.floor(e.getSalary() * (departmentSalary / remainder));
+                proportion = (double) remainder / departmentSalary;
+                salary = e.getSalary() + Math.round(e.getSalary() * proportion);
                 break;
             default:
                 break;
