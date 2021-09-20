@@ -1,4 +1,4 @@
-package ua.training;
+package ua.training.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Department {
         this.departmentName = departmentName;
     }
 
-    void addEmployee(Employee employee) {
+    public void addEmployee(Employee employee) {
         employeeList.add(employee);
     }
 
@@ -34,7 +34,7 @@ public class Department {
         return employeeList.size();
     }
 
-    void setPayroll(Payroll payroll) {
+    public void setPayroll(Payroll payroll) {
         this.payroll = payroll;
     }
 }

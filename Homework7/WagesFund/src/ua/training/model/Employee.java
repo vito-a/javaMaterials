@@ -1,4 +1,4 @@
-package ua.training;
+package ua.training.model;
 
 import java.util.Date;
 
@@ -27,7 +27,7 @@ public class Employee {
         return this.lastName + " " + this.firstName + " " + this.familyName;
     }
 
-    void setSalary(int salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 
@@ -35,23 +35,23 @@ public class Employee {
         return this.salary;
     }
 
-    void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    void setFamilyName(String familyName) {
+    public void setFamilyName(String familyName) {
         this.familyName = familyName;
     }
 
-    void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 }

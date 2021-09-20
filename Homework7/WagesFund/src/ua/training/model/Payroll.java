@@ -1,4 +1,4 @@
-package ua.training;
+package ua.training.model;
 
 public class Payroll {
     private PayrollTypes type;
@@ -16,7 +16,7 @@ public class Payroll {
     public Payroll() {
     }
 
-    void setPayrollType(PayrollTypes payrollType) {
+    public void setPayrollType(PayrollTypes payrollType) {
         this.type = payrollType;
     }
 
@@ -28,7 +28,7 @@ public class Payroll {
         this.salaryTotal = salaryTotal;
     }
 
-    long getSalary(Department department, Employee e) throws IllegalArgumentException {
+    public long getSalary(Department department, Employee e) throws IllegalArgumentException {
         if (salaryTotal <= 0 ) {
            throw new IllegalArgumentException("The total salary for the '" + department.getDepartmentName() + "' department is incorrect.");
         }

@@ -1,4 +1,6 @@
-package ua.training;
+package ua.training.model;
+
+import ua.training.model.Employee;
 
 import java.util.ArrayList;
 import java.util.Date;
