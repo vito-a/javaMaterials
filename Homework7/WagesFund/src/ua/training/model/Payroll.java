@@ -37,8 +37,8 @@ public class Payroll {
         }
 
         long salary = 0;
-        long departmentSalary = department.getDepartmentSalary();
-        long remainder = this.salaryTotal - departmentSalary;
+        long baseSalary = department.getBaseSalary();
+        long remainder = this.salaryTotal - baseSalary;
         double proportion;
 
         switch (type) {
@@ -46,7 +46,7 @@ public class Payroll {
                 salary = e.getSalary() + (int) remainder / department.getEmployeesCount();
                 break;
             case PROPORTIONAL:
-                proportion = (double) remainder / departmentSalary;
+                proportion = (double) remainder / baseSalary;
                 salary = e.getSalary() + Math.round(e.getSalary() * proportion);
                 break;
             default:

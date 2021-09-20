@@ -9,18 +9,20 @@ public class Employee {
     private String email;
     private Date createdDate;
     private Date birthday;
+    private EmployeeTypes type;
     private int salary;
 
     public Employee() {
     }
 
-    public Employee(String lastName, String firstName, String familyName, String email, Date createdDate, int salary) {
+    public Employee(String lastName, String firstName, String familyName, String email, Date createdDate, int salary, EmployeeTypes type) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.familyName = familyName;
         this.email = email;
         this.createdDate = createdDate;
         this.salary = salary;
+        this.type = type;
     }
 
     public String getFullName() {
@@ -54,4 +56,12 @@ public class Employee {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
+    public void setBirthday(Date birthday) { this.birthday = birthday; }
+
+    public Date getBirthday() { return this.birthday; }
+
+    public void setType(EmployeeTypes type) { this.type = type; }
+
+    public EmployeeTypes getType() { return this.type; }
 }

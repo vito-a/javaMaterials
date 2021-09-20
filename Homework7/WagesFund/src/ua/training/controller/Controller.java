@@ -19,7 +19,7 @@ public class Controller {
                 "Taras",
                 "Oleksijovich",
                 "podoprygora.taras2021@gmail.com",
-                new Date("06/03/2021"), 1000);
+                new Date("06/03/2021"), 1000, EmployeeTypes.WORKER);
 
         Employee employee2 = new Employee();
         employee2.setLastName("Omelchenko");
@@ -27,6 +27,7 @@ public class Controller {
         employee2.setFamilyName("Oleksandrovych");
         employee2.setEmail("omelchenko.petro2021@gmail.com");
         employee2.setCreatedDate(new Date("17/07/2021"));
+        employee2.setType(EmployeeTypes.MANAGER);
         employee2.setSalary(2000);
 
         Department department1 = new Department("Manufacturing Department");
@@ -36,7 +37,7 @@ public class Controller {
         Payroll payroll1 = new Payroll(3500, PayrollTypes.EQUAL);
         department1.setPayroll(payroll1);
 
-        view.printMessage("Salary for " + employee1.getFullName() + " is: " + payroll1.getSalary(department1, employee1));
+        view.printDepartmentSalary(department1);
 
         Payroll payroll2 = new Payroll(3500);
         payroll2.setPayrollType(PayrollTypes.PROPORTIONAL);
@@ -46,6 +47,6 @@ public class Controller {
         department2.addEmployee(employee2);
         department2.setPayroll(payroll2);
 
-        view.printMessage("Salary for " + employee2.getFullName() + " is: " + payroll2.getSalary(department2, employee2));
+        view.printDepartmentSalary(department2);
     }
 }

@@ -20,7 +20,7 @@ public class Department {
         return this.departmentName;
     }
 
-    long getDepartmentSalary() {
+    long getBaseSalary() {
         long salary = 0;
 
         for (Employee e : employeeList) {
@@ -30,9 +30,25 @@ public class Department {
         return salary;
     }
 
+    public long getDepartmentSalary() {
+        long salary = 0;
+
+        for (Employee e : employeeList) {
+            salary += this.payroll.getSalary(this, e);
+        }
+
+        return salary;
+    }
+
+    public long getEmployeeSalary(Employee employee) {
+        return this.payroll.getSalary(this, employee);
+    }
+
     int getEmployeesCount() {
         return employeeList.size();
     }
+
+    public List<Employee> getEmployeesList() { return  this.employeeList; }
 
     public void setPayroll(Payroll payroll) {
         this.payroll = payroll;
