@@ -3,6 +3,7 @@ package ua.training.controller;
 import ua.training.model.*;
 import ua.training.view.View;
 
+import java.text.ParseException;
 import java.util.Date;
 
 public class Controller {
@@ -14,21 +15,35 @@ public class Controller {
         this.view = view;
     }
 
-    public void processApp() {
+    public void processApp() throws ParseException {
         Employee employee1 = new Employee("Podoprygora",
                 "Taras",
                 "Oleksijovich",
                 "podoprygora.taras2021@gmail.com",
-                new Date("06/03/2021"), 1000, EmployeeTypes.WORKER);
+                "2021-03-06", "1994-05-22",
+                1000, 100, EmployeeTypes.WORKER);
 
         Employee employee2 = new Employee();
         employee2.setLastName("Omelchenko");
         employee2.setFirstName("Petro");
         employee2.setFamilyName("Oleksandrovych");
         employee2.setEmail("omelchenko.petro2021@gmail.com");
-        employee2.setCreatedDate(new Date("17/07/2021"));
+
+        try {
+            employee2.setCreatedDate("2021-07-17");
+        } catch (ParseException e) {
+            view.printDateParsingError("2021-07-17");
+        }
+
+        try {
+            employee2.setBirthday("1990-09-06");
+        } catch (ParseException e) {
+            view.printDateParsingError("1990-09-06");
+        }
+
+        employee2.setBonus(200);
         employee2.setType(EmployeeTypes.MANAGER);
-        employee2.setSalary(2000);
+        employee2.setBaseSalary(2000);
 
         Department department1 = new Department("Manufacturing Department");
         department1.addEmployee(employee1);
@@ -39,7 +54,7 @@ public class Controller {
 
         view.printDepartmentSalary(department1);
 
-        Payroll payroll2 = new Payroll(3500);
+        Payroll payroll2 = new Payroll(4000);
         payroll2.setPayrollType(PayrollTypes.PROPORTIONAL);
 
         Department department2 = new Department("Sales department");

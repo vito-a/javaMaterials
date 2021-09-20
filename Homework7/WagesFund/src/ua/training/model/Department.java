@@ -24,7 +24,7 @@ public class Department {
         long salary = 0;
 
         for (Employee e : employeeList) {
-            salary += e.getSalary();
+            salary += e.getBaseSalary();
         }
 
         return salary;

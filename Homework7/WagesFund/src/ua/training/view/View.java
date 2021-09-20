@@ -18,4 +18,15 @@ public class View {
             printMessage("Salary for " + e.getFullName() + " is: " + department.getEmployeeSalary(e));
         }
     }
+
+    public void printDateParsingError(String dateString) {
+        String message = "Incorrect date format";
+        printMessage("");
+
+        if (dateString.length() > 0) {
+            message.concat(": " + dateString);
+        }
+
+        printMessage(message);
+    }
 }

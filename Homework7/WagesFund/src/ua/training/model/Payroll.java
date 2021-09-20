@@ -43,14 +43,18 @@ public class Payroll {
 
         switch (type) {
             case EQUAL:
-                salary = e.getSalary() + (int) remainder / department.getEmployeesCount();
+                salary = e.getBaseSalary() + (int) remainder / department.getEmployeesCount();
                 break;
             case PROPORTIONAL:
                 proportion = (double) remainder / baseSalary;
-                salary = e.getSalary() + Math.round(e.getSalary() * proportion);
+                salary = e.getBaseSalary() + Math.round(e.getBaseSalary() * proportion);
                 break;
             default:
                 break;
+        }
+
+        if (e.hasBonus()) {
+            salary += e.getBonus();
         }
 
         return salary;
