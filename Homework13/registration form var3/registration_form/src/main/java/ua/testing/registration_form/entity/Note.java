@@ -10,7 +10,6 @@ import lombok.*;
 @ToString
 public class Note {
     private Long id;
-    private String language;
     private String names;
     private String lastname;
     private String login;

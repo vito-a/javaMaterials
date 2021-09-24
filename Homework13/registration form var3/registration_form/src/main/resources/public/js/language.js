@@ -1,11 +1,11 @@
 angular.module("language",[])
            .controller("LanguageCtrl", function ($scope, $http) {
-               $scope.auth = {};
-               $scope.sendForm = function(auth){
+               $scope.language = {};
+               $scope.sendForm = function(language){
                    $http({
                        method: "POST",
-                       url: "/",
-                       data: $.param(auth),
+                       url: "/api/language",
+                       data: $.param(language),
                        headers: { "Content-Type" : "application/x-www-form-urlencoded" }
                    }).then(
                        function(data) {

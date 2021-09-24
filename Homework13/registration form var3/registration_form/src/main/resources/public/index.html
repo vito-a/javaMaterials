@@ -15,14 +15,12 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <h2 class="page-header">Language Form Demo</h2>
-            <form style="margin-bottom: 30px" name="form" autocomplete="off" novalidate ng-submit="form.$valid && sendForm(auth)">
+            <form style="margin-bottom: 30px" name="form" autocomplete="off" novalidate ng-submit="form.$valid && sendForm(language)">
                 <div class="form-group">
-                    <form>
-                        Pick a language:
-                        <input type="radio" class="form-control" name="langcode" ng-model="language.langcode" value="en">English
-                        <input type="radio" class="form-control" name="langcode" ng-model="language.langcode" value="ua">Українська
-                    </form>
-                    <div ng-switch="language.langcode">
+                    Pick a language:
+                    <input type="radio" class="form-control" ng-model="language.language" value="en">English
+                    <input type="radio" class="form-control" ng-model="language.language" value="ua">Українська
+                    <div ng-switch="language.language">
                         <div ng-switch-when="en">
                             <h1>Registration form in English</h1>
                             <p>Welcome to the Java Autumn 2021 registration form in English</p>

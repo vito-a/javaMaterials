@@ -20,4 +20,9 @@ public class PagesController {
     public String regForm(){
         return "reg_form";
     }
+
+    @RequestMapping("/language")
+    public String language(){
+        return "language";
+    }
 }
