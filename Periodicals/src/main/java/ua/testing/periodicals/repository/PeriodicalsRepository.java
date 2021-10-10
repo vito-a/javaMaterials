@@ -13,7 +13,7 @@ public interface PeriodicalsRepository extends JpaRepository<Periodical, Long> {
     Periodical findByName(String name);
     @Query("SELECT p FROM Periodical p WHERE p.name LIKE %?1%"
             + " OR p.description LIKE %?1%"
-            + " OR p.category_id LIKE %?1%"
+            + " OR p.categoryId LIKE %?1%"
             + " OR CONCAT(p.price, '') LIKE %?1%")
     public List<Periodical> search(String keyword);
 }

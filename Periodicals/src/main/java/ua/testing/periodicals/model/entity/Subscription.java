@@ -5,6 +5,10 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
+import static ua.testing.periodicals.model.constants.Constants.USER_ID;
+import static ua.testing.periodicals.model.constants.Constants.PERIODICAL_ID;
+import static ua.testing.periodicals.model.constants.Constants.SUBSCRIPTION_ID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,11 +21,11 @@ import java.util.Date;
 public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sub_id", nullable = false)
+    @Column(name = SUBSCRIPTION_ID, nullable = false)
     private Long subId;
-    @Column(name = "user_id", nullable = false)
+    @Column(name = USER_ID, nullable = false)
     private Long userId;
-    @Column(name = "periodical_id", nullable = false)
+    @Column(name = PERIODICAL_ID, nullable = false)
     private Long periodicalId;
     @Column(name = "startdate", nullable = false)
     private Date startdate;

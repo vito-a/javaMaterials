@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import static ua.testing.periodicals.model.constants.Constants.PERIODICAL_ID;
+import static ua.testing.periodicals.model.constants.Constants.CATEGORY_ID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,14 +19,14 @@ import javax.persistence.*;
 public class Periodical {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "periodical_id", nullable = false)
-    private Long periodical_id;
+    @Column(name = PERIODICAL_ID, nullable = false)
+    private Long periodicalId;
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "description")
     private String description;
-    @Column(name = "category_id", nullable = false)
-    private String category_id;
+    @Column(name = CATEGORY_ID, nullable = false)
+    private String categoryId;
     @Column(name = "price", nullable = false)
     private Long price;
 }

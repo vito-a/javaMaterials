@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`periodicals` (
     `periodical_id` INT NOT NULL AUTO_INCREMENT,
     `name`          VARCHAR(255) NOT NULL,
     `description`   VARCHAR(255) NULL DEFAULT NULL,
-    `category_id`   INT NULL DEFAULT NULL,
+    `cat_id`        INT NULL DEFAULT NULL,
     `price`         DECIMAL(15,2) UNSIGNED NOT NULL,
     PRIMARY KEY (`periodical_id`),
     INDEX `i_periodicals_name` (`name` ASC)
@@ -115,7 +115,7 @@ INSERT INTO categories (cat_id, name) VALUES (1, 'News'), (2, 'Medicine'), (3, '
 -- --------------------------------------------------------------------------------------------
 -- Periodicals
 -- --------------------------------------------------------------------------------------------
-INSERT INTO periodicals (periodical_id, name, description, category_id, price) VALUES
+INSERT INTO periodicals (periodical_id, name, description, cat_id, price) VALUES
   (DEFAULT, 'Guardian, October 2021',           'Pandora papers',                 1, 2),
   (DEFAULT, 'New York Times, September 2021',   'Oil prices rise',                1, 3),
   (DEFAULT, 'Wall Street Journal, August 2021', 'Cryptocurrencies fall in China', 1, 4),

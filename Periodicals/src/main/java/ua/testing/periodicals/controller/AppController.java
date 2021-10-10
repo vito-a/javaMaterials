@@ -1,10 +1,12 @@
 package ua.testing.periodicals.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.testing.periodicals.model.entity.Category;
 import ua.testing.periodicals.model.entity.Periodical;
@@ -46,8 +48,35 @@ public class AppController {
     }
 
     @GetMapping("/periodicals")
-    public String listPeriodicals(Model model) {
+    public String listPeriodicalsAll(Model model) {
+        /*
         List<Periodical> listPeriodicals = periodicalsRepo.findAll();
+        model.addAttribute("listPeriodicals", listPeriodicals);
+
+        return "periodicals.html";
+        */
+        //return "redirect:/periodicals/1";
+        return listPeriodicalsSortingPager(model, 1, "name", "asc");
+    }
+
+    @RequestMapping("/periodicals/{pageNum}")
+    public String listPeriodicalsSortingPager(Model model,
+                           @PathVariable(name = "pageNum") int pageNum,
+                           @Param("sortField") String sortField,
+                           @Param("sortDir") String sortDir) {
+
+        Page<Periodical> page = periodicalsService.listAll(pageNum, sortField, sortDir);
+
+        List<Periodical> listPeriodicals = page.getContent();
+
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
         model.addAttribute("listPeriodicals", listPeriodicals);
 
         return "periodicals.html";
