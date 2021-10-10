@@ -49,7 +49,7 @@ public class AppController {
 
     @GetMapping("/periodicals")
     public String listPeriodicalsAll(Model model) {
-        return listPeriodicalsSortingPager(model, 1, "name", "asc");
+        return listPeriodicalsSortingPager(model, 1, "periodicalId", "asc");
     }
 
     @RequestMapping("/periodicals/{pageNum}")

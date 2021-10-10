@@ -26,19 +26,27 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`roles` (
 -- -------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `periodicalsdb`.`users` (
     `user_id`   INT NOT NULL AUTO_INCREMENT,
-    `login`     VARCHAR(64)  NOT NULL,
+    `username`  VARCHAR(64)  NOT NULL,
     `password`  VARCHAR(64)  NOT NULL,
     `firstname` VARCHAR(255) NOT NULL DEFAULT '',
     `lastname`  VARCHAR(255) NOT NULL DEFAULT '',
     `fullname`  VARCHAR(255) NOT NULL DEFAULT '',
     `email`     VARCHAR(255) NOT NULL,
     `status`    TINYINT NULL DEFAULT '1',
-    `role_id`   INT NOT NULL,
     `account`   DECIMAL(15, 2) UNSIGNED NULL DEFAULT NULL,
     `created`   TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `updated`   TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`user_id`),
-    UNIQUE INDEX `u_users_login` (`login` ASC)
+    UNIQUE INDEX `u_users_username` (`username` ASC)
+);
+
+-- -------------------------------------------------------
+-- Table `periodicalsdb`.`users_roles`
+-- -------------------------------------------------------
+CREATE TABLE `users_roles` (
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  INDEX `i_user_id` (`user_id` ASC)
 );
 
 -- -------------------------------------------------------
@@ -84,28 +92,56 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`subscriptions` (
 -- --------------------------------------------------------------------------------------------
 -- Roles
 -- --------------------------------------------------------------------------------------------
-INSERT INTO roles (role_id, name) VALUES(DEFAULT, 'admin');
-INSERT INTO roles (role_id, name) VALUES(DEFAULT, 'user');
+INSERT INTO roles (role_id, name) VALUES(DEFAULT, 'USER');
+INSERT INTO roles (role_id, name) VALUES(DEFAULT, 'EDITOR');
+INSERT INTO roles (role_id, name) VALUES(DEFAULT, 'ADMIN');
 
 -- --------------------------------------------------------------------------------------------
 -- Users
 -- --------------------------------------------------------------------------------------------
-SET @adminRoleId = (SELECT role_id FROM roles WHERE name = 'admin');
-INSERT INTO users (user_id, login, password, email, fullname, role_id) VALUES
-  (DEFAULT, 'admin', 'admin', 'tomi@gmail.com',  'Tomi Petteri Putaansuu',     @adminRoleId),
-  (DEFAULT, 'amen',  'amen',  'amen@gmail.com',  'Jussi Sydänmaa',             @adminRoleId),
-  (DEFAULT, 'mana',  'mana',  'mana@gmail.com',  'Antto Nikolai Tuomainen',    @adminRoleId),
-  (DEFAULT, 'hella', 'hella', 'hella@gmail.com', 'Henna-Riikka Tuulia Broda',  @adminRoleId),
-  (DEFAULT, 'awa',   'awa',   'awa@gmail.com',   'Leena Maria Peisa',          @adminRoleId);
+INSERT INTO users (user_id, username, password, email, fullname) VALUES
+  (DEFAULT, 'user1',  'user1',  'gstream@gmail.com', 'Sami Keinänen'),
+  (DEFAULT, 'magnum', 'magnum', 'sami@gmail.com',    'Sami Wolking'),
+  (DEFAULT, 'kalma',  'kalma',  'kalma@gmail.com',   'Nick Gore'),
+  (DEFAULT, 'kita',   'kita',   'kita@gmail.com',    'Sampsa Astala'),
+  (DEFAULT, 'user',   '$2a$10$wSXV/z6SGuGsS1JwuDM7w.P8sZmzhwbaxQJFbySo8x0eHq0DliQgG', 'user@gmail.com', 'User name');
 
-SET @userRoleId = (SELECT role_id FROM roles WHERE name = 'user');
-INSERT INTO users (user_id, login, password, email, fullname, role_id) VALUES
-  (DEFAULT, 'user',   'user',   'gstream@gmail.com', 'Sami Keinänen',          @userRoleId),
-  (DEFAULT, 'magnum', 'magnum', 'sami@gmail.com',    'Sami Wolking',           @userRoleId),
-  (DEFAULT, 'kalma',  'kalma',  'kalma@gmail.com',   'Nick Gore',              @userRoleId),
-  (DEFAULT, 'kita',   'kita',   'kita@gmail.com',    'Sampsa Astala',          @userRoleId),
-  (DEFAULT, 'otus',   'otus',   'otus@gmail.com',    'Tonmi Kristian Lillman', @userRoleId),
-  (DEFAULT, 'oxx',    'oxx',    'oxx@gmail.com',     'Samer el Nahhal',        @userRoleId);
+INSERT INTO users (user_id, username, password, email, fullname) VALUES
+  (DEFAULT, 'otus',   'otus',   'otus@gmail.com',    'Tonmi Kristian Lillman'),
+  (DEFAULT, 'oxx',    'oxx',    'oxx@gmail.com',     'Samer el Nahhal'),
+  (DEFAULT, 'amen',   'amen',   'amen@gmail.com',    'Jussi Sydänmaa'),
+  (DEFAULT, 'mana',   'mana',   'mana@gmail.com',    'Antto Nikolai Tuomainen');
+
+INSERT INTO users (user_id, username, password, email, fullname) VALUES
+  (DEFAULT, 'admin1', 'admin1', 'tomi@gmail.com',    'Tomi Petteri Putaansuu'),
+  (DEFAULT, 'hella',  'hella',  'hella@gmail.com',   'Henna-Riikka Tuulia Broda'),
+  (DEFAULT, 'awa',    'awa',    'awa@gmail.com',     'Leena Maria Peisa'),
+  (DEFAULT, 'admin',  '$2a$10$LehXdZM4hFlDB6AASmdPZubIaV/XiaES5EBEsEPvn5nG37yh8bljq', 'admin@gmail.com', 'Admin name');
+
+-- --------------------------------------------------------------------------------------------
+-- Users_Roles
+-- --------------------------------------------------------------------------------------------
+SET @userRoleId = (SELECT role_id FROM roles WHERE name = 'USER');
+INSERT INTO users_roles (user_id, role_id) VALUES
+  ((SELECT user_id FROM `users` WHERE username = 'user1'),  @userRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'magnum'), @userRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'kalma'),  @userRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'kita'),   @userRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'user'),   @userRoleId);
+
+SET @editorRoleId = (SELECT role_id FROM roles WHERE name = 'EDITOR');
+INSERT INTO users_roles (user_id, role_id) VALUES
+  ((SELECT user_id FROM `users` WHERE username = 'otus'),   @editorRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'oxx'),    @editorRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'amen'),   @editorRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'mana'),   @editorRoleId);
+
+SET @adminRoleId = (SELECT role_id FROM roles WHERE name = 'ADMIN');
+INSERT INTO users_roles (user_id, role_id) VALUES
+  ((SELECT user_id FROM `users` WHERE username = 'admin1'), @adminRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'hella'),  @adminRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'awa'),    @adminRoleId),
+  ((SELECT user_id FROM `users` WHERE username = 'admin'),  @adminRoleId);
 
 -- --------------------------------------------------------------------------------------------
 -- Categories

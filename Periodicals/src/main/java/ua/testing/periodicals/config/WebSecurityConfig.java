@@ -21,7 +21,7 @@ import ua.testing.periodicals.service.CustomUserDetailsService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
-     
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
@@ -49,18 +49,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+            .antMatchers("/").permitAll()
             .antMatchers("/register").permitAll()
+            .antMatchers("/about").permitAll()
             .antMatchers("/process_register").permitAll()
+            .antMatchers("**/new").hasAuthority("ADMIN")
+            .antMatchers("**/edit/**").hasAuthority("ADMIN")
+            .antMatchers("**/delete/**").hasAuthority("ADMIN")
             .anyRequest().authenticated()
-            .and()
-            .formLogin()
+                .and()
+                .formLogin()
                 .usernameParameter("email")
                 .defaultSuccessUrl("/periodicals")
                 .permitAll()
                 .loginPage("/login")
                 .usernameParameter("user")
                 .passwordParameter("pass")
+                .and()
+                .logout().logoutSuccessUrl("/").permitAll()
             .and()
-            .logout().logoutSuccessUrl("/").permitAll();
+            .exceptionHandling().accessDeniedPage("/403.html");
     }
 }

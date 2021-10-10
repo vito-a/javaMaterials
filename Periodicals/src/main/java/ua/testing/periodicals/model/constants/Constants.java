@@ -3,7 +3,7 @@ package ua.testing.periodicals.model.constants;
 public interface Constants {
     // Users
     String USER_ID         = "user_id";
-    String USER_LOGIN      = "login";
+    String USERNAME        = "username";
     String USER_ROLE_ID    = "role_id";
     String USER_PASSWORD   = "password";
     String USER_STATUS     = "status";

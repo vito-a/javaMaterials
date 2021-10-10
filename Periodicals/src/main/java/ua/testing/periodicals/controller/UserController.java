@@ -32,10 +32,10 @@ public class UserController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        user.setRole(Constants.ROLE_ID_USER);
         user.setStatus(Constants.STATUS_ACTIVE);
-        user.setFullname(user.getFirstname() + " " + user.getLastname());
-        user.setLogin(user.getEmail());
+        if ((user.getFullName() == null) || user.getFullName().isEmpty()) {
+            user.setFullName(user.getFirstName() + " " + user.getLastName());
+        }
 
         userRepo.save(user);
 
@@ -47,7 +47,7 @@ public class UserController {
         User User = new User();
         model.addAttribute("User", User);
 
-        return "new_periodical.html";
+        return "new_user.html";
     }
 
     @RequestMapping(value = "/user/save", method = RequestMethod.POST)

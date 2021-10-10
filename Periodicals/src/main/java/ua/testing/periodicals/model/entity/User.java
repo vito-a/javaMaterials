@@ -4,6 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static ua.testing.periodicals.model.constants.Constants.USER_ID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,22 +22,31 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
-    private Long user_id;
-    @Column(name = "login", nullable = false)
-    private String login;
+    @Column(name = USER_ID, nullable = false)
+    private Long userId;
+    @Column(name = "username", nullable = false)
+    private String username;
     @Column(name = "fullname")
-    private String fullname;
+    private String fullName;
     @Column(name = "firstname", nullable = false)
-    private String firstname;
+    private String firstName;
     @Column(name = "lastname", nullable = false)
-    private String lastname;
+    private String lastName;
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "email", nullable = false)
     private String email;
-    @Column(name = "role_id", nullable = false)
-    private Long role;
     @Column(name = "status", nullable = false)
     private Integer status;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    public boolean isEnabled() {
+        return status > 0;
+    }
 }

@@ -23,11 +23,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="user: ${listUsers}">
-                    <td th:text="${user.user_id}">User ID</td>
-                    <td th:text="${user.Login}">User ID</td>
-                    <td th:text="${user.fullname}">Full name</th>
-                    <td th:text="${user.firstname}">First name</td>
-                    <td th:text="${user.lastname}">Last name</td>
+                    <td th:text="${user.userId}">User ID</td>
+                    <td th:text="${user.username}">User ID</td>
+                    <td th:text="${user.fullName}">Full name</th>
+                    <td th:text="${user.firstName}">First name</td>
+                    <td th:text="${user.lastName}">Last name</td>
                     <td th:text="${user.email}">E-mail</td>
                     <td th:text="${user.role}">Role ID</td>
                     <td th:text="${user.status}">Status</td>

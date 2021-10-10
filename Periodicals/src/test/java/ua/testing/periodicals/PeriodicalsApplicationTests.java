@@ -32,12 +32,12 @@ public class PeriodicalsApplicationTests {
         User user = new User();
         user.setEmail("test1@gmail.com");
         user.setPassword("test2021");
-        user.setFirstname("Test first name");
-        user.setLastname("Test last name");
+        user.setFirstName("Test first name");
+        user.setLastName("Test last name");
 
         User savedUser = repo.save(user);
 
-        User existUser = entityManager.find(User.class, savedUser.getUser_id());
+        User existUser = entityManager.find(User.class, savedUser.getUserId());
 
         assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
     }

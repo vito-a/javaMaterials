@@ -1,10 +1,13 @@
 package ua.testing.periodicals.model.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ua.testing.periodicals.model.entity.User;
 
 public class CustomUserDetails implements UserDetails {
  
@@ -13,10 +16,18 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(User user) {
         this.user = user;
     }
- 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Set<Role> roles = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+            System.out.println(role.getName());
+        }
+
+        return authorities;
     }
  
     @Override
@@ -26,7 +37,7 @@ public class CustomUserDetails implements UserDetails {
  
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getUsername();
     }
  
     @Override
@@ -50,7 +61,10 @@ public class CustomUserDetails implements UserDetails {
     }
      
     public String getFullName() {
-        return user.getFirstname() + " " + user.getLastname();
+        if ((user.getFullName() == null) || user.getFullName().isEmpty()) {
+            return user.getFirstName() + " " + user.getLastName();
+        }
+        return user.getFullName();
     }
  
 }
