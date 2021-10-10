@@ -38,13 +38,13 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown button
+                    <button class="btn btn-secondary" type="button" onclick="$('#language-dropdown').toggle();">
+                        [[#{language}]]
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="/?lang=en" th:text="#{en}"></a>
-                        <a class="dropdown-item" href="/?lang=fr" th:text="#{fr}"></a>
-                        <a class="dropdown-item" href="/?lang=ru" th:text="#{ru}"></a>
+                    <div class="dropdown-menu" id="language-dropdown">
+                        <button class="dropdown-item" type="button"><a href="/?lang=en" th:text="#{en}"></a>
+                        <button class="dropdown-item" type="button"><a href="/?lang=fr" th:text="#{fr}"></a>
+                        <button class="dropdown-item" type="button"><a href="/?lang=ru" th:text="#{ru}"></a>
                     </div>
                 </div>
             </li>
