@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Periodicals</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,7 +10,7 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a th:href="@{/users}">List of Users</a>
+                <a class="nav-link" th:href="@{/users}">List of Users</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Periodicals</a>
@@ -25,12 +25,14 @@
                 <a class="nav-link" href="#">About</a>
             </li>
         </ul>
-        <ul class="nav navbar-nav">
-            <li class="nav-item" th:classappend="${module == 'register' ? 'active' : ''}">
-                <a class="nav-link" th:href="@{/register}">Register</a>
-            </li>
-            <li class="nav-item" th:classappend="${module == 'login' ? 'active' : ''}">
-                <a class="nav-link" th:href="@{/login}">Login</a>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <div style="margin-right: 10px;">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -47,9 +49,24 @@
                 </div>
             </li>
         </ul>
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item" sec:authorize="isAnonymous()"  th:classappend="${module == 'register' ? 'active' : ''}">
+                <a class="nav-link" th:href="@{/register}">Register</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAnonymous()" th:classappend="${module == 'login' ? 'active' : ''}">
+                <a class="nav-link" th:href="@{/login}">
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
+                </a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()" th:classappend="${module == 'logout' ? 'active' : ''}">
+                <div>
+                    <div class="nav-link" style="color: #fff; float: left; margin-left: 10px;" th:text="#{greeting}"></div>
+                    <a class="nav-link" style="float:left;" href="/logout" th:href="@{#}" onclick="$('#logout-form').submit();">Logout</a>
+                </div>
+                <form style="display:none;visibility: hidden;" id="logout-form" method="post" action="#" th:action="@{/logout}">
+                    <input class="nav-link" type="submit" value="Sign Out" />
+                </form>
+            </li>
+        </ul>
     </div>
 </nav>
