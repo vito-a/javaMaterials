@@ -2,6 +2,7 @@ package ua.testing.periodicals.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.UserRepository;
 
@@ -17,5 +18,17 @@ public class UsersService {
             return usersRepo.search(keyword);
         }
         return usersRepo.findAll();
+    }
+
+    public void save(User user) {
+        usersRepo.save(user);
+    }
+
+    public User get(Long userId) {
+        return usersRepo.findById(userId).get();
+    }
+
+    public void delete(Long userId) {
+        usersRepo.deleteById(userId);
     }
 }

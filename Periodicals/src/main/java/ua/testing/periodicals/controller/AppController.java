@@ -49,13 +49,6 @@ public class AppController {
 
     @GetMapping("/periodicals")
     public String listPeriodicalsAll(Model model) {
-        /*
-        List<Periodical> listPeriodicals = periodicalsRepo.findAll();
-        model.addAttribute("listPeriodicals", listPeriodicals);
-
-        return "periodicals.html";
-        */
-        //return "redirect:/periodicals/1";
         return listPeriodicalsSortingPager(model, 1, "name", "asc");
     }
 

@@ -35,4 +35,16 @@ public class PeriodicalsService {
 
         return periodicalsRepo.findAll(pageable);
     }
+
+    public void save(Periodical periodical) {
+        periodicalsRepo.save(periodical);
+    }
+
+    public Periodical get(Long id) {
+        return periodicalsRepo.findById(id).get();
+    }
+
+    public void delete(Long id) {
+        periodicalsRepo.deleteById(id);
+    }
 }
