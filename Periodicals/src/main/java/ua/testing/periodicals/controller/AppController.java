@@ -1,16 +1,19 @@
 package ua.testing.periodicals.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 import ua.testing.periodicals.repository.UserRepository;
 import ua.testing.periodicals.model.constants.Constants;
 import ua.testing.periodicals.model.entity.User;
+import ua.testing.periodicals.service.PeriodicalsService;
 
 import java.util.List;
 
@@ -22,6 +25,9 @@ public class AppController {
 
     @Autowired
     private PeriodicalsRepository periodicalsRepo;
+
+    @Autowired
+    private PeriodicalsService service;
 
     @GetMapping("")
     public String viewHomePage() {
@@ -80,12 +86,12 @@ public class AppController {
         return "themes.html";
     }
 
-    @GetMapping("/pricing")
-    public String listPricing(Model model) {
-        List<Periodical> listPeriodicals = periodicalsRepo.findAll();
+    @RequestMapping("/search/periodicals")
+    public String searchPeriodicals(Model model, @Param("keyword") String keyword) {
+        List<Periodical> listPeriodicals = service.listAll(keyword);
         model.addAttribute("listPeriodicals", listPeriodicals);
-
-        return "pricing.html";
+        model.addAttribute("keyword", keyword);
+        return "search/periodicals.html";
     }
 
     @GetMapping("/about")
