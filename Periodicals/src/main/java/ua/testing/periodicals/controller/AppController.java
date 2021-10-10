@@ -30,6 +30,12 @@ public class AppController {
         return "signup_form.html";
     }
 
+    @GetMapping("/login")
+    public String get(Model model) {
+        model.addAttribute("title", "Форма входа");
+        return "login";
+    }
+
     @PostMapping("/process_register")
     public String processRegister(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
