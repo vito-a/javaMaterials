@@ -48,11 +48,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
             .antMatchers("/users").authenticated()
-            .anyRequest().permitAll()
+            .anyRequest().authenticated()
             .and()
             .formLogin()
                 .usernameParameter("email")
-                .defaultSuccessUrl("/users")
+                .defaultSuccessUrl("/periodicals")
                 .permitAll()
                 .loginPage("/login")
                 .usernameParameter("user")

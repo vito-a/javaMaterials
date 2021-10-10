@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import ua.testing.periodicals.model.entity.Periodical;
+import ua.testing.periodicals.repository.PeriodicalsRepository;
 import ua.testing.periodicals.repository.UserRepository;
 import ua.testing.periodicals.model.constants.Constants;
 import ua.testing.periodicals.model.entity.User;
@@ -17,6 +19,9 @@ public class AppController {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private PeriodicalsRepository periodicalsRepo;
 
     @GetMapping("")
     public String viewHomePage() {
@@ -57,5 +62,37 @@ public class AppController {
         model.addAttribute("listUsers", listUsers);
 
         return "users.html";
+    }
+
+    @GetMapping("/periodicals")
+    public String listPeriodicals(Model model) {
+        List<Periodical> listPeriodicals = periodicalsRepo.findAll();
+        model.addAttribute("listPeriodicals", listPeriodicals);
+
+        return "periodicals.html";
+    }
+
+    @GetMapping("/themes")
+    public String listThemes(Model model) {
+        List<Periodical> listPeriodicals = periodicalsRepo.findAll();
+        model.addAttribute("listPeriodicals", listPeriodicals);
+
+        return "themes.html";
+    }
+
+    @GetMapping("/pricing")
+    public String listPricing(Model model) {
+        List<Periodical> listPeriodicals = periodicalsRepo.findAll();
+        model.addAttribute("listPeriodicals", listPeriodicals);
+
+        return "pricing.html";
+    }
+
+    @GetMapping("/about")
+    public String listAbout(Model model) {
+        List<Periodical> listPeriodicals = periodicalsRepo.findAll();
+        model.addAttribute("listPeriodicals", listPeriodicals);
+
+        return "about.html";
     }
 }

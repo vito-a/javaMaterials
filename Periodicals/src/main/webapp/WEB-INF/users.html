@@ -10,19 +10,27 @@
         <div>
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
-                <tr>
-                    <th>User ID</th>
-                    <th>E-mail</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                </tr>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Login</th>
+                        <th>Full name</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>E-mail</th>
+                        <th>Role ID</th>
+                        <th>Status</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <tr th:each="user: ${listUsers}">
                     <td th:text="${user.user_id}">User ID</td>
+                    <td th:text="${user.Login}">User ID</td>
+                    <td th:text="${user.fullname}">Full name</th>
+                    <td th:text="${user.firstname}">First name</td>
+                    <td th:text="${user.lastname}">Last name</td>
                     <td th:text="${user.email}">E-mail</td>
-                    <td th:text="${user.firstname}">First Name</td>
-                    <td th:text="${user.lastname}">Last Name</td>
+                    <td th:text="${user.role}">Role ID</td>
+                    <td th:text="${user.status}">Status</td>
                 </tr>
                 </tbody>
             </table>
