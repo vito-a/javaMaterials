@@ -27,7 +27,7 @@
                     <th class="p-4">
                         <a class="text-white" th:href="@{'/periodicals/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Price</a>
                     </th>
-                    <th class="p-3"><span class="nav-link">Actions</span></th>
+                    <th class="p-3" sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')"><span class="nav-link">Actions</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -37,7 +37,7 @@
                     <td th:text="${periodical.description}">Description</td>
                     <td th:text="${periodical.categoryId}">Category ID</td>
                     <td th:text="${periodical.price}">Price</td>
-                    <td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
                         <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" th:href="@{'/periodical/edit/' + ${periodical.periodicalId}}">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{'/periodical/delete/' + ${periodical.periodicalId}}">Delete</a>

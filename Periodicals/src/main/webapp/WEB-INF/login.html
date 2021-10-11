@@ -25,10 +25,7 @@
                 <label for="pass" class="sr-only">Password</label>
                 <input type="password" id="pass" name="pass" class="form-control" placeholder="Password" required="">
             </p>
-            <input name="_csrf"<input
-                type="hidden"
-                th:name="${_csrf.parameterName}"
-                th:value="${_csrf.token}" />
+            <input name="_csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div class="form-actions">
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </div>

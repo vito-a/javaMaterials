@@ -12,5 +12,5 @@ import java.util.List;
 public interface RoleRepository extends JpaRepository<Role, Long> {
     Role findByName(String name);
     @Query("SELECT r FROM Role r WHERE r.name = ?1")
-    public List<User> getRoleByName(String name);
+    List<User> getRoleByName(String name);
 }

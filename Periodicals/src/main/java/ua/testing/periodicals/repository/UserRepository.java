@@ -17,5 +17,5 @@ public interface UserRepository extends JpaRepository<User, Long>, CrudRepositor
             + " OR u.fullName LIKE %?1%"
             + " OR u.firstName LIKE %?1%"
             + " OR u.lastName LIKE %?1%")
-    public List<User> search(String keyword);
+    List<User> search(String keyword);
 }
