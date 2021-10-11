@@ -38,6 +38,8 @@ public class User {
     private String email;
     @Column(name = "status", nullable = false)
     private Integer status;
+    @Column(name = "balance", nullable = false)
+    private Double balance;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",

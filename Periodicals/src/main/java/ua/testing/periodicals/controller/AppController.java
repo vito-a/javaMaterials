@@ -98,4 +98,5 @@ public class AppController {
 
         return "about.html";
     }
+
 }

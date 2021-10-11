@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`roles` (
     `role_id`   INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`role_id`),
-    UNIQUE INDEX `u_roles_name` (`name` ASC));
+    UNIQUE INDEX `u_roles_name` (`name`)
+);
 
 -- -------------------------------------------------------
 -- Table `periodicalsdb`.`users`
@@ -33,11 +34,11 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`users` (
     `fullname`  VARCHAR(255) NOT NULL DEFAULT '',
     `email`     VARCHAR(255) NOT NULL,
     `status`    TINYINT NULL DEFAULT '1',
-    `account`   DECIMAL(15, 2) UNSIGNED NULL DEFAULT NULL,
+    `balance`   DOUBLE DEFAULT NULL,
     `created`   TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `updated`   TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`user_id`),
-    UNIQUE INDEX `u_users_username` (`username` ASC)
+    UNIQUE INDEX `u_users_username` (`username`)
 );
 
 -- -------------------------------------------------------
@@ -46,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`users` (
 CREATE TABLE `users_roles` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  INDEX `i_user_id` (`user_id` ASC)
+  INDEX `i_user_id` (`user_id`)
 );
 
 -- -------------------------------------------------------
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`categories` (
     `cat_id` INT NOT NULL AUTO_INCREMENT,
     `name`   VARCHAR(64) NOT NULL,
     PRIMARY KEY (`cat_id`),
-    UNIQUE INDEX `u_categories_name` (`name` ASC)
+    UNIQUE INDEX `u_categories_name` (`name`)
 );
 
 -- -------------------------------------------------------
@@ -69,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`periodicals` (
     `cat_id`        INT NULL DEFAULT NULL,
     `price`         DECIMAL(15,2) UNSIGNED NOT NULL,
     PRIMARY KEY (`periodical_id`),
-    INDEX `i_periodicals_name` (`name` ASC)
+    INDEX `i_periodicals_name` (`name`)
 );
 
 -- -------------------------------------------------------
@@ -82,7 +83,20 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`subscriptions` (
     `startdate`     DATE NOT NULL,
     `enddate`       DATE NOT NULL,
     PRIMARY KEY (`sub_id`),
-    INDEX `u_subscriptions_user_id` (`user_id` ASC)
+    INDEX `u_subscriptions_user_id` (`user_id`)
+);
+
+-- -------------------------------------------------------
+-- Table `periodicalsdb`.`subscriptions`
+-- -------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `periodicalsdb`.`balance_transactions` (
+    `trans_id`       INT NOT NULL AUTO_INCREMENT,
+    `periodical_id`  INT NOT NULL,
+    `amount`         DOUBLE NOT NULL,
+    `startdate`      DATE NOT NULL,
+    `enddate`        DATE NOT NULL,
+    PRIMARY KEY (`trans_id`),
+    INDEX `u_balance_transactions_id` (`trans_id`)
 );
 
 -- --------------------------------------------------------------------------------------------
@@ -99,24 +113,24 @@ INSERT INTO roles (role_id, name) VALUES(DEFAULT, 'ADMIN');
 -- --------------------------------------------------------------------------------------------
 -- Users
 -- --------------------------------------------------------------------------------------------
-INSERT INTO users (user_id, username, password, email, fullname) VALUES
-  (DEFAULT, 'user1',  'user1',  'gstream@gmail.com', 'Sami Keinänen'),
-  (DEFAULT, 'magnum', 'magnum', 'sami@gmail.com',    'Sami Wolking'),
-  (DEFAULT, 'kalma',  'kalma',  'kalma@gmail.com',   'Nick Gore'),
-  (DEFAULT, 'kita',   'kita',   'kita@gmail.com',    'Sampsa Astala'),
-  (DEFAULT, 'user',   '$2a$10$wSXV/z6SGuGsS1JwuDM7w.P8sZmzhwbaxQJFbySo8x0eHq0DliQgG', 'user@gmail.com', 'User name');
+INSERT INTO users (user_id, username, password, email, firstname, lastname) VALUES
+  (DEFAULT, 'user1',  'user1',  'gstream@gmail.com', 'Sami', 'Keinänen'),
+  (DEFAULT, 'magnum', 'magnum', 'sami@gmail.com',    'Sami', 'Wolking'),
+  (DEFAULT, 'kalma',  'kalma',  'kalma@gmail.com',   'Nick', 'Gore'),
+  (DEFAULT, 'kita',   'kita',   'kita@gmail.com',    'Sampsa', 'Astala'),
+  (DEFAULT, 'user',   '$2a$10$wSXV/z6SGuGsS1JwuDM7w.P8sZmzhwbaxQJFbySo8x0eHq0DliQgG', 'user@gmail.com', 'User', 'name');
 
-INSERT INTO users (user_id, username, password, email, fullname) VALUES
-  (DEFAULT, 'otus',   'otus',   'otus@gmail.com',    'Tonmi Kristian Lillman'),
-  (DEFAULT, 'oxx',    'oxx',    'oxx@gmail.com',     'Samer el Nahhal'),
-  (DEFAULT, 'amen',   'amen',   'amen@gmail.com',    'Jussi Sydänmaa'),
-  (DEFAULT, 'mana',   'mana',   'mana@gmail.com',    'Antto Nikolai Tuomainen');
+INSERT INTO users (user_id, username, password, email, firstname, lastname) VALUES
+  (DEFAULT, 'otus',   'otus',   'otus@gmail.com',    'Tonmi', 'Kristian Lillman'),
+  (DEFAULT, 'oxx',    'oxx',    'oxx@gmail.com',     'Samer', 'el Nahhal'),
+  (DEFAULT, 'amen',   'amen',   'amen@gmail.com',    'Jussi', 'Sydänmaa'),
+  (DEFAULT, 'mana',   'mana',   'mana@gmail.com',    'Antto', 'Nikolai Tuomainen');
 
-INSERT INTO users (user_id, username, password, email, fullname) VALUES
-  (DEFAULT, 'admin1', 'admin1', 'tomi@gmail.com',    'Tomi Petteri Putaansuu'),
-  (DEFAULT, 'hella',  'hella',  'hella@gmail.com',   'Henna-Riikka Tuulia Broda'),
-  (DEFAULT, 'awa',    'awa',    'awa@gmail.com',     'Leena Maria Peisa'),
-  (DEFAULT, 'admin',  '$2a$10$LehXdZM4hFlDB6AASmdPZubIaV/XiaES5EBEsEPvn5nG37yh8bljq', 'admin@gmail.com', 'Admin name');
+INSERT INTO users (user_id, username, password, email, firstname, lastname) VALUES
+  (DEFAULT, 'admin1', 'admin1', 'tomi@gmail.com',    'Tomi', 'Petteri Putaansuu'),
+  (DEFAULT, 'hella',  'hella',  'hella@gmail.com',   'Henna-Riikka', 'Tuulia Broda'),
+  (DEFAULT, 'awa',    'awa',    'awa@gmail.com',     'Leena', 'Maria Peisa'),
+  (DEFAULT, 'admin',  '$2a$10$LehXdZM4hFlDB6AASmdPZubIaV/XiaES5EBEsEPvn5nG37yh8bljq', 'admin@gmail.com', 'Admin', 'name');
 
 -- --------------------------------------------------------------------------------------------
 -- Users_Roles

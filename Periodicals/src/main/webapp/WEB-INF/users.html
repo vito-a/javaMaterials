@@ -14,10 +14,8 @@
                         <th>User ID</th>
                         <th>Login</th>
                         <th>Full name</th>
-                        <th>First name</th>
                         <th>Last name</th>
                         <th>E-mail</th>
-                        <th>Role ID</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -25,11 +23,9 @@
                 <tr th:each="user: ${listUsers}">
                     <td th:text="${user.userId}">User ID</td>
                     <td th:text="${user.username}">User ID</td>
-                    <td th:text="${user.fullName}">Full name</th>
                     <td th:text="${user.firstName}">First name</td>
                     <td th:text="${user.lastName}">Last name</td>
                     <td th:text="${user.email}">E-mail</td>
-                    <td th:text="${user.role}">Role ID</td>
                     <td th:text="${user.status}">Status</td>
                 </tr>
                 </tbody>
