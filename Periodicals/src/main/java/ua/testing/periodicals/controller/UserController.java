@@ -6,16 +6,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+import ua.testing.periodicals.model.entity.Role;
+import ua.testing.periodicals.repository.RoleRepository;
 import ua.testing.periodicals.repository.UserRepository;
-import ua.testing.periodicals.model.constants.Constants;
+
+import static ua.testing.periodicals.model.constants.Constants.ROLE_USER;
+import static ua.testing.periodicals.model.constants.Constants.STATUS_ACTIVE;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.service.UsersService;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class UserController {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private RoleRepository roleRepo;
 
     @Autowired
     private UsersService usersService;
@@ -32,7 +43,9 @@ public class UserController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        user.setStatus(Constants.STATUS_ACTIVE);
+        user.setStatus(STATUS_ACTIVE);
+        Role userRole = roleRepo.findByName(ROLE_USER);
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         if ((user.getFullName() == null) || user.getFullName().isEmpty()) {
             user.setFullName(user.getFirstName() + " " + user.getLastName());
         }

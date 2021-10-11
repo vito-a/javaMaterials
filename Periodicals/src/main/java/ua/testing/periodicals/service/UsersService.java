@@ -2,7 +2,6 @@ package ua.testing.periodicals.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.UserRepository;
 

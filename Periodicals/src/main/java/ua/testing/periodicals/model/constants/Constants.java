@@ -19,8 +19,9 @@ public interface Constants {
     String DESCRIPTION     = "description";
 
     // Roles
-    long ROLE_ID_ADMIN     = 1;
-    long ROLE_ID_USER      = 2;
+    String ROLE_USER         = "USER";
+    String ROLE_EDITOR       = "EDITOR";
+    String ROLE_ADMIN        = "ADMIN";
 
     // Status
     int STATUS_ACTIVE      = 1;

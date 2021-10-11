@@ -14,11 +14,9 @@ public class Role {
     @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(name = "name")
     private String name;
     public Integer getId() {
         return id;
     }
-
-    // remaining getters and setters
 }

@@ -12,6 +12,6 @@ import java.util.Optional;
 @Repository
 public interface CategoriesRepository extends JpaRepository<Category, Long> {
     Category findByName(String name);
-    @Query("SELECT c FROM Category c WHERE c.name LIKE %?1% ORDER BY cat_id ASC")
+    @Query("SELECT c FROM Category c WHERE c.name LIKE %?1%")
     public List<Category> search(String keyword);
 }
