@@ -6,6 +6,7 @@
             <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/users}">Users</a></li>
             <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/periodicals}">Periodicals</a></li>
             <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/categories}">Categories</a></li>
+            <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/subscriptions}">Subscriptions</a></li>
             <li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">

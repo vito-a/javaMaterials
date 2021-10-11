@@ -166,19 +166,32 @@ INSERT INTO categories (cat_id, name) VALUES (1, 'News'), (2, 'Medicine'), (3, '
 -- Periodicals
 -- --------------------------------------------------------------------------------------------
 INSERT INTO periodicals (periodical_id, name, description, cat_id, price) VALUES
-  (DEFAULT, 'Guardian, October 2021',           'Pandora papers',                 1, 2),
-  (DEFAULT, 'New York Times, September 2021',   'Oil prices rise',                1, 3),
-  (DEFAULT, 'Wall Street Journal, August 2021', 'Cryptocurrencies fall in China', 1, 4),
-  (DEFAULT, 'Lancet, July 2021',                'Race for vaccine',               2, 5),
-  (DEFAULT, 'Janes, June 2021',                 'Iron dome',                      4, 6),
-  (DEFAULT, 'Wired, May 2021',                  'New DDOS of unseen strength',    4, 7);
+  (DEFAULT, 'Guardian', 'Latest news, sport, business, comment, analysis and reviews from the , the world\'s leading liberal voice', 1, 200),
+  (DEFAULT, 'New York Times', 'Live news, investigations, opinion, photos and video by the journalists from more than 150 countries around the world.', 1, 300),
+  (DEFAULT, 'Wall Street Journal', 'Breaking news and analysis from the U.S. and around the world at WSJ.com.', 1, 400),
+  (DEFAULT, 'Lancet', 'Regional Health - Europe publishes a Series of eleven papers by experts from different areas of public health', 2, 500),
+  (DEFAULT, 'Janes', 'The latest defence and security news - the trusted source for defence intelligence', 4, 600),
+  (DEFAULT, 'Wired', 'A monthly American magazine, published in print and online editions, that focuses on how emerging technologies affect culture, the economy, and politics.', 4, 700);
 
 -- --------------------------------------------------------------------------------------------
 -- Subscriptions
 -- --------------------------------------------------------------------------------------------
+
 INSERT INTO subscriptions (sub_id, user_id, periodical_id, startdate, enddate) VALUES
-  (DEFAULT, 5, 1, '2021-09-04', '2021-09-04'),
-  (DEFAULT, 5, 2, '2021-09-04', '2021-09-04'),
-  (DEFAULT, 5, 3, '2021-09-04', '2021-09-04'),
-  (DEFAULT, 5, 4, '2021-09-04', '2021-09-04'),
-  (DEFAULT, 5, 6, '2020-09-04', '2021-09-05');
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'user1'),  (SELECT periodical_id FROM `periodicals` WHERE name = 'Guardian'),            '2021-09-04', '2022-09-04'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'magnum'), (SELECT periodical_id FROM `periodicals` WHERE name = 'New York Times'),      '2021-09-04', '2022-09-04'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'kalma'),  (SELECT periodical_id FROM `periodicals` WHERE name = 'Wall Street Journal'), '2021-09-04', '2022-09-04'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'kita'),   (SELECT periodical_id FROM `periodicals` WHERE name = 'Lancet'),              '2021-09-04', '2022-09-04'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'user'),   (SELECT periodical_id FROM `periodicals` WHERE name = 'Janes'),               '2021-09-04', '2022-09-04');
+
+INSERT INTO subscriptions (sub_id, user_id, periodical_id, startdate, enddate) VALUES
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'otus'),   (SELECT periodical_id FROM `periodicals` WHERE name = 'Guardian'), '2021-09-05', '2022-09-05'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'oxx'),    (SELECT periodical_id FROM `periodicals` WHERE name = 'Lancet'),   '2021-09-05', '2022-09-05'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'amen'),   (SELECT periodical_id FROM `periodicals` WHERE name = 'Janes'),    '2021-09-05', '2022-09-05'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'mana'),   (SELECT periodical_id FROM `periodicals` WHERE name = 'Wired'),    '2021-09-05', '2022-09-05');
+
+INSERT INTO subscriptions (sub_id, user_id, periodical_id, startdate, enddate) VALUES
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'admin1'), (SELECT periodical_id FROM `periodicals` WHERE name = 'Guardian'), '2021-09-06', '2022-09-06'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'hella'),  (SELECT periodical_id FROM `periodicals` WHERE name = 'Lancet'),   '2021-09-06', '2022-09-06'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'awa'),    (SELECT periodical_id FROM `periodicals` WHERE name = 'Janes'),    '2021-09-06', '2022-09-06'),
+  (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'admin'),  (SELECT periodical_id FROM `periodicals` WHERE name = 'Wired'),    '2021-09-06', '2022-09-06');
