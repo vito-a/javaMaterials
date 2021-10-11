@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import ua.testing.periodicals.model.entity.Role;
+import ua.testing.periodicals.model.entity.Subscription;
 import ua.testing.periodicals.repository.RoleRepository;
 import ua.testing.periodicals.repository.UserRepository;
 
@@ -17,6 +18,7 @@ import ua.testing.periodicals.service.UsersService;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller

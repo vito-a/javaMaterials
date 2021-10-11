@@ -1,21 +1,25 @@
 package ua.testing.periodicals.controller;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import ua.testing.periodicals.model.entity.Category;
 import ua.testing.periodicals.model.entity.Periodical;
+import ua.testing.periodicals.model.entity.Subscription;
 import ua.testing.periodicals.repository.CategoriesRepository;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
+import ua.testing.periodicals.repository.SubscriptionsRepository;
 import ua.testing.periodicals.repository.UserRepository;
 import ua.testing.periodicals.service.CategoriesService;
 import ua.testing.periodicals.service.PeriodicalsService;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -28,10 +32,13 @@ public class AppController {
     private PeriodicalsRepository periodicalsRepo;
 
     @Autowired
-    private PeriodicalsService periodicalsService;
+    private CategoriesRepository categoriesRepo;
 
     @Autowired
-    private CategoriesRepository categoriesRepo;
+    private SubscriptionsRepository subscriptionRepo;
+
+    @Autowired
+    private PeriodicalsService periodicalsService;
 
     @Autowired
     private CategoriesService categoriesService;
@@ -39,6 +46,18 @@ public class AppController {
     @GetMapping("")
     public String viewHomePage() {
         return "index.html";
+    }
+
+    private String getCurrentUserName() {
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
     }
 
     @GetMapping("/login")
@@ -90,6 +109,17 @@ public class AppController {
         model.addAttribute("keyword", keyword);
         return "search/periodicals.html";
     }
+
+/*
+    @GetMapping("/user/my-subscriptions")
+    public String listMySubscriptions(Model model) {
+        String username = getCurrentUserName();
+        List<Subscription> listSubscriptions = subscriptionRepo.findMySubscriptions(username);
+        model.addAttribute("listSubscriptions", listSubscriptions);
+
+        return "user/my_subscriptions.html";
+    }
+ */
 
     @GetMapping("/about")
     public String listAbout(Model model) {
