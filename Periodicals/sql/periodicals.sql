@@ -160,7 +160,7 @@ INSERT INTO users_roles (user_id, role_id) VALUES
 -- --------------------------------------------------------------------------------------------
 -- Categories
 -- --------------------------------------------------------------------------------------------
-INSERT INTO categories (cat_id, name) VALUES (1, 'News'), (2, 'Medicine'), (3, 'IT'), (4, 'Defense');
+INSERT INTO categories (cat_id, name) VALUES (1, 'News'), (2, 'Medicine'), (3, 'IT'), (4, 'Defence');
 
 -- --------------------------------------------------------------------------------------------
 -- Periodicals

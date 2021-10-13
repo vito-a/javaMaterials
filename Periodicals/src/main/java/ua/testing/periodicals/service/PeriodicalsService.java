@@ -21,10 +21,10 @@ public class PeriodicalsService {
     private int pageSize;
 
     public List<Periodical> listAll(String keyword) {
-        if (keyword != null) {
+        if (keyword != null) {  // TODO: Optional
             return periodicalsRepo.search(keyword);
         }
-        return periodicalsRepo.findAll();
+        return periodicalsRepo.findAll();  // TODO: Optional
     }
 
     public Page<Periodical> listAll(int pageNum, String sortField, String sortDir) {
@@ -36,10 +36,13 @@ public class PeriodicalsService {
         return periodicalsRepo.findAll(pageable);
     }
 
+    // TODO: try - catch
     public void save(Periodical periodical) {
         periodicalsRepo.save(periodical);
     }
 
+    // TODO: IsPresent()
+    // TODO: check warnings
     public Periodical get(Long id) {
         return periodicalsRepo.findById(id).get();
     }

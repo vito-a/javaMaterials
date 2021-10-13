@@ -81,6 +81,7 @@ public class AppController {
 
         List<Periodical> listPeriodicals = page.getContent();
 
+        // TODO: move attributes to Builder
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());

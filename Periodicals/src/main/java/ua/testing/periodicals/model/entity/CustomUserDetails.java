@@ -17,6 +17,7 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
     }
 
+    // TODO: change For (Role to stream
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> roles = user.getRoles();

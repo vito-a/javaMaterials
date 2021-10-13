@@ -25,10 +25,15 @@ public class SubscriptionsService {
         return subscriptionsRepo.findAll();
     }
 
+    // TODO: deprecated? switch to LocalDate
+    // TODO: Learn LocalDateTime
+    // TODO: make try with resource
     public List<Subscription> search(String date_keyword) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date myDate = null;
         List<Subscription> subscriptionList = null;
+
+        // TODO: make try with resource
         try {
             myDate = format.parse(date_keyword);
             String query = "SELECT s FROM Subscription s WHERE s.startdate >= :startdate";
@@ -43,6 +48,7 @@ public class SubscriptionsService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         return subscriptionList;
     }
 }
