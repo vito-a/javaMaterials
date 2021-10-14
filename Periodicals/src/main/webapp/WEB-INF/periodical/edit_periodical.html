@@ -4,32 +4,32 @@
 <body>
 	<div th:replace="fragments/header :: header"></div>
 	<div class="container text-center">
-		<h1>Edit Periodical</h1>
+		<h1>[[#{actions.edit}]]</h1>
 		<br />
-		<form action="#" th:action="@{/save}" th:object="${periodical}" method="post">
+		<form action="#" th:action="@{/periodical/save}" th:object="${periodical}" method="post">
 			<table border="0" cellpadding="10">
 				<tr>
-					<td>Periodical ID:</td>
+					<td>[[#{subscriptions.periodical.id}]]</td>
 					<td><input type="text" th:field="*{periodicalId}" readonly="readonly" /></td>
 				</tr>
 				<tr>
-					<td>Periodical Name:</td>
+					<td>[[#{periodicals.name}]]</td>
 					<td><input type="text" th:field="*{name}" /></td>
 				</tr>
 				<tr>
-					<td>Description:</td>
+					<td>[[#{periodicals.description}]]</td>
 					<td><input type="text" th:field="*{description}" /></td>
 				</tr>
 				<tr>
-					<td>Category ID:</td>
+					<td>[[#{categories.id}]]</td>
 					<td><input type="text" th:field="*{categoryId}" /></td>
 				</tr>
 				<tr>
-					<td>Price:</td>
+					<td>[[#{periodicals.price}]]</td>
 					<td><input type="text" th:field="*{price}" /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><button class="btn btn-primary" type="submit">Save</button></td>
+					<td colspan="2"><button class="btn btn-primary" type="submit">[[#{actions.submit}]]</button></td>
 				</tr>
 			</table>
 		</form>

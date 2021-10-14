@@ -5,10 +5,11 @@
 <div th:replace="fragments/header :: header"></div>
     <div class="container text-center">
         <div>
-            <h1>Roles</h1>
+            <h1>[[#{pages.about}]]</h1>
         </div>
+        <p style="float:left; text-align: left;" th:utext="#{general.about}"></p>
         <div sec:authorize="isAuthenticated()">
-            <i><span sec:authentication="principal.authorities">Roles</span></i>
+            <i><span sec:authentication="principal.authorities">[[#{role.roles}]]</span></i>
         </div>
     </div>
 </body>

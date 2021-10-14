@@ -5,26 +5,32 @@
 <div th:replace="fragments/header :: header"></div>
     <div class="container text-center">
         <div>
-            <h1>Search: Periodicals</h1>
+            <h1>[[#{periodicals.title}]]</h1>
         </div>
         <div>
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
                 <tr>
-                    <th>Periodical ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Category ID</th>
-                    <th>Price</th>
+                    <th class="p-4">[[#{categories.periodical.id}]]</th>
+                    <th class="p-4">[[#{periodicals.name}]]</a></th>
+                    <th class="p-4">[[#{periodicals.description}]]</a></th>
+                    <th class="p-4">[[#{categories.id}]]</a></th>
+                    <th class="p-4">[[#{periodicals.price}]]</a></th>
+                    <th class="p-3" sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')"><span class="nav-link">[[#{actions.actions}]]</span></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="periodical: ${listPeriodicals}">
-                    <td th:text="${periodical.periodicalId}">Periodical ID</td>
-                    <td th:text="${periodical.name}">Name</td>
-                    <td th:text="${periodical.description}">Description</td>
-                    <td th:text="${periodical.categoryId}">Category ID</td>
-                    <td th:text="${periodical.price}">Price</td>
+                    <td th:text="${periodical.periodicalId}">[[#{categories.periodical.id}]]</td>
+                    <td th:text="${periodical.name}">[[#{periodicals.name}]]</td>
+                    <td th:text="${periodical.description}">[[#{periodicals.description}]]</td>
+                    <td th:text="${periodical.categoryId}">[[#{categories.id}]]</td>
+                    <td th:text="${periodical.price}">[[#{periodicals.price}]]</td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
+                        <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" th:href="@{'/periodical/edit/' + ${periodical.periodicalId}}">[[#{actions.edit}]]</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{'/periodical/delete/' + ${periodical.periodicalId}}">[[#{actions.delete}]]</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

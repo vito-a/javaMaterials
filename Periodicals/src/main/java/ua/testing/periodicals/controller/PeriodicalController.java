@@ -32,7 +32,7 @@ public class PeriodicalController {
     public String savePeriodical(@ModelAttribute("periodical") Periodical periodical) {
         service.save(periodical);
 
-        return "redirect:/";
+        return "redirect:/periodicals";
     }
     
     @RequestMapping("/periodical/edit/{id}")

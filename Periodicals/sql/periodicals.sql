@@ -113,24 +113,24 @@ INSERT INTO roles (role_id, name) VALUES(DEFAULT, 'ADMIN');
 -- --------------------------------------------------------------------------------------------
 -- Users
 -- --------------------------------------------------------------------------------------------
-INSERT INTO users (user_id, username, password, email, firstname, lastname) VALUES
-  (DEFAULT, 'user1',  'user1',  'gstream@gmail.com', 'Sami', 'Keinänen'),
-  (DEFAULT, 'magnum', 'magnum', 'sami@gmail.com',    'Sami', 'Wolking'),
-  (DEFAULT, 'kalma',  'kalma',  'kalma@gmail.com',   'Nick', 'Gore'),
-  (DEFAULT, 'kita',   'kita',   'kita@gmail.com',    'Sampsa', 'Astala'),
-  (DEFAULT, 'user',   '$2a$10$wSXV/z6SGuGsS1JwuDM7w.P8sZmzhwbaxQJFbySo8x0eHq0DliQgG', 'user@gmail.com', 'User', 'name');
+INSERT INTO users (user_id, username, password, email, firstname, lastname, balance) VALUES
+  (DEFAULT, 'user1',  'user1',  'gstream@gmail.com', 'Sami', 'Keinänen', 1100),
+  (DEFAULT, 'magnum', 'magnum', 'sami@gmail.com',    'Sami', 'Wolking', 1200),
+  (DEFAULT, 'kalma',  'kalma',  'kalma@gmail.com',   'Nick', 'Gore', 1300),
+  (DEFAULT, 'kita',   'kita',   'kita@gmail.com',    'Sampsa', 'Astala', 1400),
+  (DEFAULT, 'user',   '$2a$10$wSXV/z6SGuGsS1JwuDM7w.P8sZmzhwbaxQJFbySo8x0eHq0DliQgG', 'user@gmail.com', 'User', 'name', 1500);
 
-INSERT INTO users (user_id, username, password, email, firstname, lastname) VALUES
-  (DEFAULT, 'otus',   'otus',   'otus@gmail.com',    'Tonmi', 'Kristian Lillman'),
-  (DEFAULT, 'oxx',    'oxx',    'oxx@gmail.com',     'Samer', 'el Nahhal'),
-  (DEFAULT, 'amen',   'amen',   'amen@gmail.com',    'Jussi', 'Sydänmaa'),
-  (DEFAULT, 'mana',   'mana',   'mana@gmail.com',    'Antto', 'Nikolai Tuomainen');
+INSERT INTO users (user_id, username, password, email, firstname, lastname, balance) VALUES
+  (DEFAULT, 'otus',   'otus',   'otus@gmail.com',    'Tonmi', 'Kristian Lillman', 1600),
+  (DEFAULT, 'oxx',    'oxx',    'oxx@gmail.com',     'Samer', 'el Nahhal', 1700),
+  (DEFAULT, 'amen',   'amen',   'amen@gmail.com',    'Jussi', 'Sydänmaa', 1800),
+  (DEFAULT, 'mana',   'mana',   'mana@gmail.com',    'Antto', 'Nikolai Tuomainen', 1900);
 
-INSERT INTO users (user_id, username, password, email, firstname, lastname) VALUES
-  (DEFAULT, 'admin1', 'admin1', 'tomi@gmail.com',    'Tomi', 'Petteri Putaansuu'),
-  (DEFAULT, 'hella',  'hella',  'hella@gmail.com',   'Henna-Riikka', 'Tuulia Broda'),
-  (DEFAULT, 'awa',    'awa',    'awa@gmail.com',     'Leena', 'Maria Peisa'),
-  (DEFAULT, 'admin',  '$2a$10$LehXdZM4hFlDB6AASmdPZubIaV/XiaES5EBEsEPvn5nG37yh8bljq', 'admin@gmail.com', 'Admin', 'name');
+INSERT INTO users (user_id, username, password, email, firstname, lastname, balance) VALUES
+  (DEFAULT, 'admin1', 'admin1', 'tomi@gmail.com',    'Tomi', 'Petteri Putaansuu', 2000),
+  (DEFAULT, 'hella',  'hella',  'hella@gmail.com',   'Henna-Riikka', 'Tuulia Broda', 2000),
+  (DEFAULT, 'awa',    'awa',    'awa@gmail.com',     'Leena', 'Maria Peisa', 2100),
+  (DEFAULT, 'admin',  '$2a$10$LehXdZM4hFlDB6AASmdPZubIaV/XiaES5EBEsEPvn5nG37yh8bljq', 'admin@gmail.com', 'Admin', 'name', 2200);
 
 -- --------------------------------------------------------------------------------------------
 -- Users_Roles

@@ -10,24 +10,24 @@
 
     <div class="container">
         <form name="login-form" class="form-signin" method="post" th:action="@{/login}">
-            <h2 class="form-signin-heading">Please sign in</h2>
+            <h2 class="form-signin-heading">[[#{login.title}]]</h2>
             <div th:if="${param.error}" class="alert alert-error">
-                Неправильные имя и пароль.
+                [[#{login.form.error}]]
             </div>
             <div th:if="${param.logout}" class="alert alert-success">
-                You have been logged out.
+                [[#{user.logged.out}]]
             </div>
             <p>
-                <label for="user" class="sr-only">User</label>
-                <input type="text" id="user" name="user" class="form-control" placeholder="Username" required="" autofocus="">
+                <label for="user" class="sr-only">[[#{login.username}]]</label>
+                <input type="text" id="user" name="user" class="form-control" th:placeholder="#{login.username}" required="" autofocus="">
             </p>
             <p>
-                <label for="pass" class="sr-only">Password</label>
-                <input type="password" id="pass" name="pass" class="form-control" placeholder="Password" required="">
+                <label for="pass" class="sr-only">[[#{login.password}]]</label>
+                <input type="password" id="pass" name="pass" class="form-control" th:placeholder="#{login.password}" required="">
             </p>
             <input name="_csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div class="form-actions">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">[[#{login.form.signin}]]</button>
             </div>
         </form>
     </div>

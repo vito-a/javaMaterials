@@ -4,10 +4,10 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 <div class="container text-center">
-    <h1 th:text="#{greeting}"></h1>
+    <h1 th:text="#{general.greeting}"></h1>
     <div class="container text-center">
-        <h3>You have signed up successfully!</h3>
-        <a class="btn btn-primary" th:href="@{/login}">Click here to Sign in</a>
+        <h3>[[#{general.welcome}]]</h3>
+        <a class="btn btn-primary" th:href="@{/login}">[[#{login.title}]]</a>
     </div>
 </div>
 </body>

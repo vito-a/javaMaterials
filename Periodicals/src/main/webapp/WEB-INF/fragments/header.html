@@ -1,20 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header">
-    <a class="navbar-brand" href="/">Periodicals</a>
+    <a class="navbar-brand" href="/">[[#{periodicals.title}]]</a>
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"><a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/users}">Users</a></li>
-            <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/periodicals}">Periodicals</a></li>
-            <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/categories}">Categories</a></li>
-            <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/subscriptions}">Subscriptions</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/">[[#{pages.main}]] <span class="sr-only">(current)</span></a></li>
+            <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/users}">[[#{pages.users}]]</a></li>
+            <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/periodicals}">[[#{pages.periodicals}]]</a></li>
+            <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/categories}">[[#{pages.categories}]]</a></li>
+            <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/subscriptions}">[[#{pages.subscriptions}]]</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/about}">[[#{pages.about}]]</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" sec:authorize="isAuthenticated()">
             <li>
                 <div style="margin-right: 10px;">
                     <form class="form-inline" th:action="@{/search/periodicals}">
-                        <input class="form-control mr-sm-2" type="search" id="keyword" name="keyword" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                        <input class="form-control mr-sm-2" type="search" id="keyword" name="keyword" th:placeholder="#{actions.search}" aria-label="[[#{actions.search}]]">
+                        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">[[#{actions.search}]]</button>
                     </form>
                 </div>
             </li>
@@ -23,34 +23,35 @@
             <li>
                 <div class="dropdown">
                     <button class="btn btn-secondary" type="button" onclick="$('#language-dropdown').toggle();">
-                        [[#{language}]]
+                        [[#{lang.language}]]
                     </button>
                     <div class="dropdown-menu" id="language-dropdown">
-                        <button class="dropdown-item" type="button"><a href="/?lang=en" th:text="#{en}"></a></button>
-                        <button class="dropdown-item" type="button"><a href="/?lang=fr" th:text="#{fr}"></a></button>
-                        <button class="dropdown-item" type="button"><a href="/?lang=ru" th:text="#{ru}"></a></button>
+                        <button class="dropdown-item" type="button"><a href="?lang=en" th:text="#{lang.EN}"></a></button>
+                        <button class="dropdown-item" type="button"><a href="?lang=fr" th:text="#{lang.FR}"></a></button>
+                        <button class="dropdown-item" type="button"><a href="?lang=ru" th:text="#{lang.RU}"></a></button>
+                        <button class="dropdown-item" type="button"><a href="?lang=ua" th:text="#{lang.UA}"></a></button>
                     </div>
                 </div>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item" sec:authorize="isAnonymous()"  th:classappend="${module == 'register' ? 'active' : ''}">
-                <a class="nav-link" th:href="@{/register}">Register</a>
+                <a class="nav-link" th:href="@{/register}">[[#{registration.form.title}]]</a>
             </li>
             <li class="nav-item" sec:authorize="isAnonymous()" th:classappend="${module == 'login' ? 'active' : ''}">
                 <a class="nav-link" th:href="@{/login}">
-                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;[[#{login.title}]]
                 </a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()" th:classappend="${module == 'logout' ? 'active' : ''}">
                 <div>
                     <div class="nav-link" style="color: #fff; float: left; margin-left: 10px;">
-                        [[#{greeting_nav}]], [[${#request.userPrincipal.principal.fullName}]]!
+                        [[#{menu.greeting}]], [[${#request.userPrincipal.principal.fullName}]]!
                     </div>
-                    <a class="nav-link" style="float:left;" href="/logout" th:href="@{#}" onclick="$('#logout-form').submit();">Logout</a>
+                    <a class="nav-link" style="float:left;" href="/logout" th:href="@{#}" onclick="$('#logout-form').submit();">[[#{user.logout}]]</a>
                 </div>
                 <form style="display:none;visibility: hidden;" id="logout-form" method="post" action="#" th:action="@{/logout}">
-                    <input class="nav-link" type="submit" value="Sign Out" />
+                    <input class="nav-link" type="submit" value="[[#{user.logout}]]" />
                 </form>
             </li>
         </ul>

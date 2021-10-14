@@ -1,5 +1,6 @@
 package ua.testing.periodicals.service;
 
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,11 @@ public class PeriodicalsService {
 
     // TODO: try - catch
     public void save(Periodical periodical) {
-        periodicalsRepo.save(periodical);
+        try {
+            periodicalsRepo.save(periodical);
+        } catch (JDBCException e) {
+            System.out.println(e.getErrorCode());
+        }
     }
 
     // TODO: IsPresent()
