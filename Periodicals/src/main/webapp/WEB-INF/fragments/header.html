@@ -26,10 +26,22 @@
                         [[#{lang.language}]]
                     </button>
                     <div class="dropdown-menu" id="language-dropdown">
-                        <button class="dropdown-item" type="button"><a href="?lang=en" th:text="#{lang.EN}"></a></button>
-                        <button class="dropdown-item" type="button"><a href="?lang=fr" th:text="#{lang.FR}"></a></button>
-                        <button class="dropdown-item" type="button"><a href="?lang=ru" th:text="#{lang.RU}"></a></button>
-                        <button class="dropdown-item" type="button"><a href="?lang=ua" th:text="#{lang.UA}"></a></button>
+                        <button class="dropdown-item" type="button">
+                            <a th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                               th:href="${urlBuilder.replaceQueryParam('lang', 'en').toUriString()}" th:text="#{lang.EN}">EN</a>
+                        </button>
+                        <button class="dropdown-item" type="button">
+                            <a th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                               th:href="${urlBuilder.replaceQueryParam('lang', 'fr').toUriString()}" th:text="#{lang.FR}">FR</a>
+                        </button>
+                        <button class="dropdown-item" type="button">
+                            <a th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                               th:href="${urlBuilder.replaceQueryParam('lang', 'ru').toUriString()}" th:text="#{lang.RU}">RU</a>
+                        </button>
+                        <button class="dropdown-item" type="button">
+                            <a th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                               th:href="${urlBuilder.replaceQueryParam('lang', 'ua').toUriString()}" th:text="#{lang.UA}">UA</a>
+                        </button>
                     </div>
                 </div>
             </li>
