@@ -27,7 +27,7 @@
                     <th class="p-4">
                         <a class="text-white" th:href="@{'/periodicals/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">[[#{periodicals.price}]]</a>
                     </th>
-                    <th class="p-3" sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')"><span class="nav-link">[[#{actions.actions}]]</span></th>
+                    <th class="p-3" sec:authorize="isAuthenticated()"><span class="nav-link">[[#{actions.actions}]]</span></th>
                 </tr>
             </thead>
             <tbody>
