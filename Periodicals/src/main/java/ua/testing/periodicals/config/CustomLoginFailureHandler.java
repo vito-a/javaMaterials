@@ -27,7 +27,6 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
     @Autowired
     private UserRepository userRepo;
 
-    @SneakyThrows
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {

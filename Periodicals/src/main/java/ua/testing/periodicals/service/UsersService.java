@@ -30,8 +30,9 @@ public class UsersService {
     private static final long LOCK_TIME_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
     public List<User> listAll(String keyword) {
-        if (keyword != null) {
-            return usersRepo.search(keyword);
+        Optional<String> optionalKeyword = Optional.ofNullable(keyword);
+        if (optionalKeyword.isPresent()) {
+            return usersRepo.search(optionalKeyword.get());
         }
         return usersRepo.findAll();
     }

@@ -113,14 +113,13 @@ public class UserController {
 
                 userService.updateBalance(user.get(), periodical.get().getPrice());
 
-                long millis = System.currentTimeMillis();
-                java.sql.Date startDate = new java.sql.Date(millis);
+                LocalDate startDate = LocalDate.now();
                 logger.info("subscription startDate = " + startDate);
 
                 LocalDate endDate = LocalDate.now().plusYears(1);
                 logger.info("subscription endDate = " + endDate);
 
-                periodicalService.subscribe(periodicalId, userId, startDate, Date.valueOf(endDate));
+                periodicalService.subscribe(periodicalId, userId, startDate, endDate);
             }
         }
 

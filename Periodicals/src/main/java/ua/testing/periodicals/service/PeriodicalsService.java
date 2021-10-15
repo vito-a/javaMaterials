@@ -19,6 +19,7 @@ import ua.testing.periodicals.repository.PeriodicalsRepository;
 import javax.persistence.Column;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,18 +56,17 @@ public class PeriodicalsService {
         return periodicalsRepo.findAll(pageable);
     }
 
-    // TODO: try - catch
     public void save(Periodical periodical) {
         try {
             periodicalsRepo.save(periodical);
-        } catch (JDBCException e) {
-            System.out.println(e.getErrorCode());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
             logger.error("Cannot save periodical " + periodical.getPeriodicalId());
             logger.error(e.getMessage());
         }
     }
 
-    public void subscribe(Long periodicalId, Long userId, Date startDate, Date endDate) throws DBException {
+    public void subscribe(Long periodicalId, Long userId, LocalDate startDate, LocalDate endDate) throws DBException {
         try {
             Subscription subscription = new Subscription(userId, periodicalId, startDate, endDate);
             subscriptionsService.save(subscription);
@@ -77,7 +77,10 @@ public class PeriodicalsService {
         }
     }
 
-    // TODO: check warnings
+    public Optional<Periodical> get() {
+        return Optional.of(new Periodical());
+    }
+
     public Optional<Periodical> get(Long id) {
         return periodicalsRepo.findById(id);
     }

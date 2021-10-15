@@ -3,6 +3,7 @@ package ua.testing.periodicals.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 import static ua.testing.periodicals.model.constants.Constants.USER_ID;
@@ -28,11 +29,11 @@ public class Subscription {
     @Column(name = PERIODICAL_ID, nullable = false)
     private Long periodicalId;
     @Column(name = "startdate", nullable = false)
-    private Date startdate;
+    private LocalDate startdate;
     @Column(name = "enddate", nullable = false)
-    private Date enddate;
+    private LocalDate enddate;
 
-    public Subscription(Long userId, Long periodicalId, Date startDate, Date endDate) {
+    public Subscription(Long userId, Long periodicalId, LocalDate startDate, LocalDate endDate) {
         this.userId = userId;
         this.periodicalId = periodicalId;
         this.startdate = startDate;

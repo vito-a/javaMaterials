@@ -14,10 +14,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,62 +31,37 @@ public class SubscriptionsService {
 
     public List<Subscription> listAll(String date_keyword) throws ParseException {
         Optional<String> optionalDateKeyword = Optional.ofNullable(date_keyword);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         List<Subscription> subscriptionList = subscriptionsRepo.findAll();
-        List<Subscription> updatedList = new java.util.ArrayList<>(List.of());
 
         if (optionalDateKeyword.isPresent()) {
             return search(optionalDateKeyword.get());
         }
 
-        for (Subscription subscription : subscriptionList) {
-            subscription.setEnddate(format.parse(subscription.getEnddate().toString()));
-            subscription.setStartdate(format.parse(subscription.getStartdate().toString()));
-            updatedList.add(subscription);
-        }
-        
-        return updatedList;
+        return subscriptionList;
     }
 
-    // TODO: deprecated? switch to LocalDate
-    // TODO: Learn LocalDateTime
-    // TODO: make try with resource
     public List<Subscription> search(String date_keyword) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date myDate = null;
         List<Subscription> subscriptionList = null;
-        List<Subscription> updatedList = new java.util.ArrayList<>(List.of());
 
-        // TODO: make try with resource
-        try {
-            myDate = format.parse(date_keyword);
-            String query = "SELECT s FROM Subscription s WHERE s.startdate >= :startdate";
-            java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("subscriptions");
-            EntityManager entityManager = factory.createEntityManager();
-            subscriptionList = entityManager.createQuery(query, Subscription.class)
-                    .setParameter("startdate", sqlDate)
-                    .getResultList();
-            entityManager.close();
-            factory.close();
-            for (Subscription subscription : subscriptionList) {
-                subscription.setEnddate(format.parse(subscription.getEnddate().toString()));
-                subscription.setStartdate(format.parse(subscription.getStartdate().toString()));
-                updatedList.add(subscription);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        LocalDate myDate = LocalDate.parse(date_keyword);
+        String query = "SELECT s FROM Subscription s WHERE s.startdate >= :startdate";
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("subscriptions");
+        EntityManager entityManager = factory.createEntityManager();
+        subscriptionList = entityManager.createQuery(query, Subscription.class)
+                .setParameter("startdate", myDate)
+                .getResultList();
+        entityManager.close();
+        factory.close();
 
-        return updatedList;
+        return subscriptionList;
     }
 
-    // TODO: try - catch
     public void save(Subscription subscription) {
         try {
             subscriptionsRepo.save(subscription);
-        } catch (JDBCException e) {
-            System.out.println(e.getErrorCode());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
             logger.error("Cannot save subscription " + subscription.getSubId());
             logger.error(e.getMessage());
         }
