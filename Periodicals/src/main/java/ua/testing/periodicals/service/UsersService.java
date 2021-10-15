@@ -27,7 +27,7 @@ public class UsersService {
 
     public static final int MAX_FAILED_ATTEMPTS = 3;
 
-    private static final long LOCK_TIME_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+    private static final long LOCK_TIME_DURATION = 24 * 60 * 60 * 1000;
 
     public List<User> listAll(String keyword) {
         Optional<String> optionalKeyword = Optional.ofNullable(keyword);
@@ -42,7 +42,7 @@ public class UsersService {
     }
 
     public User get(Long userId) {
-        return usersRepo.findById(userId).get();
+        return usersRepo.findById(userId).orElseGet(User::new);
     }
 
     public void delete(Long userId) {

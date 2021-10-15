@@ -51,7 +51,7 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(PeriodicalController.class);
 
     private String getCurrentUserName() {
-        String userName = null;
+        String userName;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {
@@ -76,8 +76,9 @@ public class UserController {
         user.setPassword(encodedPassword);
         user.setEnabled(STATUS_ENABLED);
         Role userRole = roleRepo.findByName(ROLE_USER);
-        user.setRoles(new HashSet<Role>(List.of(userRole)));
-        if ((user.getFullName() == null) || user.getFullName().isEmpty()) {
+        user.setRoles(new HashSet<>(List.of(userRole)));
+        Optional<String> fullName = Optional.ofNullable(user.getFullName());
+        if (!fullName.isPresent()) {
             user.setFullName(user.getFirstName() + " " + user.getLastName());
         }
 

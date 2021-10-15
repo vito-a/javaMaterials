@@ -50,7 +50,7 @@ public class AppController {
     }
 
     private String getCurrentUserName() {
-        String userName = null;
+        String userName;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {

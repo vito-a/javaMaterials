@@ -10,7 +10,6 @@ import ua.testing.periodicals.repository.SubscriptionsRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -36,7 +35,7 @@ public class SubscriptionsService {
 
     public List<Subscription> search(String date_keyword) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        List<Subscription> subscriptionList = null;
+        List<Subscription> subscriptionList;
 
         LocalDate myDate = LocalDate.parse(date_keyword);
         String query = "SELECT s FROM Subscription s WHERE s.startdate >= :startdate";

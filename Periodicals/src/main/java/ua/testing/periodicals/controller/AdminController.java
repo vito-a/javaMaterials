@@ -15,7 +15,6 @@ import ua.testing.periodicals.service.PeriodicalsService;
 import ua.testing.periodicals.service.SubscriptionsService;
 import ua.testing.periodicals.service.UsersService;
 
-import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +49,7 @@ public class AdminController {
     }
 
     @GetMapping("/subscriptions")
-    public String listSubscriptions(Model model) throws ParseException {
+    public String listSubscriptions(Model model) {
         List<Subscription> listSubscriptions = subscriptionsService.listAll(null);
         model.addAttribute("listSubscriptions", listSubscriptions);
 
