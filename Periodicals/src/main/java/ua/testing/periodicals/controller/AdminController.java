@@ -15,6 +15,7 @@ import ua.testing.periodicals.service.PeriodicalsService;
 import ua.testing.periodicals.service.UsersService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -70,8 +71,10 @@ public class AdminController {
     public ModelAndView showEditUserForm(@PathVariable(name = "id") Long userId) {
         ModelAndView mav = new ModelAndView("user/edit_user.html");
 
-        User user = userRepo.getUserByUserId(userId);
-        mav.addObject("user", user);
+        Optional<User> user = userRepo.getUserByUserId(userId);
+        if (user.isPresent()) {
+            mav.addObject("user", user);
+        }
 
         return mav;
     }

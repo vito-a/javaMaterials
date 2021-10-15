@@ -1,6 +1,7 @@
 package ua.testing.periodicals.config;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,19 +30,19 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
                                         AuthenticationException exception) throws IOException, ServletException {
         String username = request.getParameter("user");
         System.out.println("error - " + username);
-        User user = userRepo.getUserByUsername(username);
+        Optional<User> user = userRepo.getUserByUsername(username);
 
-        if (user != null) {
-            if (user.isEnabled() && user.isAccountNonLocked()) {
-                if (user.getFailedAttempt() < UsersService.MAX_FAILED_ATTEMPTS - 1) {
-                    userService.increaseFailedAttempts(user);
+        if (user.isPresent()) {
+            if (user.get().isEnabled() && user.get().isAccountNonLocked()) {
+                if (user.get().getFailedAttempt() < UsersService.MAX_FAILED_ATTEMPTS - 1) {
+                    userService.increaseFailedAttempts(user.get());
                 } else {
-                    userService.lock(user);
+                    userService.lock(user.get());
                     exception = new LockedException("Your account has been locked due to 3 failed attempts."
                             + " It will be unlocked after 24 hours.");
                 }
-            } else if (!user.isAccountNonLocked()) {
-                if ((user.getLockTime() != null) && userService.unlockWhenTimeExpired(user)) {
+            } else if (!user.get().isAccountNonLocked()) {
+                if ((user.get().getLockTime() != null) && userService.unlockWhenTimeExpired(user.get())) {
                     exception = new LockedException("Your account has been unlocked. Please try to login again.");
                 }
             }

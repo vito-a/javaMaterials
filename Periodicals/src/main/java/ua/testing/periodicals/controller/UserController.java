@@ -28,10 +28,7 @@ import ua.testing.periodicals.service.UsersService;
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class UserController {
@@ -82,7 +79,7 @@ public class UserController {
         user.setPassword(encodedPassword);
         user.setEnabled(STATUS_ENABLED);
         Role userRole = roleRepo.findByName(ROLE_USER);
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        user.setRoles(new HashSet<Role>(List.of(userRole)));
         if ((user.getFullName() == null) || user.getFullName().isEmpty()) {
             user.setFullName(user.getFirstName() + " " + user.getLastName());
         }
@@ -97,33 +94,35 @@ public class UserController {
                                       @PathVariable(name = "periodical_id") Long periodicalId) throws DBException {
         logger.info("subscribePeriodical");
 
-        User user = (User) userRepo.getUserByUserId(userId);
-        Periodical periodical = (Periodical) periodicalsRepo.getPeriodicalByPeriodicalId(periodicalId);
+        Optional<User> user = userRepo.getUserByUserId(userId);
+        Optional<Periodical> periodical = periodicalsRepo.getPeriodicalByPeriodicalId(periodicalId);
 
         logger.info("periodical ID ==> " + periodicalId);
 
-        if (user == null) {
+        if (!user.isPresent()) {
             throw new DBException("To subscribe, please sign in!");
+        } else {
+            if (userService.checkSubscription(userId, periodicalId)) {
+                throw new DBException("You are already subscribed");
+            }
+
+            if (periodical.isPresent()) {
+                if (user.get().getBalance() < periodical.get().getPrice()) {
+                    throw new DBException("You don't have enough account balance");
+                }
+
+                userService.updateBalance(user.get(), periodical.get().getPrice());
+
+                long millis = System.currentTimeMillis();
+                java.sql.Date startDate = new java.sql.Date(millis);
+                logger.info("subscription startDate = " + startDate);
+
+                LocalDate endDate = LocalDate.now().plusYears(1);
+                logger.info("subscription endDate = " + endDate);
+
+                periodicalService.subscribe(periodicalId, userId, startDate, Date.valueOf(endDate));
+            }
         }
-
-        if (userService.checkSubscription(userId, periodicalId)) {
-            throw new DBException("You are already subscribed");
-        }
-
-        if (user.getBalance() < periodical.getPrice()) {
-            throw new DBException("You don't have enough account balance");
-        }
-
-        userService.updateBalance(user, periodical.getPrice());
-
-        long millis = System.currentTimeMillis();
-        java.sql.Date startDate = new java.sql.Date(millis);
-        logger.info("subscription startDate = " + startDate);
-
-        LocalDate endDate = LocalDate.now().plusYears(1);
-        logger.info("subscription endDate = " + endDate);
-
-        periodicalService.subscribe(periodicalId, userId, startDate, Date.valueOf(endDate));
 
         return "redirect:/periodicals";
     }
@@ -131,9 +130,8 @@ public class UserController {
     @GetMapping("/user/replenish_account")
     public String replenishAccount(Model model) {
         String username = getCurrentUserName();
-        User user = userRepo.getUserByUsername(username);
-        model.addAttribute("user", user);
-
+        Optional<User> user = userRepo.getUserByUsername(username);
+        user.ifPresent(value -> model.addAttribute("user", value));
         return "user/replenish_account.html";
     }
 
@@ -141,7 +139,6 @@ public class UserController {
     @PostMapping("/user/process_replenish")
     public String processReplenish(User user) {
         userRepo.updateBalance(user.getBalance(), user.getEmail());
-
         return "user/replenish_success.html";
     }
 }

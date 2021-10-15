@@ -12,9 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, CrudRepository<User, Long> {
-    User getUserByUsername(String username);
-    User getUserByEmail(String email);
-    User getUserByUserId(Long userId);
+    Optional<User> getUserByUsername(String username);
+    Optional<User> getUserByEmail(String email);
+    Optional<User> getUserByUserId(Long userId);
     @Query("SELECT u FROM User u WHERE u.username LIKE %?1%"
             + " OR u.email LIKE %?1%"
             + " OR u.fullName LIKE %?1%"

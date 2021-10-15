@@ -1,5 +1,6 @@
 package ua.testing.periodicals.controller;
 
+import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +22,7 @@ import ua.testing.periodicals.service.CategoriesService;
 import ua.testing.periodicals.service.PeriodicalsService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AppController {
@@ -68,9 +70,8 @@ public class AppController {
 
     @GetMapping("/periodicals")
     public String listPeriodicalsAll(Model model, @AuthenticationPrincipal UserDetails currentUser) {
-        User user = (User) userRepo.getUserByUsername(currentUser.getUsername());
-        model.addAttribute("currentUser", user);
-
+        Optional<User> user = userRepo.getUserByUsername(currentUser.getUsername());
+        user.ifPresent(value -> model.addAttribute("currentUser", value));
         return listPeriodicalsSortingPager(model, 1, "periodicalId", "asc", currentUser);
     }
 
@@ -80,13 +81,11 @@ public class AppController {
                            @Param("sortField") String sortField,
                            @Param("sortDir") String sortDir, @AuthenticationPrincipal UserDetails currentUser) {
 
-        User user = (User) userRepo.getUserByUsername(currentUser.getUsername());
-        model.addAttribute("currentUser", user);
-
+        Optional<User> user = userRepo.getUserByUsername(currentUser.getUsername());
         Page<Periodical> page = periodicalsService.listAll(pageNum, sortField, sortDir);
         List<Periodical> listPeriodicals = page.getContent();
 
-        // TODO: move attributes to Builder
+        user.ifPresent(value -> model.addAttribute("currentUser", value));
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
@@ -102,7 +101,7 @@ public class AppController {
 
     @GetMapping("/categories")
     public String listCategories(Model model) {
-        List<Category> listCategories = categoriesService.listAll(null);
+        List<Category> listCategories = categoriesService.listAll(Optional.empty());
         model.addAttribute("listCategories", listCategories);
 
         return "categories.html";

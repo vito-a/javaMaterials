@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import ua.testing.periodicals.controller.PeriodicalController;
 import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Subscription;
 import ua.testing.periodicals.model.entity.User;
@@ -13,8 +12,8 @@ import ua.testing.periodicals.repository.SubscriptionsRepository;
 import ua.testing.periodicals.repository.UserRepository;
 
 import java.util.Date;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsersService {
@@ -101,7 +100,7 @@ public class UsersService {
         return false;
     }
 
-    public User getUserByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         return usersRepo.getUserByEmail(email);
     }
 }

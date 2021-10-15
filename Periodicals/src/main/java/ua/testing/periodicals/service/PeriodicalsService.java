@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.model.entity.Subscription;
+import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 
 import javax.persistence.Column;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import static ua.testing.periodicals.model.constants.Constants.PERIODICAL_ID;
 import static ua.testing.periodicals.model.constants.Constants.USER_ID;
@@ -74,10 +76,9 @@ public class PeriodicalsService {
         }
     }
 
-    // TODO: IsPresent()
     // TODO: check warnings
-    public Periodical get(Long id) {
-        return periodicalsRepo.findById(id).get();
+    public Optional<Periodical> get(Long id) {
+        return periodicalsRepo.findById(id);
     }
 
     public void delete(Long id) {

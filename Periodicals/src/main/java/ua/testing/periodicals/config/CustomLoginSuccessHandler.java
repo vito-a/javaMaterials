@@ -1,6 +1,7 @@
 package ua.testing.periodicals.config;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +29,15 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         CustomUserDetails userDetails =  (CustomUserDetails) authentication.getPrincipal();
-        User user = userRepo.getUserByUsername(userDetails.getUsername());
-        System.out.println(user);
-        if (user.getFailedAttempt() > 0) {
-            userService.resetFailedAttempts(user.getUsername());
+        Optional<User> user = userRepo.getUserByUsername(userDetails.getUsername());
+
+        if (user.isPresent()) {
+            logger.info("onAuthenticationSuccess");
+            logger.info(user.get().getUsername());
+
+            if (user.get().getFailedAttempt() > 0) {
+                userService.resetFailedAttempts(user.get().getUsername());
+            }
         }
 
         super.onAuthenticationSuccess(request, response, authentication);

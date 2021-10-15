@@ -18,6 +18,7 @@ import ua.testing.periodicals.service.UsersService;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -54,10 +55,8 @@ public class PeriodicalController {
     @RequestMapping("/periodical/edit/{id}")
     public ModelAndView showEditPeriodicalForm(@PathVariable(name = "id") Long periodicalId) {
         ModelAndView mav = new ModelAndView("periodical/edit_periodical.html");
-
-        Periodical periodical = periodicalService.get(periodicalId);
-        mav.addObject("periodical", periodical);
-
+        Optional<Periodical> periodical = periodicalService.get(periodicalId);
+        periodical.ifPresent(value -> mav.addObject("periodical", value));
         return mav;
     }
 

@@ -8,6 +8,8 @@ import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.model.entity.CustomUserDetails;
 import ua.testing.periodicals.repository.UserRepository;
 
+import java.util.Optional;
+
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
@@ -15,11 +17,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.getUserByUsername(username);
-        if (user == null) {
+        Optional<User> user = userRepo.getUserByUsername(username);
+        if (!user.isPresent()) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new CustomUserDetails(user);
+        return new CustomUserDetails(user.get());
     }
 
 }

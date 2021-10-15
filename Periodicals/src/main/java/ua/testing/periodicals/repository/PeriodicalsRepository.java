@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface PeriodicalsRepository extends JpaRepository<Periodical, Long> {
-    Periodical findByName(String name);
-    Periodical getPeriodicalByPeriodicalId(Long periodicalId);
+    Optional<Periodical> findByName(String name);
+    Optional<Periodical> getPeriodicalByPeriodicalId(Long periodicalId);
     @Query("SELECT p FROM Periodical p WHERE p.name LIKE %?1%"
             + " OR p.description LIKE %?1%"
             + " OR p.categoryId LIKE %?1%"
