@@ -16,4 +16,5 @@ public interface SubscriptionsRepository extends JpaRepository<Subscription, Lon
     @Query("SELECT s FROM Subscription s WHERE u.username = ?1")
     List<Subscription> findMySubscriptions(String username);
      */
+    Subscription getByUserIdAndSubId(long userId, long subId);
 }

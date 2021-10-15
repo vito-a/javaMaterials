@@ -31,4 +31,11 @@ public class Subscription {
     private Date startdate;
     @Column(name = "enddate", nullable = false)
     private Date enddate;
+
+    public Subscription(Long userId, Long periodicalId, Date startDate, Date endDate) {
+        this.userId = userId;
+        this.periodicalId = periodicalId;
+        this.startdate = startDate;
+        this.enddate = endDate;
+    }
 }

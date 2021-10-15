@@ -1,9 +1,9 @@
 package ua.testing.periodicals.controller;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import ua.testing.periodicals.model.entity.Category;
 import ua.testing.periodicals.model.entity.Periodical;
-import ua.testing.periodicals.model.entity.Subscription;
+import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.CategoriesRepository;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 import ua.testing.periodicals.repository.SubscriptionsRepository;
@@ -19,7 +19,6 @@ import ua.testing.periodicals.repository.UserRepository;
 import ua.testing.periodicals.service.CategoriesService;
 import ua.testing.periodicals.service.PeriodicalsService;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -67,7 +66,10 @@ public class AppController {
     }
 
     @GetMapping("/periodicals")
-    public String listPeriodicalsAll(Model model) {
+    public String listPeriodicalsAll(Model model, @AuthenticationPrincipal UserDetails currentUser) {
+        User user = (User) userRepo.getUserByUsername(currentUser.getUsername());
+        model.addAttribute("currentUser", user);
+
         return listPeriodicalsSortingPager(model, 1, "periodicalId", "asc");
     }
 

@@ -1,8 +1,13 @@
 package ua.testing.periodicals.service;
 
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.model.entity.Subscription;
+import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.SubscriptionsRepository;
 
 import javax.persistence.EntityManager;
@@ -17,6 +22,8 @@ import java.util.List;
 public class SubscriptionsService {
     @Autowired
     private SubscriptionsRepository subscriptionsRepo;
+
+    private static final Logger logger = LoggerFactory.getLogger(SubscriptionsService.class);
 
     public List<Subscription> listAll(String date_keyword) {
         if (date_keyword != null) {
@@ -50,5 +57,16 @@ public class SubscriptionsService {
         }
 
         return subscriptionList;
+    }
+
+    // TODO: try - catch
+    public void save(Subscription subscription) {
+        try {
+            subscriptionsRepo.save(subscription);
+        } catch (JDBCException e) {
+            System.out.println(e.getErrorCode());
+            logger.error("Cannot save subscription " + subscription.getSubId());
+            logger.error(e.getMessage());
+        }
     }
 }

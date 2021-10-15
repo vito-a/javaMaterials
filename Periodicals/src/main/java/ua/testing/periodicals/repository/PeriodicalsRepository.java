@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.testing.periodicals.model.entity.Periodical;
+import ua.testing.periodicals.model.entity.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface PeriodicalsRepository extends JpaRepository<Periodical, Long> {
     Periodical findByName(String name);
+    Periodical getPeriodicalByPeriodicalId(Long periodicalId);
     @Query("SELECT p FROM Periodical p WHERE p.name LIKE %?1%"
             + " OR p.description LIKE %?1%"
             + " OR p.categoryId LIKE %?1%"

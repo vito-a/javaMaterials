@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, CrudRepository<User, Long> {
     User getUserByUsername(String username);
+    User getUserByUserId(Long userId);
     @Query("SELECT u FROM User u WHERE u.username LIKE %?1%"
             + " OR u.email LIKE %?1%"
             + " OR u.fullName LIKE %?1%"
