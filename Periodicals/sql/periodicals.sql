@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`users` (
     `fullname`           VARCHAR(255) NULL DEFAULT '',
     `email`              VARCHAR(255) NOT NULL,
     `enabled`            TINYINT NULL DEFAULT 1,
-    `account_non_locked` TINYINT NULL DEFAULT 0,
+    `account_non_locked` TINYINT NULL DEFAULT 1,
     `failed_attempt`     TINYINT NULL DEFAULT 0,
     `lock_time`          DATETIME NULL,
     `balance`            DOUBLE DEFAULT NULL,

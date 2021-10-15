@@ -39,10 +39,11 @@ public class PeriodicalsService {
     private static final Logger logger = LoggerFactory.getLogger(PeriodicalsService.class);
 
     public List<Periodical> listAll(String keyword) {
-        if (keyword != null) {  // TODO: Optional
-            return periodicalsRepo.search(keyword);
+        Optional<String> optionalKeyword = Optional.ofNullable(keyword);
+        if (optionalKeyword.isPresent()) {
+            return periodicalsRepo.search(optionalKeyword.get());
         }
-        return periodicalsRepo.findAll();  // TODO: Optional
+        return periodicalsRepo.findAll();
     }
 
     public Page<Periodical> listAll(int pageNum, String sortField, String sortDir) {
