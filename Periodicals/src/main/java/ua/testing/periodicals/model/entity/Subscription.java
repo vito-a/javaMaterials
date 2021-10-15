@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 import static ua.testing.periodicals.model.constants.Constants.USER_ID;
 import static ua.testing.periodicals.model.constants.Constants.PERIODICAL_ID;

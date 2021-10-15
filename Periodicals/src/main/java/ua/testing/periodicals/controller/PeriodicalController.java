@@ -8,16 +8,12 @@ import org.springframework.ui.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
-import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Periodical;
-import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 import ua.testing.periodicals.repository.UserRepository;
 import ua.testing.periodicals.service.PeriodicalsService;
 import ua.testing.periodicals.service.UsersService;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller

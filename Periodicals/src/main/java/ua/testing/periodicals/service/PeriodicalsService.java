@@ -1,6 +1,5 @@
 package ua.testing.periodicals.service;
 
-import org.hibernate.JDBCException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +12,11 @@ import org.springframework.stereotype.Service;
 import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.model.entity.Subscription;
-import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 
-import javax.persistence.Column;
-import java.sql.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
-import static ua.testing.periodicals.model.constants.Constants.PERIODICAL_ID;
-import static ua.testing.periodicals.model.constants.Constants.USER_ID;
 
 @Service
 public class PeriodicalsService {

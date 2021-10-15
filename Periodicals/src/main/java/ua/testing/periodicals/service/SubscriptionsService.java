@@ -1,24 +1,18 @@
 package ua.testing.periodicals.service;
 
-import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.model.entity.Subscription;
-import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.SubscriptionsRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +23,7 @@ public class SubscriptionsService {
 
     private static final Logger logger = LoggerFactory.getLogger(SubscriptionsService.class);
 
-    public List<Subscription> listAll(String date_keyword) throws ParseException {
+    public List<Subscription> listAll(String date_keyword) {
         Optional<String> optionalDateKeyword = Optional.ofNullable(date_keyword);
         List<Subscription> subscriptionList = subscriptionsRepo.findAll();
 

@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ua.testing.periodicals.model.entity.Category;
-import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.repository.CategoriesRepository;
-import ua.testing.periodicals.repository.PeriodicalsRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +14,10 @@ public class CategoriesService {
     @Autowired
     private CategoriesRepository categoriesRepo;
 
-    public List<Category> listAll(Optional<String> keyword) {
-        if (keyword.isPresent()) {
-            return categoriesRepo.search(keyword.get());
+    public List<Category> listAll(String keyword) {
+        Optional<String> optionalKeyword = Optional.ofNullable(keyword);
+        if (optionalKeyword.isPresent()) {
+            return categoriesRepo.search(optionalKeyword.get());
         }
         return categoriesRepo.findAll(Sort.by(Sort.Direction.ASC, "catId"));
     }

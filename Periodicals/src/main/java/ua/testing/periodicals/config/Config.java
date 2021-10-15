@@ -31,12 +31,10 @@ public class Config implements WebMvcConfigurer {
         lci.setParamName("lang");
         return lci;
     }
-    //SessionLocaleResolver
 
     @Bean
     public LocaleResolver localeResolver() {
-        SessionLocaleResolver resolver = new SessionLocaleResolver();
-        return resolver;
+        return new SessionLocaleResolver();
     }
 
     @Autowired

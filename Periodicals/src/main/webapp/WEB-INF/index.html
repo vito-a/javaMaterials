@@ -4,7 +4,9 @@
 <body>
     <div th:replace="fragments/header :: header"></div>
     <div class="container text-center">
+        <div class="clearfix clear"><br /></div>
         <h1 th:text="#{general.greeting}"></h1>
+        <div class="clearfix clear"><br /></div>
         <div class="home-register-login" sec:authorize="isAnonymous()">
             <a class="btn btn-primary" th:href="@{/register}">[[#{registration.form.title}]]</a>
             &nbsp;&nbsp;<a class="btn btn-primary" th:href="@{/login}">[[#{login.title}]]</a>

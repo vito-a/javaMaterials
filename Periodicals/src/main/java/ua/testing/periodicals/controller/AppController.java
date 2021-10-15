@@ -1,6 +1,5 @@
 package ua.testing.periodicals.controller;
 
-import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -101,7 +100,7 @@ public class AppController {
 
     @GetMapping("/categories")
     public String listCategories(Model model) {
-        List<Category> listCategories = categoriesService.listAll(Optional.empty());
+        List<Category> listCategories = categoriesService.listAll("");
         model.addAttribute("listCategories", listCategories);
 
         return "categories.html";

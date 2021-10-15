@@ -1,13 +1,11 @@
 package ua.testing.periodicals.config;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import ua.testing.periodicals.model.entity.Category;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface CategoriesRepository extends JpaRepository<Category, Long> {
