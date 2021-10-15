@@ -7,7 +7,7 @@
         <div>
             <h1>[[#{pages.about}]]</h1>
         </div>
-        <p style="float:left; text-align: left;" th:utext="#{general.about}"></p>
+        <p class="float-left" th:utext="#{general.about}"></p>
         <div sec:authorize="isAuthenticated()">
             <i><span sec:authentication="principal.authorities">[[#{role.roles}]]</span></i>
         </div>

@@ -3,11 +3,7 @@
 <head th:replace="fragments/head :: head"></head>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <form name="f" th:action="@{/login}" method="post">
-        <fieldset>
-        </fieldset>
-    </form>
-
+    <div class="clearfix clear"><br /></div>
     <div class="container">
         <form name="login-form" class="form-signin" method="post" th:action="@{/login}">
             <h2 class="form-signin-heading">[[#{login.title}]]</h2>

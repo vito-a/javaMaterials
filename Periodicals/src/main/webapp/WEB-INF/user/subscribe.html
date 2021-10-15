@@ -11,8 +11,7 @@
         <li>3 - Donald</li>
     </ul>
 
-    <div th:if="${errorMessage!=null}"
-         style="color:red;font-style:italic" th:utext="${errorMessage}">..</div>
+    <div th:if="${errorMessage!=null}" class="text-danger font-italic" th:utext="${errorMessage}">..</div>
 
     <form th:action="@{/sendMoney}" th:object="${sendMoneyForm}" method="POST">
         <table>
