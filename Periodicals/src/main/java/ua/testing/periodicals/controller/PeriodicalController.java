@@ -61,42 +61,6 @@ public class PeriodicalController {
         return mav;
     }
 
-    @RequestMapping("/periodical/subscribe/{user_id}/{periodical_id}")
-    public String subscribePeriodical(@PathVariable(name = "user_id") Long userId,
-                                      @PathVariable(name = "periodical_id") Long periodicalId) throws DBException {
-        logger.info("subscribePeriodical");
-
-        User user = (User) userRepo.getUserByUserId(userId);
-        Periodical periodical = (Periodical) periodicalsRepo.getPeriodicalByPeriodicalId(periodicalId);
-
-        logger.info("periodical ID ==> " + periodicalId);
-
-        if (user == null) {
-            throw new DBException("To subscribe, please sign in!");
-        }
-
-        if (userService.checkSubscription(userId, periodicalId)) {
-            throw new DBException("You are already subscribed");
-        }
-
-        if (user.getBalance() < periodical.getPrice()) {
-            throw new DBException("You don't have enough account balance");
-        }
-
-        userService.updateBalance(user, periodical.getPrice());
-
-        long millis = System.currentTimeMillis();
-        java.sql.Date startDate = new java.sql.Date(millis);
-        logger.info("subscription startDate = " + startDate);
-
-        LocalDate endDate = LocalDate.now().plusYears(1);
-        logger.info("subscription endDate = " + endDate);
-
-        periodicalService.subscribe(periodicalId, userId, startDate, Date.valueOf(endDate));
-
-        return "redirect:/periodicals";
-    }
-
     @RequestMapping("/periodical/delete/{id}")
     public String deletePeriodical(@PathVariable(name = "id") Long periodicalId) {
         periodicalService.delete(periodicalId);

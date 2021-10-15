@@ -1,5 +1,7 @@
 package ua.testing.periodicals.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,8 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+import ua.testing.periodicals.model.dao.DBException;
+import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.model.entity.Role;
 import ua.testing.periodicals.model.entity.Subscription;
+import ua.testing.periodicals.repository.PeriodicalsRepository;
 import ua.testing.periodicals.repository.RoleRepository;
 import ua.testing.periodicals.repository.SubscriptionsRepository;
 import ua.testing.periodicals.repository.UserRepository;
@@ -17,9 +22,12 @@ import ua.testing.periodicals.repository.UserRepository;
 import static ua.testing.periodicals.model.constants.Constants.ROLE_USER;
 import static ua.testing.periodicals.model.constants.Constants.STATUS_ENABLED;
 import ua.testing.periodicals.model.entity.User;
+import ua.testing.periodicals.service.PeriodicalsService;
 import ua.testing.periodicals.service.UsersService;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -35,10 +43,18 @@ public class UserController {
     private RoleRepository roleRepo;
 
     @Autowired
+    private PeriodicalsRepository periodicalsRepo;
+
+    @Autowired
     private SubscriptionsRepository subscriptionRepo;
 
     @Autowired
-    private UsersService usersService;
+    private UsersService userService;
+
+    @Autowired
+    private PeriodicalsService periodicalService;
+
+    private static final Logger logger = LoggerFactory.getLogger(PeriodicalController.class);
 
     private String getCurrentUserName() {
         String userName = null;
@@ -74,6 +90,42 @@ public class UserController {
         userRepo.save(user);
 
         return "register_success";
+    }
+
+    @RequestMapping("/periodical/subscribe/{user_id}/{periodical_id}")
+    public String subscribePeriodical(@PathVariable(name = "user_id") Long userId,
+                                      @PathVariable(name = "periodical_id") Long periodicalId) throws DBException {
+        logger.info("subscribePeriodical");
+
+        User user = (User) userRepo.getUserByUserId(userId);
+        Periodical periodical = (Periodical) periodicalsRepo.getPeriodicalByPeriodicalId(periodicalId);
+
+        logger.info("periodical ID ==> " + periodicalId);
+
+        if (user == null) {
+            throw new DBException("To subscribe, please sign in!");
+        }
+
+        if (userService.checkSubscription(userId, periodicalId)) {
+            throw new DBException("You are already subscribed");
+        }
+
+        if (user.getBalance() < periodical.getPrice()) {
+            throw new DBException("You don't have enough account balance");
+        }
+
+        userService.updateBalance(user, periodical.getPrice());
+
+        long millis = System.currentTimeMillis();
+        java.sql.Date startDate = new java.sql.Date(millis);
+        logger.info("subscription startDate = " + startDate);
+
+        LocalDate endDate = LocalDate.now().plusYears(1);
+        logger.info("subscription endDate = " + endDate);
+
+        periodicalService.subscribe(periodicalId, userId, startDate, Date.valueOf(endDate));
+
+        return "redirect:/periodicals";
     }
 
     @GetMapping("/user/replenish_account")
