@@ -30,14 +30,18 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
+        // TODO: several requests to database
         User user = userRepo.getUserByUsername(request.getParameter("user")).orElseGet(User::new);
-        boolean isUnlocked = user.isEnabled() && user.isAccountNonLocked();
-        boolean notMaxFailedAttempts = user.getFailedAttempt() < MAX_FAILED_ATTEMPTS - 1;
-        Integer result = isUnlocked && notMaxFailedAttempts ? userService.increaseFailedAttempts(user) : userService.lock(user);
+        Integer result = user.isEnabled() && user.isAccountNonLocked() && (user.getFailedAttempt() < MAX_FAILED_ATTEMPTS - 1) ?
+                userService.increaseFailedAttempts(user) : userService.lock(user);
+
+        // TODO: strings to resources
         String message = result.equals(MAX_FAILED_ATTEMPTS) ? "Your account is locked for 24 hours due to 3 failed attempts." : "";
         message = message.isEmpty() && !user.isAccountNonLocked() && (user.getLockTime() != null) && userService.unlockWhenTimeExpired(user) ?
                 "Your account has been unlocked. Please try to login again." : "";
+
         exception = new LockedException(message);
+
         super.setDefaultFailureUrl("/login?error");
         super.onAuthenticationFailure(request, response, exception);
     }
