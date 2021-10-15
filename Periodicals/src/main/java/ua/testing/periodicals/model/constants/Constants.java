@@ -6,7 +6,7 @@ public interface Constants {
     String USERNAME        = "username";
     String USER_ROLE_ID    = "role_id";
     String USER_PASSWORD   = "password";
-    String USER_STATUS     = "status";
+    String USER_ENABLED    = "enabled";
     String USER_ACCOUNT    = "account";
 
     // Periodicals
@@ -24,8 +24,8 @@ public interface Constants {
     String ROLE_ADMIN        = "ADMIN";
 
     // Status
-    int STATUS_ACTIVE      = 1;
-    int STATUS_BLOCKED     = 0;
+    boolean STATUS_ENABLED   = true;
+    boolean STATUS_BLOCKED   = false;
 
     // Subscription
     String SUBSCRIPTION_ID = "sub_id";

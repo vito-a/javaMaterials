@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,8 +37,14 @@ public class User {
     private String password;
     @Column(name = "email", nullable = false)
     private String email;
-    @Column(name = "status", nullable = false)
-    private Integer status;
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
+    @Column(name = "account_non_locked")
+    private boolean accountNonLocked;
+    @Column(name = "failed_attempt")
+    private int failedAttempt;
+    @Column(name = "lock_time")
+    private Date lockTime;
     @Column(name = "balance", nullable = false)
     private Double balance;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -47,8 +54,4 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-
-    public boolean isEnabled() {
-        return status > 0;
-    }
 }

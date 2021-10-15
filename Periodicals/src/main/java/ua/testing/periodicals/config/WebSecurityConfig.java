@@ -65,15 +65,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .usernameParameter("email")
                 .defaultSuccessUrl("/periodicals")
                 .permitAll()
                 .loginPage("/login")
                 .usernameParameter("user")
                 .passwordParameter("pass")
+                .successHandler(loginSuccessHandler)
+                .failureHandler(loginFailureHandler)
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll()
             .and()
             .exceptionHandling().accessDeniedPage("/403.html");
     }
+
+    @Autowired
+    private CustomLoginFailureHandler loginFailureHandler;
+
+    @Autowired
+    private CustomLoginSuccessHandler loginSuccessHandler;
 }

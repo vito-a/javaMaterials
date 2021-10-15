@@ -26,17 +26,20 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`roles` (
 -- Table `periodicalsdb`.`users`
 -- -------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `periodicalsdb`.`users` (
-    `user_id`   INT NOT NULL AUTO_INCREMENT,
-    `username`  VARCHAR(64)  NOT NULL,
-    `password`  VARCHAR(64)  NOT NULL,
-    `firstname` VARCHAR(255) NOT NULL DEFAULT '',
-    `lastname`  VARCHAR(255) NOT NULL DEFAULT '',
-    `fullname`  VARCHAR(255) NOT NULL DEFAULT '',
-    `email`     VARCHAR(255) NOT NULL,
-    `status`    TINYINT NULL DEFAULT '1',
-    `balance`   DOUBLE DEFAULT NULL,
-    `created`   TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated`   TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    `user_id`            INT NOT NULL AUTO_INCREMENT,
+    `username`           VARCHAR(64)  NOT NULL,
+    `password`           VARCHAR(64)  NOT NULL,
+    `firstname`          VARCHAR(255) NOT NULL DEFAULT '',
+    `lastname`           VARCHAR(255) NOT NULL DEFAULT '',
+    `fullname`           VARCHAR(255) NULL DEFAULT '',
+    `email`              VARCHAR(255) NOT NULL,
+    `enabled`            TINYINT NULL DEFAULT 1,
+    `account_non_locked` TINYINT NULL DEFAULT 0,
+    `failed_attempt`     TINYINT NULL DEFAULT 0,
+    `lock_time`          DATETIME NULL,
+    `balance`            DOUBLE DEFAULT NULL,
+    `created`            TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated`            TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`user_id`),
     UNIQUE INDEX `u_users_username` (`username`)
 );

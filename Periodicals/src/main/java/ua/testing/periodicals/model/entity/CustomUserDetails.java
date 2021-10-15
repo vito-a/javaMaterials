@@ -16,6 +16,11 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(User user) {
         this.user = user;
     }
+/*
+    public User getUser() {
+        return this.user;
+    }
+ */
 
     // TODO: change For (Role to stream
     @Override
@@ -48,7 +53,7 @@ public class CustomUserDetails implements UserDetails {
  
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.isAccountNonLocked();
     }
  
     @Override
@@ -57,9 +62,7 @@ public class CustomUserDetails implements UserDetails {
     }
  
     @Override
-    public boolean isEnabled() {
-        return true;
-    }
+    public boolean isEnabled() { return user.isEnabled(); }
      
     public String getFullName() {
         if ((user.getFullName() == null) || user.getFullName().isEmpty()) {

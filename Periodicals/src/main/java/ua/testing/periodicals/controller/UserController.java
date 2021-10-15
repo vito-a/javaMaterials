@@ -12,7 +12,7 @@ import ua.testing.periodicals.repository.RoleRepository;
 import ua.testing.periodicals.repository.UserRepository;
 
 import static ua.testing.periodicals.model.constants.Constants.ROLE_USER;
-import static ua.testing.periodicals.model.constants.Constants.STATUS_ACTIVE;
+import static ua.testing.periodicals.model.constants.Constants.STATUS_ENABLED;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.service.UsersService;
 
@@ -45,7 +45,7 @@ public class UserController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        user.setStatus(STATUS_ACTIVE);
+        user.setEnabled(STATUS_ENABLED);
         Role userRole = roleRepo.findByName(ROLE_USER);
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         if ((user.getFullName() == null) || user.getFullName().isEmpty()) {
@@ -74,10 +74,10 @@ public class UserController {
 
     @RequestMapping("/user/edit/{id}")
     public ModelAndView showEditUserForm(@PathVariable(name = "id") Long userId) {
-        ModelAndView mav = new ModelAndView("edit_user");
+        ModelAndView mav = new ModelAndView("user/edit_user.html");
 
-        User User = usersService.get(userId);
-        mav.addObject("User", User);
+        User user = userRepo.getUserByUserId(userId);
+        mav.addObject("user", user);
 
         return mav;
     }

@@ -16,7 +16,8 @@
                         <th>[[#{users.firstname}]]</th>
                         <th>[[#{users.lastname}]]</th>
                         <th>[[#{users.email}]]</th>
-                        <th>[[#{users.status}]]</th>
+                        <th>[[#{users.enabled}]]</th>
+                        <th sec:authorize="hasAnyAuthority('ADMIN')">[[#{actions.edit}]]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,7 +27,10 @@
                     <td th:text="${user.firstName}">[[#{users.firstname}]]</td>
                     <td th:text="${user.lastName}">[[#{users.lastname}]]</td>
                     <td th:text="${user.email}">[[#{users.email}]]</td>
-                    <td th:text="${user.status}">[[#{users.status}]]</td>
+                    <td th:text="${user.enabled}">[[#{users.enabled}]]</td>
+                    <td sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a th:href="@{'/user/edit/' + ${user.userId}}">[[#{actions.edit}]]</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -71,17 +71,19 @@ public class AppController {
         User user = (User) userRepo.getUserByUsername(currentUser.getUsername());
         model.addAttribute("currentUser", user);
 
-        return listPeriodicalsSortingPager(model, 1, "periodicalId", "asc");
+        return listPeriodicalsSortingPager(model, 1, "periodicalId", "asc", currentUser);
     }
 
     @RequestMapping("/periodicals/{pageNum}")
     public String listPeriodicalsSortingPager(Model model,
                            @PathVariable(name = "pageNum") int pageNum,
                            @Param("sortField") String sortField,
-                           @Param("sortDir") String sortDir) {
+                           @Param("sortDir") String sortDir, @AuthenticationPrincipal UserDetails currentUser) {
+
+        User user = (User) userRepo.getUserByUsername(currentUser.getUsername());
+        model.addAttribute("currentUser", user);
 
         Page<Periodical> page = periodicalsService.listAll(pageNum, sortField, sortDir);
-
         List<Periodical> listPeriodicals = page.getContent();
 
         // TODO: move attributes to Builder
