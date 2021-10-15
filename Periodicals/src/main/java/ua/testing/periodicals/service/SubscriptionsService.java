@@ -16,7 +16,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubscriptionsService {
@@ -25,11 +28,23 @@ public class SubscriptionsService {
 
     private static final Logger logger = LoggerFactory.getLogger(SubscriptionsService.class);
 
-    public List<Subscription> listAll(String date_keyword) {
-        if (date_keyword != null) {
-            return search(date_keyword);
+    public List<Subscription> listAll(String date_keyword) throws ParseException {
+        Optional<String> optionalDateKeyword = Optional.ofNullable(date_keyword);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        List<Subscription> subscriptionList = subscriptionsRepo.findAll();
+        List<Subscription> updatedList = new java.util.ArrayList<>(List.of());
+
+        if (optionalDateKeyword.isPresent()) {
+            return search(optionalDateKeyword.get());
         }
-        return subscriptionsRepo.findAll();
+
+        for (Subscription subscription : subscriptionList) {
+            subscription.setEnddate(format.parse(subscription.getEnddate().toString()));
+            subscription.setStartdate(format.parse(subscription.getStartdate().toString()));
+            updatedList.add(subscription);
+        }
+        
+        return updatedList;
     }
 
     // TODO: deprecated? switch to LocalDate
@@ -39,6 +54,7 @@ public class SubscriptionsService {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date myDate = null;
         List<Subscription> subscriptionList = null;
+        List<Subscription> updatedList = new java.util.ArrayList<>(List.of());
 
         // TODO: make try with resource
         try {
@@ -52,11 +68,16 @@ public class SubscriptionsService {
                     .getResultList();
             entityManager.close();
             factory.close();
+            for (Subscription subscription : subscriptionList) {
+                subscription.setEnddate(format.parse(subscription.getEnddate().toString()));
+                subscription.setStartdate(format.parse(subscription.getStartdate().toString()));
+                updatedList.add(subscription);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return subscriptionList;
+        return updatedList;
     }
 
     // TODO: try - catch

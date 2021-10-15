@@ -12,8 +12,10 @@ import ua.testing.periodicals.repository.SubscriptionsRepository;
 import ua.testing.periodicals.repository.UserRepository;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.service.PeriodicalsService;
+import ua.testing.periodicals.service.SubscriptionsService;
 import ua.testing.periodicals.service.UsersService;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +38,9 @@ public class AdminController {
     @Autowired
     private UsersService usersService;
 
+    @Autowired
+    private SubscriptionsService subscriptionsService;
+
     @GetMapping("/users")
     public String listUsers(Model model) {
         List<User> listUsers = userRepo.findAll();
@@ -45,8 +50,8 @@ public class AdminController {
     }
 
     @GetMapping("/subscriptions")
-    public String listSubscriptions(Model model) {
-        List<Subscription> listSubscriptions = subscriptionRepo.findAll();
+    public String listSubscriptions(Model model) throws ParseException {
+        List<Subscription> listSubscriptions = subscriptionsService.listAll(null);
         model.addAttribute("listSubscriptions", listSubscriptions);
 
         return "subscriptions.html";

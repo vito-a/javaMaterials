@@ -67,20 +67,22 @@ public class UsersService {
         usersRepo.save(user);
     }
 
-    public void increaseFailedAttempts(User user) {
+    public int increaseFailedAttempts(User user) {
         int newFailAttempts = user.getFailedAttempt() + 1;
         usersRepo.updateFailedAttempts(newFailAttempts, user.getEmail());
+
+        return newFailAttempts;
     }
 
     public void resetFailedAttempts(String email) {
         usersRepo.updateFailedAttempts(0, email);
     }
 
-    public void lock(User user) {
+    public int lock(User user) {
         user.setAccountNonLocked(false);
         user.setLockTime(new Date());
-
         usersRepo.save(user);
+        return MAX_FAILED_ATTEMPTS;
     }
 
     public boolean unlockWhenTimeExpired(User user) {
@@ -91,9 +93,7 @@ public class UsersService {
             user.setAccountNonLocked(true);
             user.setLockTime(null);
             user.setFailedAttempt(0);
-
             usersRepo.save(user);
-
             return true;
         }
 
