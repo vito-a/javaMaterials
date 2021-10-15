@@ -1,6 +1,7 @@
 package ua.testing.periodicals.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ua.testing.periodicals.model.entity.Category;
 import ua.testing.periodicals.model.entity.Periodical;
@@ -14,10 +15,11 @@ public class CategoriesService {
     @Autowired
     private CategoriesRepository categoriesRepo;
 
+    // TODO: Optional
     public List<Category> listAll(String keyword) {
         if (keyword != null) {
             return categoriesRepo.search(keyword);
         }
-        return categoriesRepo.findAll();
+        return categoriesRepo.findAll(Sort.by(Sort.Direction.ASC, "catId"));
     }
 }

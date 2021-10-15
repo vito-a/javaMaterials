@@ -92,8 +92,6 @@ public class PeriodicalController {
         LocalDate endDate = LocalDate.now().plusYears(1);
         logger.info("subscription endDate = " + endDate);
 
-        // Long currentUserID = user.getId();
-
         periodicalService.subscribe(periodicalId, userId, startDate, Date.valueOf(endDate));
 
         return "redirect:/periodicals";

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import ua.testing.periodicals.model.entity.Category;
 import ua.testing.periodicals.model.entity.Periodical;
+import ua.testing.periodicals.model.entity.Subscription;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.CategoriesRepository;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
@@ -99,7 +100,7 @@ public class AppController {
 
     @GetMapping("/categories")
     public String listCategories(Model model) {
-        List<Category> listCategories = categoriesRepo.findAll();
+        List<Category> listCategories = categoriesService.listAll(null);
         model.addAttribute("listCategories", listCategories);
 
         return "categories.html";
@@ -113,7 +114,6 @@ public class AppController {
         return "search/periodicals.html";
     }
 
-/*
     @GetMapping("/user/my-subscriptions")
     public String listMySubscriptions(Model model) {
         String username = getCurrentUserName();
@@ -122,7 +122,6 @@ public class AppController {
 
         return "user/my_subscriptions.html";
     }
- */
 
     @GetMapping("/about")
     public String listAbout(Model model) {
