@@ -37,7 +37,7 @@
                     <td th:text="${periodical.description}">[[#{periodicals.description}]]</td>
                     <td th:text="${periodical.categoryId}">[[#{categories.id}]]</td>
                     <td th:text="${periodical.price}">[[#{periodicals.price}]]</td>
-                    <td sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
+                    <td sec:authorize="isAuthenticated()">
                         <a sec:authorize="isAuthenticated()" th:href="@{'/periodical/subscribe/' + ${currentUser.userId} + '/' + ${periodical.periodicalId}}">[[#{actions.subscribe}]]</a>
                         &nbsp;
                         <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" th:href="@{'/periodical/edit/' + ${periodical.periodicalId}}">[[#{actions.edit}]]</a>
