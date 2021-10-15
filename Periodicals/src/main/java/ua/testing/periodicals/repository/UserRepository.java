@@ -23,5 +23,8 @@ public interface UserRepository extends JpaRepository<User, Long>, CrudRepositor
     List<User> search(String keyword);
     @Query("UPDATE User u SET u.failedAttempt = ?1 WHERE u.email = ?2")
     @Modifying
-    public void updateFailedAttempts(int failAttempts, String email);
+    public void updateFailedAttempts(int failedAttempt, String email);
+    @Query("UPDATE User u SET u.balance = ?1 where u.email = ?2")
+    @Modifying
+    public void updateBalance(Double balance, String email);
 }

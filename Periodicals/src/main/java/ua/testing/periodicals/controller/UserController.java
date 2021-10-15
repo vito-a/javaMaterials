@@ -1,6 +1,8 @@
 package ua.testing.periodicals.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.testing.periodicals.model.entity.Role;
 import ua.testing.periodicals.model.entity.Subscription;
 import ua.testing.periodicals.repository.RoleRepository;
+import ua.testing.periodicals.repository.SubscriptionsRepository;
 import ua.testing.periodicals.repository.UserRepository;
 
 import static ua.testing.periodicals.model.constants.Constants.ROLE_USER;
@@ -16,6 +19,7 @@ import static ua.testing.periodicals.model.constants.Constants.STATUS_ENABLED;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.service.UsersService;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +35,22 @@ public class UserController {
     private RoleRepository roleRepo;
 
     @Autowired
+    private SubscriptionsRepository subscriptionRepo;
+
+    @Autowired
     private UsersService usersService;
+
+    private String getCurrentUserName() {
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -57,35 +76,20 @@ public class UserController {
         return "register_success";
     }
 
-    @RequestMapping("/user/new")
-    public String showNewUserForm(Model model) {
-        User User = new User();
-        model.addAttribute("User", User);
+    @GetMapping("/user/replenish_account")
+    public String replenishAccount(Model model) {
+        String username = getCurrentUserName();
+        User user = userRepo.getUserByUsername(username);
+        model.addAttribute("user", user);
 
-        return "new_user.html";
+        return "user/replenish_account.html";
     }
 
-    @RequestMapping(value = "/user/save", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("User") User user) {
-        usersService.save(user);
+    @Transactional
+    @PostMapping("/user/process_replenish")
+    public String processReplenish(User user) {
+        userRepo.updateBalance(user.getBalance(), user.getEmail());
 
-        return "redirect:/";
-    }
-
-    @RequestMapping("/user/edit/{id}")
-    public ModelAndView showEditUserForm(@PathVariable(name = "id") Long userId) {
-        ModelAndView mav = new ModelAndView("user/edit_user.html");
-
-        User user = userRepo.getUserByUserId(userId);
-        mav.addObject("user", user);
-
-        return mav;
-    }
-
-    @RequestMapping("/user/delete/{id}")
-    public String deleteUser(@PathVariable(name = "id") Long userId) {
-        usersService.delete(userId);
-
-        return "redirect:/";
+        return "user/replenish_success.html";
     }
 }
