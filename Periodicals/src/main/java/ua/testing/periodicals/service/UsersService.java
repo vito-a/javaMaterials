@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Subscription;
@@ -68,6 +69,7 @@ public class UsersService {
         usersRepo.save(user);
     }
 
+    @Transactional
     public int increaseFailedAttempts(User user) {
         int newFailAttempts = user.getFailedAttempt() + 1;
         usersRepo.updateFailedAttempts(newFailAttempts, user.getEmail());
@@ -75,6 +77,7 @@ public class UsersService {
         return newFailAttempts;
     }
 
+    @Transactional
     public void resetFailedAttempts(String email) {
         usersRepo.updateFailedAttempts(0, email);
     }
