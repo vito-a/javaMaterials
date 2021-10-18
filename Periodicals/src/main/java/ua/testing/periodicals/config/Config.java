@@ -15,6 +15,9 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
+/**
+ * The type Config.
+ */
 @Configuration
 public class Config implements WebMvcConfigurer {
 
@@ -25,6 +28,11 @@ public class Config implements WebMvcConfigurer {
         registry.addInterceptor(localeChangeInterceptor());
     }
 
+    /**
+     * Locale change interceptor.
+     *
+     * @return the locale change interceptor
+     */
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
@@ -32,16 +40,31 @@ public class Config implements WebMvcConfigurer {
         return lci;
     }
 
+    /**
+     * Locale resolver.
+     *
+     * @return the locale resolver
+     */
     @Bean
     public LocaleResolver localeResolver() {
         return new SessionLocaleResolver();
     }
 
+    /**
+     * Instantiates a new Config.
+     *
+     * @param applicationContext the application context
+     */
     @Autowired
     public Config(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * Spring resource template resolver.
+     *
+     * @return the spring resource template resolver
+     */
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -51,6 +74,11 @@ public class Config implements WebMvcConfigurer {
         return templateResolver;
     }
 
+    /**
+     * Template engine spring template engine.
+     *
+     * @return the spring template engine
+     */
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();

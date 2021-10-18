@@ -18,6 +18,9 @@ import ua.testing.periodicals.service.UsersService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The Admin controller.
+ */
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
@@ -40,6 +43,12 @@ public class AdminController {
     @Autowired
     private SubscriptionsService subscriptionsService;
 
+    /**
+     * List users.
+     *
+     * @param model the model
+     * @return users list template name
+     */
     @GetMapping("/users")
     public String listUsers(Model model) {
         List<User> listUsers = userRepo.findAll();
@@ -48,6 +57,12 @@ public class AdminController {
         return "users.html";
     }
 
+    /**
+     * List subscriptions.
+     *
+     * @param model the model
+     * @return subscriptions list template name
+     */
     @GetMapping("/subscriptions")
     public String listSubscriptions(Model model) {
         List<Subscription> listSubscriptions = subscriptionsService.listAll(null);
@@ -56,6 +71,12 @@ public class AdminController {
         return "subscriptions.html";
     }
 
+    /**
+     * Show new user form.
+     *
+     * @param model the model
+     * @return user form template name
+     */
     @RequestMapping("/user/new")
     public String showNewUserForm(Model model) {
         User User = new User();
@@ -64,6 +85,12 @@ public class AdminController {
         return "new_user.html";
     }
 
+    /**
+     * Save user.
+     *
+     * @param user the user
+     * @return the redirection request endpoint
+     */
     @RequestMapping(value = "/user/save", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("User") User user) {
         usersService.save(user);
@@ -71,6 +98,12 @@ public class AdminController {
         return "redirect:/";
     }
 
+    /**
+     * User edit form.
+     *
+     * @param userId the user id
+     * @return the model and view
+     */
     @RequestMapping("/user/edit/{id}")
     public ModelAndView showEditUserForm(@PathVariable(name = "id") Long userId) {
         ModelAndView mav = new ModelAndView("user/edit_user.html");
@@ -83,6 +116,12 @@ public class AdminController {
         return mav;
     }
 
+    /**
+     * Delete user.
+     *
+     * @param userId the user id
+     * @return the redirection request endpoint
+     */
     @RequestMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable(name = "id") Long userId) {
         usersService.delete(userId);

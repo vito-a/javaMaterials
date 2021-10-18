@@ -21,6 +21,9 @@ import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.UserRepository;
 import ua.testing.periodicals.service.UsersService;
 
+/**
+ * The Custom login failure handler.
+ */
 @Component
 public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 

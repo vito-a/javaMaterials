@@ -8,6 +8,9 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * The Mvc config.
+ */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
@@ -17,6 +20,11 @@ public class MvcConfig implements WebMvcConfigurer {
 		registry.addViewController("/404").setViewName("404.html");
 	}
 
+	/**
+	 * Message source getting.
+	 *
+	 * @return the message source
+	 */
 	@Bean
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
