@@ -104,6 +104,11 @@ public class UsersService {
         return false;
     }
 
+    public Integer checkFailedAttempt(User user) {
+        return user.isEnabled() && user.isAccountNonLocked() && (user.getFailedAttempt() < MAX_FAILED_ATTEMPTS - 1) ?
+                increaseFailedAttempts(user) : lock(user);
+    }
+
     public Optional<User> getUserByEmail(String email) {
         return usersRepo.getUserByEmail(email);
     }

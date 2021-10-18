@@ -36,15 +36,11 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
-        // TODO: several requests to database
         User user = userRepo.getUserByUsername(request.getParameter("user")).orElseGet(User::new);
-        Integer result = user.isEnabled() && user.isAccountNonLocked() && (user.getFailedAttempt() < MAX_FAILED_ATTEMPTS - 1) ?
-                userService.increaseFailedAttempts(user) : userService.lock(user);
-
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames("messages");
         Locale locale = LocaleContextHolder.getLocale();
-        String message = result.equals(MAX_FAILED_ATTEMPTS) ? messageSource.getMessage("user.locked", null, locale) : "";
+        String message = userService.checkFailedAttempt(user).equals(MAX_FAILED_ATTEMPTS) ? messageSource.getMessage("user.locked", null, locale) : "";
         message = message.isEmpty() && !user.isAccountNonLocked() && (user.getLockTime() != null) && userService.unlockWhenTimeExpired(user) ?
                 messageSource.getMessage("user.unlocked", null, locale) : "";
 
