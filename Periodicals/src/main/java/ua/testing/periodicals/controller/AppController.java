@@ -100,7 +100,7 @@ public class AppController {
 
     @GetMapping("/categories")
     public String listCategories(Model model) {
-        List<Category> listCategories = categoriesService.listAll("");
+        List<Category> listCategories = categoriesRepo.findByOrderByCatIdAsc();
         model.addAttribute("listCategories", listCategories);
 
         return "categories.html";

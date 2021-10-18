@@ -16,7 +16,7 @@ public class CategoriesService {
 
     public List<Category> listAll(String keyword) {
         Optional<String> optionalKeyword = Optional.ofNullable(keyword);
-        if (optionalKeyword.isPresent()) {
+        if (optionalKeyword.isPresent() && !optionalKeyword.equals(Optional.empty())) {
             return categoriesRepo.search(optionalKeyword.get());
         }
         return categoriesRepo.findAll(Sort.by(Sort.Direction.ASC, "catId"));
