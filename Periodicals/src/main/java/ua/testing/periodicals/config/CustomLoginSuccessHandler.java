@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -25,20 +27,16 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     @Autowired
     private UserRepository userRepo;
 
+    private static final Logger logger = LoggerFactory.getLogger(UsersService.class);
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         CustomUserDetails userDetails =  (CustomUserDetails) authentication.getPrincipal();
         Optional<User> user = userRepo.getUserByUsername(userDetails.getUsername());
-
-        if (user.isPresent()) {
-            logger.info("onAuthenticationSuccess");
-            logger.info(user.get().getUsername());
-
-            if (user.get().getFailedAttempt() > 0) {
-                userService.resetFailedAttempts(user.get().getUsername());
-            }
-        }
+        int result = user.isPresent() && (user.get().getFailedAttempt() > 0) ? userService.resetFailedAttempts(user.get().getUsername()) : -1;
+        String message = result > 0 ? "onAuthenticationSuccess" + user.get().getUsername() : "";
+        logger.info(message);
 
         super.onAuthenticationSuccess(request, response, authentication);
     }

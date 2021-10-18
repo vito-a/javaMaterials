@@ -20,7 +20,6 @@ import ua.testing.periodicals.controller.PeriodicalController;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.UserRepository;
 import ua.testing.periodicals.service.UsersService;
-import static ua.testing.periodicals.service.UsersService.MAX_FAILED_ATTEMPTS;
 
 @Component
 public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
@@ -40,7 +39,7 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames("messages");
         Locale locale = LocaleContextHolder.getLocale();
-        String message = userService.checkFailedAttempt(user).equals(MAX_FAILED_ATTEMPTS) ? messageSource.getMessage("user.locked", null, locale) : "";
+        String message = userService.checkFailedAttempt(user).equals(userService.getMaxFailedAttempts()) ? messageSource.getMessage("user.locked", null, locale) : "";
         message = message.isEmpty() && !user.isAccountNonLocked() && (user.getLockTime() != null) && userService.unlockWhenTimeExpired(user) ?
                 messageSource.getMessage("user.unlocked", null, locale) : "";
 
