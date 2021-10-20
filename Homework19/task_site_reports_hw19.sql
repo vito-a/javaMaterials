@@ -161,6 +161,12 @@ SELECT DISTINCT(b.b_id), b.b_url FROM banners b, m2m_banners_pages m2mbp WHERE m
 --  10
 --  http://gismeteo.ru
 
+-- with JOIN
+
+SELECT DISTINCT(b.b_id), b.b_url FROM banners b LEFT JOIN m2m_banners_pages m2mbp ON b.b_id = m2mbp.b_id WHERE m2mbp.b_id IS NULL AND b.b_url IS NOT NULL;
+
+-- with subquery
+
 SELECT DISTINCT(b.b_id), b.b_url FROM banners b WHERE b.b_id NOT IN(SELECT m2mbp.b_id FROM m2m_banners_pages m2mbp) AND b.b_url IS NOT NULL;
 
 --  10. Написать запрос, показывающий баннеры, для которых отношение кликов к показам >= 80% (при условии, что баннер был показан хотя бы один раз).
@@ -208,7 +214,7 @@ SELECT b.b_id, b.b_url, ((b.b_click / b.b_show) * 100) AS rate FROM banners b HA
 --  Банковские реквизиты
 --  Схема проезда к офису
 
-SELECT DISTINCT(p.p_name) FROM pages p, banners b, m2m_banners_pages m2mbp WHERE p.p_id = m2mbp.p_id AND b.b_id = m2mbp.b_id AND NOT ISNULL(b.b_text);
+SELECT DISTINCT(p.p_name) FROM pages p, banners b, m2m_banners_pages m2mbp WHERE p.p_id = m2mbp.p_id AND b.b_id = m2mbp.b_id AND b.b_text IS NOT NULL;
 
 --  12. Написать запрос, показывающий список страниц сайта, на которых показаны баннеры с картинкой (в поле `b_pic` не NULL).
 --  
@@ -323,7 +329,7 @@ SET @parent_name = "Юридическим лицам";
 SELECT p.p_name, m2mbp.b_id, b.b_url FROM pages p
 JOIN m2m_banners_pages m2mbp ON p.p_id = m2mbp.p_id
 JOIN banners b ON b.b_id = m2mbp.b_id
-WHERE p.p_parent = (SELECT p.p_id FROM pages p WHERE p.p_name = @parent_name);
+WHERE p.p_parent = (SELECT p2.p_id FROM pages p2 WHERE p2.p_name = @parent_name);
 
 --  19. Написать запрос, показывающий список всех баннеров с картинками (поле `b_pic` не NULL), отсортированный по убыванию отношения кликов по баннеру к показам баннера.
 --  
@@ -366,7 +372,7 @@ FROM (
     UNION
   SELECT r.r_header AS header, r.r_dt AS date FROM reviews r
 ) AS publications
-ORDER BY date limit 1;
+ORDER BY date ASC LIMIT 1;
 
 --  21. Написать запрос, показывающий список баннеров, URL которых встречается в таблице один раз.
 --  
@@ -402,7 +408,7 @@ SELECT b.b_url, b.b_id FROM banners b WHERE b.b_url IN (SELECT b.b_url FROM bann
 --  Физическим лицам
 --  1
 
-SELECT p_name, COUNT(m2mbp.b_id) AS banners_count FROM pages p JOIN m2m_banners_pages m2mbp ON p.p_id = m2mbp.p_id GROUP BY p_name ORDER BY banners_COUNT DESC;
+SELECT p_name, COUNT(m2mbp.b_id) AS banners_count FROM pages p JOIN m2m_banners_pages m2mbp ON p.p_id = m2mbp.p_id GROUP BY p_name ORDER BY banners_count DESC;
 
 --  23. Написать запрос, показывающий самую «свежую» новость и самый «свежий» обзор.
 --  
