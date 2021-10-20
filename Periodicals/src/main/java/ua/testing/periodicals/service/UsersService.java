@@ -1,9 +1,12 @@
 package ua.testing.periodicals.service;
 
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Subscription;
@@ -15,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Getter
 @Service
 public class UsersService {
     @Autowired
@@ -25,9 +29,11 @@ public class UsersService {
 
     private static final Logger logger = LoggerFactory.getLogger(UsersService.class);
 
-    public static final int MAX_FAILED_ATTEMPTS = 3;
+    @Value("${periodicals.max_failed_attempts:3}")
+    private int maxFailedAttempts;
 
-    private static final long LOCK_TIME_DURATION = 24 * 60 * 60 * 1000;
+    @Value("${periodicals.lock_time_duration:3600000L}")
+    private long lockTimeDuration;
 
     public List<User> listAll(String keyword) {
         Optional<String> optionalKeyword = Optional.ofNullable(keyword);
@@ -68,6 +74,7 @@ public class UsersService {
         usersRepo.save(user);
     }
 
+    @Transactional
     public int increaseFailedAttempts(User user) {
         int newFailAttempts = user.getFailedAttempt() + 1;
         usersRepo.updateFailedAttempts(newFailAttempts, user.getEmail());
@@ -75,22 +82,25 @@ public class UsersService {
         return newFailAttempts;
     }
 
-    public void resetFailedAttempts(String email) {
+    @Transactional
+    public Integer resetFailedAttempts(String email) {
         usersRepo.updateFailedAttempts(0, email);
+
+        return 0;
     }
 
     public int lock(User user) {
         user.setAccountNonLocked(false);
         user.setLockTime(new Date());
         usersRepo.save(user);
-        return MAX_FAILED_ATTEMPTS;
+        return maxFailedAttempts;
     }
 
     public boolean unlockWhenTimeExpired(User user) {
         long lockTimeInMillis = user.getLockTime().getTime();
         long currentTimeInMillis = System.currentTimeMillis();
 
-        if (lockTimeInMillis + LOCK_TIME_DURATION < currentTimeInMillis) {
+        if (lockTimeInMillis + lockTimeDuration < currentTimeInMillis) {
             user.setAccountNonLocked(true);
             user.setLockTime(null);
             user.setFailedAttempt(0);
@@ -99,6 +109,11 @@ public class UsersService {
         }
 
         return false;
+    }
+
+    public Integer checkFailedAttempt(User user) {
+        return user.isEnabled() && user.isAccountNonLocked() && (user.getFailedAttempt() < maxFailedAttempts - 1) ?
+                increaseFailedAttempts(user) : lock(user);
     }
 
     public Optional<User> getUserByEmail(String email) {

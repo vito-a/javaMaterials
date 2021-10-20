@@ -23,6 +23,9 @@ import ua.testing.periodicals.service.PeriodicalsService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The App controller.
+ */
 @Controller
 public class AppController {
 
@@ -44,6 +47,11 @@ public class AppController {
     @Autowired
     private CategoriesService categoriesService;
 
+    /**
+     * View home page.
+     *
+     * @return user name
+     */
     @GetMapping("")
     public String viewHomePage() {
         return "index.html";
@@ -61,12 +69,25 @@ public class AppController {
         return userName;
     }
 
+    /**
+     * Get string.
+     *
+     * @param model the model
+     * @return login template name
+     */
     @GetMapping("/login")
     public String get(Model model) {
         model.addAttribute("title", "Sign In form");
         return "login";
     }
 
+    /**
+     * List periodicals all string.
+     *
+     * @param model       the model
+     * @param currentUser the current user
+     * @return all periodicals list template name
+     */
     @GetMapping("/periodicals")
     public String listPeriodicalsAll(Model model, @AuthenticationPrincipal UserDetails currentUser) {
         Optional<User> user = userRepo.getUserByUsername(currentUser.getUsername());
@@ -74,6 +95,16 @@ public class AppController {
         return listPeriodicalsSortingPager(model, 1, "periodicalId", "asc", currentUser);
     }
 
+    /**
+     * List periodicals sorting pager string.
+     *
+     * @param model       the model
+     * @param pageNum     the page num
+     * @param sortField   the sort field
+     * @param sortDir     the sort dir
+     * @param currentUser the current user
+     * @return periodicals list template name
+     */
     @RequestMapping("/periodicals/{pageNum}")
     public String listPeriodicalsSortingPager(Model model,
                            @PathVariable(name = "pageNum") int pageNum,
@@ -98,14 +129,27 @@ public class AppController {
         return "periodicals.html";
     }
 
+    /**
+     * List categories string.
+     *
+     * @param model the model
+     * @return categories list template name
+     */
     @GetMapping("/categories")
     public String listCategories(Model model) {
-        List<Category> listCategories = categoriesService.listAll("");
+        List<Category> listCategories = categoriesRepo.findByOrderByCatIdAsc();
         model.addAttribute("listCategories", listCategories);
 
         return "categories.html";
     }
 
+    /**
+     * Search periodicals string.
+     *
+     * @param model   the model
+     * @param keyword the keyword
+     * @return periodicals search template name
+     */
     @RequestMapping("/search/periodicals")
     public String searchPeriodicals(Model model, @Param("keyword") String keyword) {
         List<Periodical> listPeriodicals = periodicalsService.listAll(keyword);
@@ -114,6 +158,12 @@ public class AppController {
         return "search/periodicals.html";
     }
 
+    /**
+     * List my subscriptions string.
+     *
+     * @param model the model
+     * @return subscriptions list template name
+     */
     @GetMapping("/user/my-subscriptions")
     public String listMySubscriptions(Model model) {
         String username = getCurrentUserName();
@@ -123,6 +173,12 @@ public class AppController {
         return "user/my_subscriptions.html";
     }
 
+    /**
+     * List about string.
+     *
+     * @param model the model
+     * @return about page template name
+     */
     @GetMapping("/about")
     public String listAbout(Model model) {
         List<Periodical> listPeriodicals = periodicalsRepo.findAll();

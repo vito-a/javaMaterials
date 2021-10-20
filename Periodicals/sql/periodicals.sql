@@ -48,9 +48,9 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`users` (
 -- Table `periodicalsdb`.`users_roles`
 -- -------------------------------------------------------
 CREATE TABLE `users_roles` (
-  `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  INDEX `i_user_id` (`user_id`)
+    `user_id` int(11) NOT NULL,
+    `role_id` int(11) NOT NULL,
+    INDEX `i_user_id` (`user_id`)
 );
 
 -- -------------------------------------------------------
