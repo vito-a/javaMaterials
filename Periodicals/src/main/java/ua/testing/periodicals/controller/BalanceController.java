@@ -11,10 +11,19 @@ import ua.testing.periodicals.model.dao.BalanceTransactionInfo;
 
 import java.util.List;
 
+/**
+ * The Balance controller.
+ */
 public class BalanceController {
     @Autowired
     private BalanceDAO balanceDAO;
 
+    /**
+     * Show bank accounts form.
+     *
+     * @param model the model
+     * @return transactions info template name
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showBankAccounts(Model model) {
         List<BalanceTransactionInfo> list = balanceDAO.listBalanceTransactionInfo();
@@ -24,6 +33,12 @@ public class BalanceController {
         return "transactions_info.html";
     }
 
+    /**
+     * Subscribe page string.
+     *
+     * @param model the model
+     * @return subscribe template name
+     */
     @RequestMapping(value = "/sendMoney", method = RequestMethod.GET)
     public String subscribePage(Model model) {
 
@@ -34,6 +49,13 @@ public class BalanceController {
         return "subscribe.html";
     }
 
+    /**
+     * Process the send money form.
+     *
+     * @param model         the model
+     * @param subscribeForm the subscribe form
+     * @return the redirection endpoint
+     */
     @RequestMapping(value = "/sendMoney", method = RequestMethod.POST)
     public String processSendMoney(Model model, SubscribeForm subscribeForm) {
         System.out.println("Send Money: " + subscribeForm.getAmount());
