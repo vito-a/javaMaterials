@@ -450,10 +450,19 @@ SELECT b.b_id, b.b_url, b.b_text FROM banners b WHERE b.b_text LIKE (CONCAT("%",
 --  p_name
 --  Юридическим лицам
 
-SELECT p.p_name, (b.b_click / b.b_show), p.p_id FROM pages p
-JOIN m2m_banners_pages m2mbp ON m2mbp.p_id = p.p_id
-JOIN banners b ON b.b_id = m2mbp.b_id
-WHERE (b_click / b_show) = (SELECT MAX(b_click / b_show) FROM banners);
+-- with ORDER
+
+SELECT p.p_name FROM banners b
+LEFT JOIN m2m_banners_pages m2mbp ON m2mbp.b_id = b.b_id
+LEFT JOIN pages p ON m2mbp.p_id = p.p_id
+ORDER BY (b.b_click / b.b_show) DESC LIMIT 1;
+
+-- with MAX
+
+SELECT p.p_name FROM pages p
+LEFT JOIN m2m_banners_pages m2mbp ON m2mbp.p_id = p.p_id
+LEFT JOIN banners b ON b.b_id = m2mbp.b_id
+WHERE (b.b_click / b.b_show) = (SELECT MAX(b2.b_click / b2.b_show) FROM banners b2) LIMIT 1;
 
 --  26. Написать запрос, считающий среднее отношение кликов к показам по всем баннерам, которые были показаны хотя бы один раз.
 --  
@@ -508,5 +517,5 @@ GROUP BY m2mbp.b_id ORDER BY COUNT DESC LIMIT 1;
 --  3
 
 SELECT p.p_name, COUNT(m2mbp.b_id) AS COUNT FROM m2m_banners_pages m2mbp
-JOIN pages p ON m2mbp.p_id = p.p_id GROUP BY p_name
+JOIN pages p ON m2mbp.p_id = p.p_id GROUP BY p.p_name
 HAVING COUNT = (SELECT COUNT(m2mbp2.b_id) AS b2_id FROM m2m_banners_pages m2mbp2 GROUP BY m2mbp2.p_id ORDER BY COUNT(m2mbp2.b_id) DESC LIMIT 1);
