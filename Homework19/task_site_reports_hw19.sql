@@ -55,7 +55,7 @@ SELECT nc.nc_name, (SELECT COUNT(n_id) FROM news n WHERE nc.nc_id = n.n_category
 --  Товары и услуги
 --  0
 
-SELECT reviews_categories.rc_name, COUNT(r_id) FROM reviews_categories LEFT JOIN reviews ON rc_id = r_category GROUP BY reviews_categories.rc_name;
+SELECT rc.rc_name, COUNT(r_id) FROM reviews_categories rc LEFT JOIN reviews r ON rc.rc_id = r.r_category GROUP BY rc.rc_name;
 
 --  4. Написать запрос, показывающий список категорий новостей, категорий обзоров и дату самой свежей публикации в каждой категории.
 --  
@@ -94,7 +94,7 @@ SELECT rc.rc_name, MAX(r.r_dt) FROM reviews_categories rc JOIN reviews r ON rc.r
 -- 1
 --  http://tut.by
 
-SELECT p.p_name, b.b_id, b.b_url FROM pages p, banners b, m2m_banners_pages m2mbp WHERE ISNULL(p_parent) AND m2mbp.p_id = p.p_id AND m2mbp.b_id = b.b_id;
+SELECT p.p_name, b.b_id, b.b_url FROM pages p, banners b, m2m_banners_pages m2mbp WHERE p.p_parent IS NULL AND m2mbp.p_id = p.p_id AND m2mbp.b_id = b.b_id;
 
 --  6. Написать запрос, показывающий список страниц сайта, на которых есть баннеры.
 --  
@@ -155,7 +155,7 @@ SELECT DISTINCT(b.b_id), b.b_url FROM banners b, m2m_banners_pages m2mbp WHERE m
 --  10
 --  http://gismeteo.ru
 
-SELECT DISTINCT(b.b_id), b.b_url FROM banners b WHERE b.b_id NOT IN(SELECT m2mbp.b_id FROM m2m_banners_pages m2mbp) AND NOT ISNULL(b.b_url);
+SELECT DISTINCT(b.b_id), b.b_url FROM banners b WHERE b.b_id NOT IN(SELECT m2mbp.b_id FROM m2m_banners_pages m2mbp) AND b.b_url IS NOT NULL;
 
 --  10. Написать запрос, показывающий баннеры, для которых отношение кликов к показам >= 80% (при условии, что баннер был показан хотя бы один раз).
 --  
