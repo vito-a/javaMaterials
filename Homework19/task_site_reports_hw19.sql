@@ -7,7 +7,7 @@
 
 -- with UNION
 
-SELECT COUNT(*) AS SUM FROM (SELECT n_header AS header FROM news UNION SELECT r_header AS header FROM reviews) AS news_reviews;
+SELECT COUNT(*) AS SUM FROM (SELECT n.n_header AS header FROM news n UNION SELECT r.r_header AS header FROM reviews r) AS news_reviews;
 
 -- without UNION
 
@@ -38,11 +38,11 @@ SELECT COUNT(DISTINCT(COALESCE(n.n_header, r.r_header))) AS SUM FROM
 
 -- with JOIN
 
-SELECT nc.nc_name, COUNT(n_id) FROM news_categories nc LEFT JOIN news n ON nc.nc_id = n.n_category GROUP BY nc.nc_name;
+SELECT nc.nc_name, COUNT(n.n_id) FROM news_categories nc LEFT JOIN news n ON nc.nc_id = n.n_category GROUP BY nc.nc_name;
 
 -- with subquery
 
-SELECT nc.nc_name, (SELECT COUNT(n_id) FROM news n WHERE nc.nc_id = n.n_category) FROM news_categories nc;
+SELECT nc.nc_name, (SELECT COUNT(n.n_id) FROM news n WHERE nc.nc_id = n.n_category) FROM news_categories nc;
 
 --  3. Написать запрос, показывающий список категорий обзоров и количество обзоров в каждой категории.
 --  
@@ -55,7 +55,13 @@ SELECT nc.nc_name, (SELECT COUNT(n_id) FROM news n WHERE nc.nc_id = n.n_category
 --  Товары и услуги
 --  0
 
+-- with JOIN
+
 SELECT rc.rc_name, COUNT(r_id) FROM reviews_categories rc LEFT JOIN reviews r ON rc.rc_id = r.r_category GROUP BY rc.rc_name;
+
+-- with subquery
+
+SELECT rc.rc_name, (SELECT COUNT(r.r_id) FROM reviews r WHERE rc.rc_id = r.r_category) FROM reviews_categories rc;
 
 --  4. Написать запрос, показывающий список категорий новостей, категорий обзоров и дату самой свежей публикации в каждой категории.
 --  
