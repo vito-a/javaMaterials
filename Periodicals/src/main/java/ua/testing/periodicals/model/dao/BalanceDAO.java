@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.service.UsersService;
 
+/**
+ * The Balance DAO.
+ */
 @Repository
 public class BalanceDAO {
 
@@ -24,14 +27,31 @@ public class BalanceDAO {
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Find transaction by balance transaction ID.
+     *
+     * @param id the id
+     * @return the balance transaction
+     */
     public BalanceTransaction findTransactionById(Long id) {
         return this.entityManager.find(BalanceTransaction.class, id);
     }
 
+    /**
+     * Find user by user id.
+     *
+     * @param id the id
+     * @return the user
+     */
     public User findUserById(Long id) {
         return usersService.get(id);
     }
 
+    /**
+     * Balance transactions info list.
+     *
+     * @return the list
+     */
     public List<BalanceTransactionInfo> listBalanceTransactionInfo() {
         String sql = "Select new " + BalanceTransactionInfo.class.getName() //
                 + "(e.id,e.periodical_id,e.amount) " //
@@ -40,7 +60,14 @@ public class BalanceDAO {
         return query.getResultList();
     }
 
-    // MANDATORY: Transaction must be created before.
+    /**
+     * Add amount.
+     *
+     * @param id     the id
+     * @param amount the amount
+     * @throws BalanceTransactionException the balance transaction exception
+     */
+// MANDATORY: Transaction must be created before.
     @Transactional(propagation = Propagation.MANDATORY )
     public void addAmount(Long id, double amount) throws BalanceTransactionException {
         User user = this.findUserById(id);
@@ -55,10 +82,26 @@ public class BalanceDAO {
         user.setBalance(newBalance);
     }
 
+    /**
+     * Add balance transaction.
+     *
+     * @param fromUserId      the from user id
+     * @param forPeriodicalId the for periodical id
+     * @param amount          the amount
+     */
     public void addBalanceTransaction (Long fromUserId, Long forPeriodicalId, double amount) {
     }
 
-    // Do not catch BalanceTransactionException in this method.
+    /**
+     * Send money.
+     *
+     * @param fromUserId      the from user id
+     * @param forPeriodicalId the for periodical id
+     * @param amount          the amount
+     * @throws BalanceTransactionException the balance transaction exception
+     *
+     * TODO: Do not catch BalanceTransactionException in this method.
+     */
     @Transactional(propagation = Propagation.REQUIRES_NEW,
             rollbackFor = BalanceTransactionException.class)
     public void sendMoney(Long fromUserId, Long forPeriodicalId, double amount) throws BalanceTransactionException {
