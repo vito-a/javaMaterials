@@ -23,6 +23,9 @@ import ua.testing.periodicals.repository.UserRepository;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * The Periodicals application tests.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DataJpaTest
@@ -38,6 +41,9 @@ public class PeriodicalsApplicationTests {
     @Autowired
     private RoleRepository roleRepo;
 
+    /**
+     * Test user creation.
+     */
     @Test
     public void testCreateUser() {
         User user = new User();
