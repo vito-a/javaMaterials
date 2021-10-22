@@ -15,6 +15,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The Subscriptions service.
+ */
 @Service
 public class SubscriptionsService {
     @Autowired
@@ -22,6 +25,12 @@ public class SubscriptionsService {
 
     private static final Logger logger = LoggerFactory.getLogger(SubscriptionsService.class);
 
+    /**
+     * List all subscriptions.
+     *
+     * @param date_keyword the date keyword
+     * @return the subscriptions list
+     */
     public List<Subscription> listAll(String date_keyword) {
         Optional<String> optionalDateKeyword = Optional.ofNullable(date_keyword);
         List<Subscription> subscriptionList = subscriptionsRepo.findAll();
@@ -33,6 +42,12 @@ public class SubscriptionsService {
         return subscriptionList;
     }
 
+    /**
+     * Search list.
+     *
+     * @param date_keyword the date keyword
+     * @return the subscriptions list
+     */
     public List<Subscription> search(String date_keyword) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         List<Subscription> subscriptionList;
@@ -50,6 +65,11 @@ public class SubscriptionsService {
         return subscriptionList;
     }
 
+    /**
+     * Save subscription.
+     *
+     * @param subscription the subscription object
+     */
     public void save(Subscription subscription) {
         try {
             subscriptionsRepo.save(subscription);

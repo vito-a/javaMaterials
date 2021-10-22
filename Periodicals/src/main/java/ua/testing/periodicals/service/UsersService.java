@@ -18,6 +18,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The Users service.
+ */
 @Getter
 @Service
 public class UsersService {
@@ -35,6 +38,12 @@ public class UsersService {
     @Value("${periodicals.lock_time_duration:3600000L}")
     private long lockTimeDuration;
 
+    /**
+     * List all list.
+     *
+     * @param keyword the keyword
+     * @return the list
+     */
     public List<User> listAll(String keyword) {
         Optional<String> optionalKeyword = Optional.ofNullable(keyword);
         if (optionalKeyword.isPresent()) {
@@ -43,18 +52,42 @@ public class UsersService {
         return usersRepo.findAll();
     }
 
+    /**
+     * Save.
+     *
+     * @param user the user object
+     */
     public void save(User user) {
         usersRepo.save(user);
     }
 
+    /**
+     * Get user.
+     *
+     * @param userId the user id
+     * @return the user object
+     */
     public User get(Long userId) {
         return usersRepo.findById(userId).orElseGet(User::new);
     }
 
+    /**
+     * Delete.
+     *
+     * @param userId the user id
+     */
     public void delete(Long userId) {
         usersRepo.deleteById(userId);
     }
 
+    /**
+     * Check subscription boolean.
+     *
+     * @param userId the user id
+     * @param subId  the sub id
+     * @return the boolean
+     * @throws DBException the db exception
+     */
     public boolean checkSubscription(long userId, long subId) throws DBException {
         boolean result;
         try {
@@ -68,12 +101,24 @@ public class UsersService {
         return result;
     }
 
+    /**
+     * Update balance.
+     *
+     * @param user  the user
+     * @param price the balance price
+     */
     @ModelAttribute("userId")
     public void updateBalance(User user, Long price) {
         user.setBalance(user.getBalance() - price);
         usersRepo.save(user);
     }
 
+    /**
+     * Increase failed attempts int.
+     *
+     * @param user the user
+     * @return the failed attempts number
+     */
     @Transactional
     public int increaseFailedAttempts(User user) {
         int newFailAttempts = user.getFailedAttempt() + 1;
@@ -82,6 +127,12 @@ public class UsersService {
         return newFailAttempts;
     }
 
+    /**
+     * Reset failed attempts integer.
+     *
+     * @param email the email
+     * @return the reset failed attempts number
+     */
     @Transactional
     public Integer resetFailedAttempts(String email) {
         usersRepo.updateFailedAttempts(0, email);
@@ -89,6 +140,12 @@ public class UsersService {
         return 0;
     }
 
+    /**
+     * Lock int.
+     *
+     * @param user the user
+     * @return the max failed attempts number for locked user
+     */
     public int lock(User user) {
         user.setAccountNonLocked(false);
         user.setLockTime(new Date());
@@ -96,6 +153,12 @@ public class UsersService {
         return maxFailedAttempts;
     }
 
+    /**
+     * Unlock when time expired boolean.
+     *
+     * @param user the user
+     * @return the locked/unlocked status
+     */
     public boolean unlockWhenTimeExpired(User user) {
         long lockTimeInMillis = user.getLockTime().getTime();
         long currentTimeInMillis = System.currentTimeMillis();
@@ -111,11 +174,23 @@ public class UsersService {
         return false;
     }
 
+    /**
+     * Check failed attempt integer.
+     *
+     * @param user the user
+     * @return the failed attempts number for a user
+     */
     public Integer checkFailedAttempt(User user) {
         return user.isEnabled() && user.isAccountNonLocked() && (user.getFailedAttempt() < maxFailedAttempts - 1) ?
                 increaseFailedAttempts(user) : lock(user);
     }
 
+    /**
+     * Gets user by email.
+     *
+     * @param email the email
+     * @return the user object
+     */
     public Optional<User> getUserByEmail(String email) {
         return usersRepo.getUserByEmail(email);
     }

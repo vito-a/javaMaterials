@@ -18,6 +18,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The Periodicals service.
+ */
 @Service
 public class PeriodicalsService {
     @Autowired
@@ -31,6 +34,12 @@ public class PeriodicalsService {
 
     private static final Logger logger = LoggerFactory.getLogger(PeriodicalsService.class);
 
+    /**
+     * List all periodicals.
+     *
+     * @param keyword the search keyword
+     * @return the periodicals list
+     */
     public List<Periodical> listAll(String keyword) {
         Optional<String> optionalKeyword = Optional.ofNullable(keyword);
         if (optionalKeyword.isPresent()) {
@@ -39,6 +48,14 @@ public class PeriodicalsService {
         return periodicalsRepo.findAll();
     }
 
+    /**
+     * List all periodicals page.
+     *
+     * @param pageNum   the page num
+     * @param sortField the sort field
+     * @param sortDir   the sort dir
+     * @return the periodical paginated object
+     */
     public Page<Periodical> listAll(int pageNum, String sortField, String sortDir) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending()
@@ -48,6 +65,11 @@ public class PeriodicalsService {
         return periodicalsRepo.findAll(pageable);
     }
 
+    /**
+     * Save periodical.
+     *
+     * @param periodical the periodical object
+     */
     public void save(Periodical periodical) {
         try {
             periodicalsRepo.save(periodical);
@@ -58,6 +80,15 @@ public class PeriodicalsService {
         }
     }
 
+    /**
+     * Subscribe.
+     *
+     * @param periodicalId the periodical id
+     * @param userId       the user id
+     * @param startDate    the start date
+     * @param endDate      the end date
+     * @throws DBException the DB exception
+     */
     public void subscribe(Long periodicalId, Long userId, LocalDate startDate, LocalDate endDate) throws DBException {
         try {
             Subscription subscription = new Subscription(userId, periodicalId, startDate, endDate);
@@ -69,14 +100,30 @@ public class PeriodicalsService {
         }
     }
 
+    /**
+     * Get optional.
+     *
+     * @return the optional periodical object
+     */
     public Optional<Periodical> get() {
         return Optional.of(new Periodical());
     }
 
+    /**
+     * Get optional.
+     *
+     * @param id the id
+     * @return the optional periodical object
+     */
     public Optional<Periodical> get(Long id) {
         return periodicalsRepo.findById(id);
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the periodical id
+     */
     public void delete(Long id) {
         periodicalsRepo.deleteById(id);
     }

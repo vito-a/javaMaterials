@@ -9,11 +9,20 @@ import ua.testing.periodicals.repository.CategoriesRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The Categories service.
+ */
 @Service
 public class CategoriesService {
     @Autowired
     private CategoriesRepository categoriesRepo;
 
+    /**
+     * List all list.
+     *
+     * @param keyword the keyword
+     * @return the categories list
+     */
     public List<Category> listAll(String keyword) {
         Optional<String> optionalKeyword = Optional.ofNullable(keyword);
         if (optionalKeyword.isPresent() && !optionalKeyword.equals(Optional.empty())) {

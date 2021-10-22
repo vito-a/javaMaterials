@@ -10,6 +10,9 @@ import ua.testing.periodicals.repository.UserRepository;
 
 import java.util.Optional;
 
+/**
+ * The custom Spring User Details service.
+ */
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
