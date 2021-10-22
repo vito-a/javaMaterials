@@ -41,7 +41,7 @@ public class UsersService {
     /**
      * List all list.
      *
-     * @param keyword the keyword
+     * @param keyword the search keyword
      * @return the list
      */
     public List<User> listAll(String keyword) {
@@ -179,6 +179,9 @@ public class UsersService {
      *
      * @param user the user
      * @return the failed attempts number for a user
+     *
+     * TODO: check 2 requests in the method
+     * TODO: do JavaDOCs like in Java
      */
     public Integer checkFailedAttempt(User user) {
         return user.isEnabled() && user.isAccountNonLocked() && (user.getFailedAttempt() < maxFailedAttempts - 1) ?

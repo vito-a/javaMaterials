@@ -44,6 +44,10 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
      * @param exception         the exception thrown
      * @throws IOException      the generic IO exception
      * @throws ServletException the generic Servlet exception
+     *
+     * TODO: check possible unused variables
+     * TODO: split into two or three private methods
+     * TODO: Transactional move to atomic methods
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
