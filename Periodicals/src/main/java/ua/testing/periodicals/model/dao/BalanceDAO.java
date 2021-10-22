@@ -99,8 +99,6 @@ public class BalanceDAO {
      * @param forPeriodicalId the for periodical id
      * @param amount          the amount
      * @throws BalanceTransactionException the balance transaction exception
-     *
-     * TODO: Do not catch BalanceTransactionException in this method.
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW,
             rollbackFor = BalanceTransactionException.class)

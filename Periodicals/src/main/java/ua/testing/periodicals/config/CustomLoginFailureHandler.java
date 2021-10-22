@@ -17,6 +17,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import ua.testing.periodicals.controller.PeriodicalController;
+import ua.testing.periodicals.model.dao.BalanceTransactionException;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.UserRepository;
 import ua.testing.periodicals.service.UsersService;
@@ -38,9 +39,11 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
     /**
      * The AuthenticationFailure event handler.
      *
-     * @param request     the request
-     * @param response    the response
-     * @param exception   the exception thrown
+     * @param request           the request
+     * @param response          the response
+     * @param exception         the exception thrown
+     * @throws IOException      the generic IO exception
+     * @throws ServletException the generic Servlet exception
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
