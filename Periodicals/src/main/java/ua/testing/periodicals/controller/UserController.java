@@ -90,6 +90,9 @@ public class UserController {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setEnabled(STATUS_ENABLED);
+        user.setAccountNonLocked(true);
+        user.setLockTime(null);
+        user.setFailedAttempt(0);
         Role userRole = roleRepo.findByName(ROLE_USER);
         user.setRoles(new HashSet<>(List.of(userRole)));
         Optional<String> fullName = Optional.ofNullable(user.getFullName());
