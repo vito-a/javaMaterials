@@ -12,10 +12,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ua.testing.periodicals.controller.PeriodicalController;
 
+/**
+ * The Custom user details.
+ */
 public class CustomUserDetails implements UserDetails {
  
     private final User user;
-     
+
+    /**
+     * Instantiates a new custom Spring Security User Details.
+     *
+     * @param user the user
+     */
     public CustomUserDetails(User user) {
         this.user = user;
     }
@@ -63,7 +71,12 @@ public class CustomUserDetails implements UserDetails {
  
     @Override
     public boolean isEnabled() { return user.isEnabled(); }
-     
+
+    /**
+     * Gets full name.
+     *
+     * @return the full name
+     */
     public String getFullName() {
         if ((user.getFullName() == null) || user.getFullName().isEmpty()) {
             return user.getFirstName() + " " + user.getLastName();

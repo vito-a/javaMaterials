@@ -18,7 +18,7 @@ public class DBException extends Exception {
     /**
      * Instantiates a new Db exception.
      *
-     * @param message the message
+     * @param message the exception message
      */
     public DBException(String message) {
         super(message);

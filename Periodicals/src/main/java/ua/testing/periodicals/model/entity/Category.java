@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * The Category entity.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
