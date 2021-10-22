@@ -32,6 +32,9 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     private static final Logger logger = LoggerFactory.getLogger(UsersService.class);
 
+    /**
+     * The AuthenticationSuccess event handler.
+     */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
