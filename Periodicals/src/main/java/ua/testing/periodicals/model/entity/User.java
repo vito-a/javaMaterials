@@ -10,6 +10,9 @@ import java.util.Set;
 
 import static ua.testing.periodicals.model.constants.Constants.USER_ID;
 
+/**
+ * The User entity.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

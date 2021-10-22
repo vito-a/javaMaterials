@@ -7,6 +7,9 @@ import javax.persistence.*;
 import static ua.testing.periodicals.model.constants.Constants.PERIODICAL_ID;
 import static ua.testing.periodicals.model.constants.Constants.CATEGORY_ID;
 
+/**
+ * The Periodical entity.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

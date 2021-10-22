@@ -9,6 +9,9 @@ import static ua.testing.periodicals.model.constants.Constants.USER_ID;
 import static ua.testing.periodicals.model.constants.Constants.PERIODICAL_ID;
 import static ua.testing.periodicals.model.constants.Constants.SUBSCRIPTION_ID;
 
+/**
+ * The Subscription entity.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -32,6 +35,14 @@ public class Subscription {
     @Column(name = "enddate", nullable = false)
     private LocalDate enddate;
 
+    /**
+     * Instantiates a new Subscription.
+     *
+     * @param userId       the user id
+     * @param periodicalId the periodical id
+     * @param startDate    the Subscription start date
+     * @param endDate      the Subscription end date
+     */
     public Subscription(Long userId, Long periodicalId, LocalDate startDate, LocalDate endDate) {
         this.userId = userId;
         this.periodicalId = periodicalId;

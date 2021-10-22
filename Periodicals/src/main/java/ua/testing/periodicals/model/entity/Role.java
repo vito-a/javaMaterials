@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * The Role entity.
+ */
 @Getter
 @Setter
 @Entity
@@ -16,6 +19,12 @@ public class Role {
     private Integer id;
     @Column(name = "name")
     private String name;
+
+    /**
+     * Gets id.
+     *
+     * @return the role id
+     */
     public Integer getId() {
         return id;
     }
