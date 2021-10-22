@@ -16,7 +16,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 /**
- * The type Config.
+ * The application MVC Configurer Config class.
  */
 @Configuration
 public class Config implements WebMvcConfigurer {
@@ -29,7 +29,7 @@ public class Config implements WebMvcConfigurer {
     }
 
     /**
-     * Locale change interceptor.
+     * Spring Locale change interceptor.
      *
      * @return the locale change interceptor
      */
@@ -41,7 +41,7 @@ public class Config implements WebMvcConfigurer {
     }
 
     /**
-     * Locale resolver.
+     * Spring Locale resolver.
      *
      * @return the locale resolver
      */
@@ -51,7 +51,7 @@ public class Config implements WebMvcConfigurer {
     }
 
     /**
-     * Instantiates a new Config.
+     * Instantiates a new application Config.
      *
      * @param applicationContext the application context
      */
@@ -63,7 +63,7 @@ public class Config implements WebMvcConfigurer {
     /**
      * Spring resource template resolver.
      *
-     * @return the spring resource template resolver
+     * @return the spring resource template resolver object
      */
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
@@ -71,13 +71,14 @@ public class Config implements WebMvcConfigurer {
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/");
         templateResolver.setSuffix(".html");
+
         return templateResolver;
     }
 
     /**
      * Template engine spring template engine.
      *
-     * @return the spring template engine
+     * @return the spring template engine object
      */
     @Bean
     public SpringTemplateEngine templateEngine() {
@@ -86,6 +87,7 @@ public class Config implements WebMvcConfigurer {
         templateEngine.setEnableSpringELCompiler(true);
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setEnableSpringELCompiler(true);
+
         return templateEngine;
     }
 

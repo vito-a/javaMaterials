@@ -5,6 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * The Periodicals application.
+ *
+ * Uses Spring Boot, Spring Security, Lombok, MySQL and Thymeleaf
+ *
+ * @see SpringApplication
+ * @see SpringBootApplication
+ *
  */
 @SpringBootApplication
 public class PeriodicalsApplication {

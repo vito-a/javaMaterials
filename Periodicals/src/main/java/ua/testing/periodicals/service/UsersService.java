@@ -39,7 +39,7 @@ public class UsersService {
     private long lockTimeDuration;
 
     /**
-     * List all list.
+     * List all users.
      *
      * @param keyword the search keyword
      * @return the list
@@ -53,7 +53,7 @@ public class UsersService {
     }
 
     /**
-     * Save.
+     * Save user.
      *
      * @param user the user object
      */
@@ -62,7 +62,7 @@ public class UsersService {
     }
 
     /**
-     * Get user.
+     * Get user by ID.
      *
      * @param userId the user id
      * @return the user object
@@ -128,9 +128,9 @@ public class UsersService {
     }
 
     /**
-     * Reset failed attempts integer.
+     * Reset the failed attempts count.
      *
-     * @param email the email
+     * @param email the user email
      * @return the reset failed attempts number
      */
     @Transactional
@@ -143,7 +143,7 @@ public class UsersService {
     /**
      * Lock int.
      *
-     * @param user the user
+     * @param user the user object
      * @return the max failed attempts number for locked user
      */
     public int lock(User user) {
@@ -156,7 +156,7 @@ public class UsersService {
     /**
      * Unlock when time expired boolean.
      *
-     * @param user the user
+     * @param user the user object
      * @return the locked/unlocked status
      */
     public boolean unlockWhenTimeExpired(User user) {
@@ -168,6 +168,7 @@ public class UsersService {
             user.setLockTime(null);
             user.setFailedAttempt(0);
             usersRepo.save(user);
+
             return true;
         }
 
