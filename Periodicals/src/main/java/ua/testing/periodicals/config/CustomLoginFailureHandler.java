@@ -35,6 +35,9 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
 
     private static final Logger logger = LoggerFactory.getLogger(PeriodicalController.class);
 
+    /**
+     * The AuthenticationFailure event handler.
+     */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
