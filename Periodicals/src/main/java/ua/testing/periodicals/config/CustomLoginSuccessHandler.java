@@ -34,6 +34,10 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     /**
      * The AuthenticationSuccess event handler.
+     *
+     * @param request         the request
+     * @param response        the response
+     * @param authentication  the authentication object
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,

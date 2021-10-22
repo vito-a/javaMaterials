@@ -37,6 +37,10 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
 
     /**
      * The AuthenticationFailure event handler.
+     *
+     * @param request     the request
+     * @param response    the response
+     * @param exception   the exception thrown
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
