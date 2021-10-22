@@ -27,6 +27,9 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * The User controller.
+ */
 @Controller
 public class UserController {
 
@@ -62,6 +65,12 @@ public class UserController {
         return userName;
     }
 
+    /**
+     * Show registration form string.
+     *
+     * @param model the model
+     * @return signup form template name
+     */
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
@@ -69,6 +78,12 @@ public class UserController {
         return "signup_form.html";
     }
 
+    /**
+     * Process register string.
+     *
+     * @param user the user
+     * @return registered successfully template name
+     */
     @PostMapping("/process_register")
     public String processRegister(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -87,6 +102,14 @@ public class UserController {
         return "register_success";
     }
 
+    /**
+     * Subscribe periodical string.
+     *
+     * @param userId       the user id
+     * @param periodicalId the periodical id
+     * @return the string
+     * @throws DBException the db exception
+     */
     @RequestMapping("/periodical/subscribe/{user_id}/{periodical_id}")
     public String subscribePeriodical(@PathVariable(name = "user_id") Long userId,
                                       @PathVariable(name = "periodical_id") Long periodicalId) throws DBException {
@@ -124,6 +147,12 @@ public class UserController {
         return "redirect:/periodicals";
     }
 
+    /**
+     * Replenish account string.
+     *
+     * @param model the model
+     * @return the account replenish template name
+     */
     @GetMapping("/user/replenish_account")
     public String replenishAccount(Model model) {
         String username = getCurrentUserName();
@@ -132,6 +161,12 @@ public class UserController {
         return "user/replenish_account.html";
     }
 
+    /**
+     * Process replenish string.
+     *
+     * @param user the user
+     * @return the account replenish success template name
+     */
     @Transactional
     @PostMapping("/user/process_replenish")
     public String processReplenish(User user) {

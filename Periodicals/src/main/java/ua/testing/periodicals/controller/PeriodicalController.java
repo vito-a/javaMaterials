@@ -16,6 +16,9 @@ import ua.testing.periodicals.service.UsersService;
 
 import java.util.Optional;
 
+/**
+ * The Periodical controller.
+ */
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
 public class PeriodicalController {
@@ -33,6 +36,12 @@ public class PeriodicalController {
 
     private static final Logger logger = LoggerFactory.getLogger(PeriodicalController.class);
 
+    /**
+     * Show new periodical form string.
+     *
+     * @param model the model
+     * @return new periodical template name
+     */
     @RequestMapping("/periodical/new")
     public String showNewPeriodicalForm(Model model) {
         Periodical periodical = new Periodical();
@@ -40,14 +49,26 @@ public class PeriodicalController {
 
         return "periodical/new_periodical.html";
     }
-    
+
+    /**
+     * Save periodical string.
+     *
+     * @param periodical the periodical
+     * @return periodical save template name
+     */
     @RequestMapping(value = "/periodical/save", method = RequestMethod.POST)
     public String savePeriodical(@ModelAttribute("periodical") Periodical periodical) {
         periodicalService.save(periodical);
 
         return "redirect:/periodicals";
     }
-    
+
+    /**
+     * Show edit periodical form model and view.
+     *
+     * @param periodicalId the periodical id
+     * @return the model and view
+     */
     @RequestMapping("/periodical/edit/{id}")
     public ModelAndView showEditPeriodicalForm(@PathVariable(name = "id") Long periodicalId) {
         ModelAndView mav = new ModelAndView("periodical/edit_periodical.html");
@@ -56,6 +77,12 @@ public class PeriodicalController {
         return mav;
     }
 
+    /**
+     * Delete periodical string.
+     *
+     * @param periodicalId the periodical id
+     * @return periodicals list template name
+     */
     @RequestMapping("/periodical/delete/{id}")
     public String deletePeriodical(@PathVariable(name = "id") Long periodicalId) {
         periodicalService.delete(periodicalId);
