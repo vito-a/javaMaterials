@@ -11,11 +11,9 @@ String getFormattedDate(){
 %>
 
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Doctor App</title>
-</head>
+    <jsp:include page="WEB-INF/fragments/head.jsp"/>
     <body>
+        <jsp:include page="WEB-INF/fragments/header.jsp"/>
         <h2>
             Hello WEB! <br/>
             <i>Сегодня <%= getFormattedDate() %></i>
@@ -28,5 +26,6 @@ String getFormattedDate(){
             <input type="submit"/>
         </form>-->
         <a href="${pageContext.request.contextPath}/api/students">Click here to see servlet</a>
+        <jsp:include page="WEB-INF/fragments/footer.jsp"/>
     </body>
 </html>
