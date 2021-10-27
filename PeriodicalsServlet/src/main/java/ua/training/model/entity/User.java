@@ -11,9 +11,11 @@ import static ua.training.model.constants.Constants.USER_ID;
 /**
  * The User entity.
  */
-@Entity
-@Table( name="users",
+/*
+( name="users",
         uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
+
+ */
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

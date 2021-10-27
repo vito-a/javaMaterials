@@ -54,8 +54,8 @@ public class Servlet extends HttpServlet {
         Command command = commands.getOrDefault(path, (r) -> "/index.jsp)");
         String page = command.execute(request);
         if (page.contains("redirect:")) {
-            // response.sendRedirect(page.replace("redirect:", "/"));
-            request.getRequestDispatcher(page.replace("redirect:", "/")).forward(request, response);
+            response.sendRedirect(page.replace("redirect:/", "/"));
+            // request.getRequestDispatcher(page.replace("redirect:", "/")).forward(request, response);
         } else {
             request.getRequestDispatcher(page).forward(request, response);
             //chain.doFilter(request, response);
