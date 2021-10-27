@@ -1,23 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, java.text.*" %>
 
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Login Page</title>
-</head>
-<body>
+<jsp:include page="/WEB-INF/fragments/head.jsp"/>
+<jsp:include page="/WEB-INF/fragments/header.jsp"/>
 
-        <h1>Вход в систему</h1><br/>
-        <form method="get" action="${pageContext.request.contextPath}/app/login">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false"%>
+<%@ page import="java.util.*, java.text.*" %>
 
-            <input type="text" name="name"><br/>
-            <input type="password" name="pass"><br/><br/>
-            <input class="button" type="submit" value="Войти">
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty language ? language : not empty sessionScope.lang ? sessionScope.lang : not empty cookie['lang'].value ? cookie['lang'].value : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<fmt:setBundle basename="messages" />
 
-        </form>
-        <br/>
-        <a href="${pageContext.request.contextPath}/app/logout">На головну</a>
+    <h2>
+        <fmt:message key="menu.greeting" /> <br/>
+    </h2>
 
-</body>
-</html>
+    <h1>Login</h1><br/>
+    <form method="get" action="${pageContext.request.contextPath}/app/login">
+        <input type="text" name="name"><br/>
+        <input type="password" name="pass"><br/><br/>
+        <input class="button" type="submit" value="Login">
+    </form>
+    <br/>
+    <a href="${pageContext.request.contextPath}/app/logout">Logout</a>
+
+<jsp:include page="/WEB-INF/fragments/footer.jsp"/>

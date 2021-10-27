@@ -1,23 +1,24 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<%@ page language="java" isErrorPage="true"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.text.*" %>
 
+<jsp:include page="/WEB-INF/fragments/head.jsp"/>
+<jsp:include page="/WEB-INF/fragments/header.jsp"/>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false"%>
+<%@ page import="java.util.*, java.text.*" %>
 
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Error Page</title>
-</head>
-    <body>
-        <h2>
-           Error Page<br/>
-            <i>Error <%= exception %></i>
-        </h2>
-    <br>
-        <a href="${pageContext.request.contextPath}/index.jsp">Index</a>
+<%@ page isErrorPage="true" %>
+<%@ page import="java.util.*, java.text.*" %>
 
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty language ? language : not empty sessionScope.lang ? sessionScope.lang : not empty cookie['lang'].value ? cookie['lang'].value : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<fmt:setBundle basename="messages" />
 
-    </body>
-</html>
+    <h2>
+       Error Page<br/>
+        <i>Error <%= exception %></i>
+    </h2>
+    <a href="${pageContext.request.contextPath}/index.jsp">Home</a>
+
+<jsp:include page="/WEB-INF/fragments/footer.jsp"/>
