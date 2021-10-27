@@ -6,9 +6,9 @@ import ua.training.model.service.StudentService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class StudentListCommand implements Command {
+public class StudentList implements Command {
 
-    public StudentListCommand(StudentService studentService) {
+    public StudentList(StudentService studentService) {
         this.studentService = studentService;
     }
 

@@ -16,7 +16,7 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain filterChain) throws IOException, ServletException {
-/*
+
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
@@ -25,7 +25,6 @@ public class AuthFilter implements Filter {
         System.out.println(session);
         System.out.println(session.getAttribute("role"));
         System.out.println(context.getAttribute("loggedUsers"));
- */
 
         filterChain.doFilter(request,response);
     }

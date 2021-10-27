@@ -6,9 +6,8 @@
 <%@ page isELIgnored="false"%>
 <%@ page import="java.util.*, java.text.*" %>
 
-<c:set var="lang" value="${not empty param.lang ? param.lang : not empty language ? language : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${lang}" />
-<fmt:setBundle basename="messages" />
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
 
 <html lang="${cookie['lang'].value}">
 

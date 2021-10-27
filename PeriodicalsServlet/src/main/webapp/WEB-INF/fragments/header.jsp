@@ -29,16 +29,16 @@
                     </button>
                     <div class="dropdown-menu" id="language-dropdown">
                         <button class="dropdown-item" type="button">
-                            <a href="${pageContext.request.contextPath}/app/locale?lang=en"><fmt:message key="lang.EN" />EN</a>
+                            <a href="${pageContext.request.contextPath}?lang=en"><fmt:message key="lang.EN" />EN</a>
                         </button>
                         <button class="dropdown-item" type="button">
-                            <a href="${pageContext.request.contextPath}/app/locale?lang=fr"><fmt:message key="lang.FR" />FR</a>
+                            <a href="${pageContext.request.contextPath}?lang=fr"><fmt:message key="lang.FR" />FR</a>
                         </button>
                         <button class="dropdown-item" type="button">
-                            <a href="${pageContext.request.contextPath}/app/locale?lang=ru"><fmt:message key="lang.RU" />RU</a>
+                            <a href="${pageContext.request.contextPath}?lang=ru"><fmt:message key="lang.RU" />RU</a>
                         </button>
                         <button class="dropdown-item" type="button">
-                            <a href="${pageContext.request.contextPath}/app/locale?lang=ua"><fmt:message key="lang.UA" />UA</a>
+                            <a href="${pageContext.request.contextPath}?lang=ua"><fmt:message key="lang.UA" />UA</a>
                         </button>
                     </div>
                 </div>

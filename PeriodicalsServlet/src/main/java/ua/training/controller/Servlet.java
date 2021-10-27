@@ -3,17 +3,15 @@ package ua.training.controller;
 import ua.training.controller.commands.*;
 import ua.training.controller.commands.Registration;
 import ua.training.controller.commands.Exception;
-import ua.training.controller.commands.StudentListCommand;
+import ua.training.controller.commands.StudentList;
 import ua.training.model.service.StudentService;
 
-import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Servlet extends HttpServlet {
@@ -22,12 +20,12 @@ public class Servlet extends HttpServlet {
     Map<String, Command> commands = new HashMap<>();
 
     public void init(){
-        commands.put("students", new StudentListCommand(new StudentService()));
+        commands.put("students", new StudentList(new StudentService()));
         commands.put("logout", new LogOut());
         commands.put("login", new Login());
         commands.put("registration", new Registration());
         commands.put("exception" , new Exception());
-        commands.put("locale", new ChangeLocaleCommand());
+        commands.put("locale", new Locale());
     }
     
     public void doGet(HttpServletRequest request,
