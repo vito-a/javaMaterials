@@ -52,6 +52,7 @@ public class AdminController {
     @GetMapping("/users")
     public String listUsers(Model model) {
         List<User> listUsers = userRepo.findAll();
+
         model.addAttribute("listUsers", listUsers);
 
         return "users.html";
