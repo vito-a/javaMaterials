@@ -7,6 +7,6 @@ public class Registration implements Command {
     public String execute(HttpServletRequest request) {
 
         //ToDo Service Registration Form
-        return "/registration.jsp";
+        return "/WEB-INF/registration.jsp";
     }
 }

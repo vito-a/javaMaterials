@@ -4,9 +4,9 @@ import ua.training.controller.commands.*;
 import ua.training.controller.commands.Registration;
 import ua.training.controller.commands.Exception;
 import ua.training.controller.commands.StudentListCommand;
-import ua.training.model.entity.Student;
 import ua.training.model.service.StudentService;
 
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +27,7 @@ public class Servlet extends HttpServlet {
         commands.put("login", new Login());
         commands.put("registration", new Registration());
         commands.put("exception" , new Exception());
+        commands.put("locale", new ChangeLocaleCommand());
     }
     
     public void doGet(HttpServletRequest request,
@@ -55,9 +56,11 @@ public class Servlet extends HttpServlet {
         Command command = commands.getOrDefault(path, (r) -> "/index.jsp)");
         String page = command.execute(request);
         if (page.contains("redirect:")) {
-            response.sendRedirect(page.replace("redirect:", "/api"));
+            // response.sendRedirect(page.replace("redirect:", "/"));
+            request.getRequestDispatcher(page.replace("redirect:", "/")).forward(request, response);
         } else {
             request.getRequestDispatcher(page).forward(request, response);
+            //chain.doFilter(request, response);
         }
         //  response.getWriter().print("Hello from servlet");
     }

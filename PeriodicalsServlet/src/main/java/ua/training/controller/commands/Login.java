@@ -9,9 +9,9 @@ public class Login implements Command {
         String pass = request.getParameter("pass");
         System.out.println(name + " " + pass);
         if ( name == null || name.equals("") || pass == null || pass.equals("")  ) {
-            return "/login.jsp";
+            return "/WEB-INF/login.jsp";
         }
         // TODO go to Service Login Form
-        return "/login.jsp";
+        return "/WEB-INF/login.jsp";
     }
 }

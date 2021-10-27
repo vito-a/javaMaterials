@@ -1,31 +1,44 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.text.*" %>
 
-<%!
-String getFormattedDate(){
-    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
-    return sdf.format(new Date());
-}
-%>
+<jsp:include page="/WEB-INF/fragments/head.jsp"/>
+<jsp:include page="/WEB-INF/fragments/header.jsp"/>
 
-<html>
-    <jsp:include page="WEB-INF/fragments/head.jsp"/>
-    <body>
-        <jsp:include page="WEB-INF/fragments/header.jsp"/>
-        <h2>
-            Hello WEB! <br/>
-            <i>Сегодня <%= getFormattedDate() %></i>
-        </h2>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false"%>
+<%@ page import="java.util.*, java.text.*" %>
+
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty language ? language : not empty sessionScope.lang ? sessionScope.lang : not empty cookie['lang'].value ? cookie['lang'].value : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<fmt:setBundle basename="messages" />
+
+    <h2>
+        <fmt:message key="menu.greeting" /> <br/>
+    </h2>
 
         <br/>
-        <a href="./servlet">Click here to see servlet</a>
+            <a href="${pageContext.request.contextPath}/app/login">Login</a>
+        <br/>
+            <a href="${pageContext.request.contextPath}/app/registration">Registration form</a>
+        <br/>
+            <a href="${pageContext.request.contextPath}/app/students">Students</a>
+        <br/>
+            <a href="${pageContext.request.contextPath}/app/exception">Exception</a>
+        <br/><br/>
+            <a href="${pageContext.request.contextPath}/?sessionLocale=en">Session Locale - EN</a>
+        <br/>
+            <a href="${pageContext.request.contextPath}/?sessionLocale=fr">Session Locale - FR</a>
+        <br/>
+            <a href="${pageContext.request.contextPath}/?sessionLocale=ru">Session Locale - RU</a>
+        <br/>
+            <a href="${pageContext.request.contextPath}/?sessionLocale=ua">Session Locale - UA</a>
+        <br/><br/>
+            <a href="${pageContext.request.contextPath}/?cookieLocale=en">Cookie Locale - EN</a>
+        <br/>
+            <a href="${pageContext.request.contextPath}/?cookieLocale=fr">Cookie Locale - FR</a>
+        <br/>
+            <a href="${pageContext.request.contextPath}/?cookieLocale=ru">Cookie Locale - RU</a>
+        <br/>
+            <a href="${pageContext.request.contextPath}/?cookieLocale=ua">Cookie Locale - UA</a>
         <br>
-      <!--  <form method="POST" action="./servlet">
-            <input type="submit"/>
-        </form>-->
-        <a href="${pageContext.request.contextPath}/api/students">Click here to see servlet</a>
-        <jsp:include page="WEB-INF/fragments/footer.jsp"/>
-    </body>
-</html>
+<jsp:include page="/WEB-INF/fragments/footer.jsp"/>

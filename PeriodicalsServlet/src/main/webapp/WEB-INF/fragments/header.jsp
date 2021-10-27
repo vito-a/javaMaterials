@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">Periodicals</a>
     <div class="collapse navbar-collapse" id="navbarColor01">
@@ -31,16 +29,16 @@
                     </button>
                     <div class="dropdown-menu" id="language-dropdown">
                         <button class="dropdown-item" type="button">
-                            <a href="/?lang=en">EN</a>
+                            <a href="${pageContext.request.contextPath}/app/locale?lang=en"><fmt:message key="lang.EN" />EN</a>
                         </button>
                         <button class="dropdown-item" type="button">
-                            <a href="/?lang=fr">FR</a>
+                            <a href="${pageContext.request.contextPath}/app/locale?lang=fr"><fmt:message key="lang.FR" />FR</a>
                         </button>
                         <button class="dropdown-item" type="button">
-                            <a href="/?lang=ru">RU</a>
+                            <a href="${pageContext.request.contextPath}/app/locale?lang=ru"><fmt:message key="lang.RU" />RU</a>
                         </button>
                         <button class="dropdown-item" type="button">
-                            <a href="/?lang=ua">UA</a>
+                            <a href="${pageContext.request.contextPath}/app/locale?lang=ua"><fmt:message key="lang.UA" />UA</a>
                         </button>
                     </div>
                 </div>
@@ -58,7 +56,7 @@
             <li class="nav-item">
                 <div>
                     <div class="nav-link float-left ml-2 text-white">
-                        Hi!
+                        <fmt:message key="menu.greeting" />
                     </div>
                     <a class="nav-link float-left" href="/logout" onclick="$('#logout-form').submit();">Logout</a>
                 </div>
