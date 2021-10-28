@@ -14,8 +14,16 @@ import static ua.training.model.constants.Constants.USER_ID;
  */
 public class User implements Serializable {
     private static final long serialVersionUID = 2054602555563947985L;
-    private long id;
+    private long userId;
     private String login;
+    private String username;
+    private String fullname;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private boolean accountNonLocked;
+    private int failedAttempt;
+    private Date lockTime;
     private String password;
     private String name;
     private boolean enabled;
@@ -34,8 +42,8 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int id, String name, Boolean enabled, long roleId) {
-        this.id = id;
+    public User(int userId, String name, Boolean enabled, long roleId) {
+        this.userId = userId;
         this.name = name;
         this.enabled = enabled;
         this.roleId = roleId;
@@ -46,11 +54,11 @@ public class User implements Serializable {
     }
 
     public long getId() {
-        return id;
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId(long userId) {
+        this.userId = userId;
     }
 
     public String getLogin() {
@@ -69,20 +77,76 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.name = fullname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.name = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.name = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String name) {
+        this.name = email;
+    }
+
+    public Boolean getAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(Boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public int getFailedAttempt() {
+        return failedAttempt;
+    }
+
+    public void setFailedAttempt(int failedAttempt) {
+        this.failedAttempt = failedAttempt;
+    }
+
+    public Date getLockTime() {
+        return lockTime;
+    }
+
+    public void setLockTime(Date lockTime) {
+        this.lockTime = lockTime;
     }
 
     public long getRoleId() {
@@ -120,13 +184,14 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", name='" + name + '\'' +
+                "id=" + userId +
+                ", username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
                 ", enabled=" + enabled +
                 ", roleId=" + roleId +
                 ", balance=" + balance +
-                ", createDate=" + createdDate +
+                ", createdDate=" + createdDate +
                 ", lastUpdate=" + lastUpdate +
                 '}';
     }
@@ -142,42 +207,12 @@ public class User implements Serializable {
 }
 
 /*
-( name="users",
-        uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
-
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = USER_ID, nullable = false)
-    private Long userId;
-    @Column(name = "username", nullable = false)
-    private String username;
-    @Column(name = "fullname")
-    private String fullName;
-    @Column(name = "firstname", nullable = false)
-    private String firstName;
-    @Column(name = "lastname", nullable = false)
-    private String lastName;
-    @Column(name = "password", nullable = false)
-    private String password;
-    @Column(name = "email", nullable = false)
-    private String email;
-    @Column(name = "enabled", nullable = false)
-    private boolean enabled;
-    @Column(name = "account_non_locked")
-    private boolean accountNonLocked;
-    @Column(name = "failed_attempt")
-    private int failedAttempt;
-    @Column(name = "lock_time")
-    private Date lockTime;
-    @Column(name = "balance", nullable = false)
-    private Double balance;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
+    JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
 }
- */
+*/

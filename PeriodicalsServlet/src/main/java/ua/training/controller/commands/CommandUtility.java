@@ -22,7 +22,7 @@ class CommandUtility {
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
                 .getAttribute("loggedUsers");
 
-        if (loggedUsers.stream().anyMatch(userName::equals)) {
+        if ((loggedUsers != null) && loggedUsers.stream().anyMatch(userName::equals)) {
             return true;
         }
 

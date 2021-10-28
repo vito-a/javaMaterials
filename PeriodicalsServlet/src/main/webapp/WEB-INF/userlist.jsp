@@ -1,19 +1,19 @@
 <jsp:include page="/WEB-INF/fragments/head.jsp"/>
 <jsp:include page="/WEB-INF/fragments/header.jsp"/>
     <h2>
-        List Students <br/>
+        List Users <br/>
     </h2>
     <table>
-    <tr><th>Name</th><th>Group</th></tr>
-    <c:forEach var="i" items="${students}">
-        <tr><td>${i.name}<c:out value="${i.name}"/></td><td>${i.groupe}</td>
+    <tr><th>firstname</th><th>lastname</th></tr>
+    <c:forEach var="i" items="${users}">
+        <tr><td>${i.name}<c:out value="${i.firstname}"/></td><td>${i.lastname}</td>
     </c:forEach>
     </table>
     <br>
     <br>
-    <%=request.getAttribute("students")%>
+    <%=request.getAttribute("users")%>
     <br>
-    <c:out value="${students}"/>
+    <c:out value="${users}"/>
     <br/>
     <a href="./index.jsp">index</a>
     <br/>

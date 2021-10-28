@@ -24,7 +24,7 @@
         <div class="mb-3">
             <label for="inputPassword" class="form-label"><fmt:message
                     key="user.password"/></label>
-            <input type="password" name="password" class="form-control" id="inputPassword" required>
+            <input type="password" name="pass" class="form-control" id="inputPassword" required>
         </div>
         <div class="mb-3">
             <input type="submit" class="btn btn-success" value="<fmt:message key="user.submit"/>">

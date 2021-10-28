@@ -133,7 +133,7 @@ INSERT INTO users (user_id, username, password, email, firstname, lastname, bala
   (DEFAULT, 'admin1', 'admin1', 'tomi@gmail.com',    'Tomi', 'Petteri Putaansuu', 2000),
   (DEFAULT, 'hella',  'hella',  'hella@gmail.com',   'Henna-Riikka', 'Tuulia Broda', 2000),
   (DEFAULT, 'awa',    'awa',    'awa@gmail.com',     'Leena', 'Maria Peisa', 2100),
-  (DEFAULT, 'admin',  '$2a$10$LehXdZM4hFlDB6AASmdPZubIaV/XiaES5EBEsEPvn5nG37yh8bljq', 'admin@gmail.com', 'Admin', 'name', 2200);
+  (DEFAULT, 'admin',  '$2a$10$Ea90moCGB9hxRN7XV8r6v.YfxrfSOduTKIFGQlYoUINJQUp5krAja', 'admin@gmail.com', 'Admin', 'name', 2200);
 
 -- --------------------------------------------------------------------------------------------
 -- Users_Roles
