@@ -1,21 +1,46 @@
+<%@ page import="java.util.*, java.text.*" %>
+
 <jsp:include page="/WEB-INF/fragments/head.jsp"/>
 <jsp:include page="/WEB-INF/fragments/header.jsp"/>
-    <h2>
-        List Users <br/>
-    </h2>
-    <table>
-    <tr><th>firstname</th><th>lastname</th></tr>
-    <c:forEach var="i" items="${users}">
-        <tr><td>${i.name}<c:out value="${i.firstname}"/></td><td>${i.lastname}</td>
-    </c:forEach>
-    </table>
-    <br>
-    <br>
-    <%=request.getAttribute("users")%>
-    <br>
-    <c:out value="${users}"/>
-    <br/>
-    <a href="./index.jsp">index</a>
-    <br/>
-    <a href="${pageContext.request.contextPath}/index.jsp">index</a>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false"%>
+<%@ page import="java.util.*, java.text.*" %>
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+
+    <div class="container text-center">
+        <div>
+            <h1><fmt:message key="users.title" /></h1>
+        </div>
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th><fmt:message key="users.id" /></th>
+                        <th><fmt:message key="users.username" /></th>
+                        <th><fmt:message key="users.firstname" /></th>
+                        <th><fmt:message key="users.lastname" /></th>
+                        <th><fmt:message key="users.email" /></th>
+                        <th><fmt:message key="users.status" /></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="user" items="${users}">
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.firstname}</td>
+                            <td>${user.lastname}</td>
+                            <td>${user.email}</td>
+                            <td>${user.enabled}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 <jsp:include page="/WEB-INF/fragments/footer.jsp"/>

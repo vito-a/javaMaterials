@@ -15,7 +15,6 @@ import static ua.training.model.constants.Constants.USER_ID;
 public class User implements Serializable {
     private static final long serialVersionUID = 2054602555563947985L;
     private long userId;
-    private String login;
     private String username;
     private String fullname;
     private String firstname;
@@ -61,14 +60,6 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -98,7 +89,7 @@ public class User implements Serializable {
     }
 
     public void setFullname(String fullname) {
-        this.name = fullname;
+        this.fullname = fullname;
     }
 
     public String getFirstname() {
@@ -106,7 +97,7 @@ public class User implements Serializable {
     }
 
     public void setFirstname(String firstname) {
-        this.name = firstname;
+        this.firstname = firstname;
     }
 
     public String getLastname() {
@@ -114,7 +105,7 @@ public class User implements Serializable {
     }
 
     public void setLastname(String lastname) {
-        this.name = lastname;
+        this.lastname = lastname;
     }
 
     public String getEmail() {
@@ -122,7 +113,7 @@ public class User implements Serializable {
     }
 
     public void setEmail(String name) {
-        this.name = email;
+        this.email = email;
     }
 
     public Boolean getAccountNonLocked() {

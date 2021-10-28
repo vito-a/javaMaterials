@@ -12,16 +12,7 @@
 <fmt:setBundle basename="messages"/>
 
     <h2>
-        <fmt:message key="menu.greeting" /> <br/>
+        <fmt:message key="menu.greeting" />
     </h2>
-
-        <br/>
-            <a href="${pageContext.request.contextPath}/app/login">Login</a>
-        <br/>
-            <a href="${pageContext.request.contextPath}/app/registration">Registration form</a>
-        <br/>
-            <a href="${pageContext.request.contextPath}/app/students">Students</a>
-        <br/>
-            <a href="${pageContext.request.contextPath}/app/exception">Exception</a>
 
 <jsp:include page="/WEB-INF/fragments/footer.jsp"/>

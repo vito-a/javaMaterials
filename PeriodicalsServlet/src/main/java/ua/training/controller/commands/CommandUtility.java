@@ -15,7 +15,9 @@ class CommandUtility {
         HttpSession session = request.getSession();
         ServletContext context = request.getServletContext();
         context.setAttribute("userName", name);
+        context.setAttribute("role", role);
         session.setAttribute("role", role);
+        session.setAttribute("userName", name);
     }
 
     static boolean checkUserIsLogged(HttpServletRequest request, String userName){

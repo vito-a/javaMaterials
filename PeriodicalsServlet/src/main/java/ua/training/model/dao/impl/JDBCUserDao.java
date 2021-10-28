@@ -36,10 +36,8 @@ public class JDBCUserDao implements UserDao {
     @Override
     public List<User> findAll() {
         List<User> listUsers = new ArrayList<>();
-        PreparedStatement psmt = null;
         ResultSet rs = null;
-        int start;
-        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM users")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users")) {
             rs = ps.executeQuery();
             UserMapper mapper = new UserMapper();
             while (rs.next()) {
@@ -54,11 +52,9 @@ public class JDBCUserDao implements UserDao {
 
     public List<User> getAllUsers(Connection connection, int currentPage, int recordsPerPage) throws SQLException {
         List<User> listUsers = new ArrayList<>();
-        PreparedStatement psmt = null;
         ResultSet rs = null;
-        int start;
-        try(PreparedStatement ps = connection.prepareStatement("SELECT * FROM users LIMIT ?, ?")) {
-            start = currentPage * recordsPerPage - recordsPerPage;
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users LIMIT ?, ?")) {
+            int start = currentPage * recordsPerPage - recordsPerPage;
             int i = 1;
             ps.setInt(i++, start);
             ps.setInt(i++, recordsPerPage);

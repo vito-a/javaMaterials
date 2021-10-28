@@ -3,13 +3,13 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active"><a class="nav-link" href="/">Main<span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
-            <li class="nav-item"><a class="nav-link" href="/periodicals">Periodicals</a></li>
-            <li class="nav-item"><a class="nav-link" href="/categories">Categories</a></li>
-            <li class="nav-item"><a class="nav-link" href="/subscriptions">Subscriptions</a></li>
-            <li class="nav-item"><a class="nav-link" href="/user/my-subscriptions">My subscriptions</a></li>
-            <li class="nav-item"><a class="nav-link" href="/user/replenish_account">Replenish account</a></li>
-            <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/users">Users</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/periodicals">Periodicals</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/categories">Categories</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/subscriptions">Subscriptions</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/my-subscriptions">My subscriptions</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/replenish_account">Replenish account</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/about">About</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
@@ -46,10 +46,10 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+                <a class="nav-link" href="/app/register">Register</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/login">
+                <a class="nav-link" href="/app/login">
                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Login
                 </a>
             </li>
@@ -58,7 +58,7 @@
                     <div class="nav-link float-left ml-2 text-white">
                         <fmt:message key="menu.greeting" />
                     </div>
-                    <a class="nav-link float-left" href="/logout" onclick="$('#logout-form').submit();">Logout</a>
+                    <a class="nav-link float-left" href="/app/logout" onclick="$('#logout-form').submit();">Logout</a>
                 </div>
                 <form class="d-none invisible" id="logout-form" method="post" action="#" action="/logout">
                     <input class="nav-link" type="submit" value="Logout" />
