@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Student {
-    private int id;
+    private long id;
     private String name;
     private int groupe;
 
@@ -20,7 +20,7 @@ public class Student {
         this.teachers = teachers;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
     public void setId(int id) {

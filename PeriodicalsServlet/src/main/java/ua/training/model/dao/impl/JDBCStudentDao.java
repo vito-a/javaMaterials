@@ -32,8 +32,8 @@ public class JDBCStudentDao implements StudentDao {
 
     @Override
     public List<Student> findAll() {
-        Map<Integer, Student> students = new HashMap<>();
-        Map<Integer, Teacher> teachers = new HashMap<>();
+        Map<Long, Student> students = new HashMap<>();
+        Map<Long, Teacher> teachers = new HashMap<>();
 
         final String query = "" +
                 " select * from studen" +

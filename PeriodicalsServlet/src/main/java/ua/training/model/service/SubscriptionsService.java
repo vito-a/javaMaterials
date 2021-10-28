@@ -1,7 +1,5 @@
 package ua.training.model.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.training.model.entity.Subscription;
 
 import javax.persistence.EntityManager;

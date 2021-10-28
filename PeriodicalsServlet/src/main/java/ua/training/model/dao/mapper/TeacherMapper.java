@@ -18,7 +18,7 @@ public class TeacherMapper implements ObjectMapper<Teacher> {
         return teacher;
     }
 
-    public Teacher makeUnique(Map<Integer, Teacher> cache,
+    public Teacher makeUnique(Map<Long, Teacher> cache,
                               Teacher teacher) {
         cache.putIfAbsent(teacher.getId(), teacher);
         return cache.get(teacher.getId());

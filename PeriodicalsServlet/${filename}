@@ -1,0 +1,8 @@
+2021-10-28 03:07:10.583 [http-bio-8888-exec-2] INFO  ua.training.controller.commands.Login - Login failure (name, pass) ==> (null, null)
+2021-10-28 03:09:27.653 [http-bio-8888-exec-2] INFO  ua.training.controller.commands.Login - Login failure (name, pass) ==> (null, null)
+2021-10-28 03:09:28.896 [http-bio-8888-exec-3] INFO  ua.training.controller.commands.Login - Login failure (name, pass) ==> (null, null)
+2021-10-28 03:09:39.107 [http-bio-8888-exec-5] INFO  ua.training.controller.commands.Login - Login failure (name, pass) ==> (null, null)
+2021-10-28 03:11:18.234 [http-bio-8888-exec-8] INFO  ua.training.controller.commands.Login - Login failure (name, pass) ==> (null, null)
+2021-10-28 03:11:24.610 [http-bio-8888-exec-9] INFO  ua.training.controller.commands.Login - Login failure (name, pass) ==> (null, null)
+2021-10-28 03:11:29.227 [http-bio-8888-exec-10] INFO  ua.training.controller.commands.Login - Login failure (name, pass) ==> (null, null)
+2021-10-28 03:17:34.479 [http-bio-8888-exec-2] INFO  ua.training.controller.commands.Login - Login failure (name, pass) ==> (null, null)

@@ -5,7 +5,7 @@ import ua.training.model.dao.impl.JDBCDaoFactory;
 public abstract class DaoFactory {
     private static DaoFactory daoFactory;
 
-    public abstract TeacherDao createTeacherDao();
+    public abstract UserDao createUserDao();
     public abstract StudentDao createStudentDao();
 
     public static DaoFactory getInstance(){
