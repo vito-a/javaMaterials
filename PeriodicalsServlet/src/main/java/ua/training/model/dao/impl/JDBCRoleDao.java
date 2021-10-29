@@ -1,7 +1,7 @@
 package ua.training.model.dao.impl;
 
 import ua.training.model.dao.RoleDao;
-import ua.training.model.entity.Teacher;
+import ua.training.model.entity.Role;
 
 import java.sql.Connection;
 import java.util.List;
@@ -15,22 +15,22 @@ public class JDBCRoleDao implements RoleDao {
 
 
     @Override
-    public void create(Teacher entity) {
+    public void create(Role entity) {
 
     }
 
     @Override
-    public Teacher findById(int id) {
+    public Role findById(int id) {
         return null;
     }
 
     @Override
-    public List<Teacher> findAll() {
+    public List<Role> findAll() {
         return null;
     }
 
     @Override
-    public void update(Teacher entity) {
+    public void update(Role entity) {
 
     }
 

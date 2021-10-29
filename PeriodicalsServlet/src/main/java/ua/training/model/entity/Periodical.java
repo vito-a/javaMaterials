@@ -1,15 +1,10 @@
 package ua.training.model.entity;
 
-import javax.persistence.*;
-
-import static ua.training.model.constants.Constants.PERIODICAL_ID;
-import static ua.training.model.constants.Constants.CATEGORY_ID;
-
 /**
  * The Periodical entity.
  */
 public class Periodical {
-    private Long periodicalId;
+    private Long id;
     private String name;
     private String description;
     private String categoryId;
@@ -18,17 +13,17 @@ public class Periodical {
     public Periodical() {
     }
 
-    public Periodical(Long periodicalId, String name) {
+    public Periodical(Long id, String name) {
         this.name = name;
-        this.periodicalId = periodicalId;
+        this.id = id;
     }
 
-    public long getPeriodicalId() {
-        return periodicalId;
+    public long getId() {
+        return id;
     }
 
-    public void setPeriodicalId(long periodicalId) {
-        this.periodicalId = periodicalId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -37,5 +32,11 @@ public class Periodical {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

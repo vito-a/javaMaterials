@@ -6,7 +6,7 @@ public abstract class DaoFactory {
     private static DaoFactory daoFactory;
 
     public abstract UserDao createUserDao();
-    public abstract PeriodicalDao createStudentDao();
+    public abstract PeriodicalDao createPeriodicalDao();
     public abstract CategoriesDao createCategoryDao();
 
     public static DaoFactory getInstance(){

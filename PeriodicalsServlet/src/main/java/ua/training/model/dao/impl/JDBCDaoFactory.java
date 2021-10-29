@@ -15,7 +15,7 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCUserDao(getConnection());
     }
     @Override
-    public PeriodicalDao createStudentDao() {
+    public PeriodicalDao createPeriodicalDao() {
         return new JDBCPeriodicalDao(getConnection());
     }
     @Override

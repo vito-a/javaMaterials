@@ -1,11 +1,21 @@
 package ua.training.model.service;
 
-import java.time.LocalDate;
+import ua.training.model.dao.DaoFactory;
+import ua.training.model.dao.PeriodicalDao;
+import ua.training.model.entity.Category;
+import ua.training.model.entity.Periodical;
+
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The Periodicals service.
  */
 public class PeriodicalsService {
+    DaoFactory daoFactory = DaoFactory.getInstance();
+
+    public List<Periodical> getAllPeriodicals(){
+        try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
+            return dao.findAll();
+        }
+    }
 }

@@ -5,7 +5,7 @@
             <li class="nav-item active"><a class="nav-link" href="/">Main<span class="sr-only">(current)</span></a></li>
             <li class="nav-item"><a class="nav-link" href="/app/admin/users">Users</a></li>
             <li class="nav-item"><a class="nav-link" href="/app/admin/categories">Categories</a></li>
-            <!-- li class="nav-item"><a class="nav-link" href="/app/admin/periodicals">Periodicals</a></li -->
+            <!--li class="nav-item"><a class="nav-link" href="/app/admin/periodicals">Periodicals</a></li -->
             <!-- li class="nav-item"><a class="nav-link" href="/app/admin/subscriptions">Subscriptions</a></li -->
             <!-- li class="nav-item"><a class="nav-link" href="/app/my-subscriptions">My subscriptions</a></li -->
             <!-- li class="nav-item"><a class="nav-link" href="/app/replenish_account">Replenish account</a></li -->

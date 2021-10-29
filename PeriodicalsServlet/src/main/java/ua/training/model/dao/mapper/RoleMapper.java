@@ -1,7 +1,6 @@
 package ua.training.model.dao.mapper;
 
 import ua.training.model.entity.Role;
-import ua.training.model.entity.Teacher;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

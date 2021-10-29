@@ -23,31 +23,13 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void create(User entity) {
-
     }
 
     @Override
     public User findById(int id) {
         return null;
     }
-/*
-    @Override
-    public List<User> findAll() {
-        List<User> listUsers = new ArrayList<>();
-        ResultSet rs = null;
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users")) {
-            rs = ps.executeQuery();
-            UserMapper mapper = new UserMapper();
-            while (rs.next()) {
-                listUsers.add(mapper.extractFromResultSet(rs));
-            }
-        } catch (Exception e) {
-            logger.error("Cannot get users list", e);
-            throw new RuntimeException(e);
-        }
-        return listUsers;
-    }
-*/
+
     @Override
     public List<User> findAll() {
         Map<Long, User> users = new HashMap<>();

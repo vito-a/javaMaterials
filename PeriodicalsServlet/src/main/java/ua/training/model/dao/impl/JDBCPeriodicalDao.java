@@ -6,7 +6,6 @@ import ua.training.controller.commands.Login;
 import ua.training.model.dao.PeriodicalDao;
 import ua.training.model.dao.mapper.PeriodicalMapper;
 import ua.training.model.entity.Periodical;
-import ua.training.model.entity.Student;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,19 +30,22 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
     @Override
     public List<Periodical> findAll () {
-        List<Periodical> listCategories = new ArrayList<>();
+        List<Periodical> listPeriodicals = new ArrayList<>();
         ResultSet rs = null;
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM categories ORDER BY cat_id")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM periodicals")) {
             rs = ps.executeQuery();
+            logger.info("Periodicals: " + rs);
             PeriodicalMapper mapper = new PeriodicalMapper();
             while (rs.next()) {
-                listCategories.add(mapper.extractFromResultSet(rs));
+                logger.info("Periodical ID: " + rs.getLong("periodical_id"));
+                logger.info("Periodical name: " + rs.getString("name"));
+                listPeriodicals.add(mapper.extractFromResultSet(rs));
             }
         } catch (Exception e) {
             logger.error("Cannot get periodicals list", e);
             throw new RuntimeException(e);
         }
-        return listCategories;
+        return listPeriodicals;
     }
 
 

@@ -25,6 +25,7 @@ public class AuthorizationFilter implements Filter {
         adminPath.add("admin/*");
         adminPath.add("admin/users");
         adminPath.add("admin/categories");
+        adminPath.add("admin/periodicals");
     }
 
     @Override
