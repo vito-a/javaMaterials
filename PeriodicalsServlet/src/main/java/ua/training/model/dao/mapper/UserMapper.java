@@ -15,6 +15,7 @@ public class UserMapper implements ObjectMapper<User> {
         user.setPassword(rs.getString("password"));
         user.setUsername(rs.getString("Users.username"));
         user.setFirstname(rs.getString("Users.firstname"));
+        user.setEmail(rs.getString("Users.email"));
         user.setLastname(rs.getString("Users.lastname"));
         user.setEnabled(rs.getBoolean("enabled"));
 //        User.setRoleId(rs.getInt("RoleId"));

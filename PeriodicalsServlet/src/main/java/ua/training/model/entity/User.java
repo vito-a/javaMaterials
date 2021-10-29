@@ -112,9 +112,7 @@ public class User implements Serializable {
         return email;
     }
 
-    public void setEmail(String name) {
-        this.email = email;
-    }
+    public void setEmail(String email) { this.email = email; }
 
     public Boolean getAccountNonLocked() {
         return accountNonLocked;
@@ -140,9 +138,7 @@ public class User implements Serializable {
         this.lockTime = lockTime;
     }
 
-    public long getRoleId() {
-        return roleId;
-    }
+    public long getRoleId() { return roleId; }
 
     public void setRoleId(long roleId) {
         this.roleId = roleId;

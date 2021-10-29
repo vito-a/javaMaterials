@@ -2,12 +2,7 @@ package ua.training.controller.filters;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.training.controller.commands.Exception;
-import ua.training.controller.commands.Locale;
-import ua.training.controller.commands.LogOut;
-import ua.training.controller.commands.Login;
 import ua.training.model.entity.User;
-import ua.training.model.service.UserService;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
