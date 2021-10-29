@@ -3,8 +3,9 @@ package ua.training.controller;
 import ua.training.controller.commands.*;
 import ua.training.controller.commands.Registration;
 import ua.training.controller.commands.Exception;
+import ua.training.controller.commands.admin.CategoriesList;
 import ua.training.controller.commands.admin.UsersList;
-import ua.training.model.service.StudentService;
+import ua.training.model.service.CategoriesService;
 import ua.training.model.service.UserService;
 
 import javax.servlet.ServletConfig;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class Servlet extends HttpServlet {
     private static final String regexPatch = ".*/app/";
-    StudentService studentService = new StudentService();
+    UserService userService = new UserService();
     Map<String, Command> commands = new HashMap<>();
 
     public void init(ServletConfig servletConfig) {
@@ -28,6 +29,7 @@ public class Servlet extends HttpServlet {
                 .setAttribute("loggedUsers", new HashSet<String>());
 
         commands.put("admin/users", new UsersList(new UserService()));
+        commands.put("admin/categories", new CategoriesList(new CategoriesService()));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(new UserService()));
         commands.put("registration", new Registration());

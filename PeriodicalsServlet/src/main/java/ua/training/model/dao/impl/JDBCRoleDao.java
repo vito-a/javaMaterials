@@ -1,15 +1,15 @@
 package ua.training.model.dao.impl;
 
-import ua.training.model.dao.TeacherDao;
+import ua.training.model.dao.RoleDao;
 import ua.training.model.entity.Teacher;
 
 import java.sql.Connection;
 import java.util.List;
 
-public class JDBCTeacherDao implements TeacherDao {
+public class JDBCRoleDao implements RoleDao {
     private Connection connection;
 
-    public JDBCTeacherDao(Connection connection) {
+    public JDBCRoleDao(Connection connection) {
         this.connection = connection;
     }
 

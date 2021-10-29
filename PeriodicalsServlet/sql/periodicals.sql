@@ -198,33 +198,3 @@ INSERT INTO subscriptions (sub_id, user_id, periodical_id, startdate, enddate) V
   (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'hella'),  (SELECT periodical_id FROM `periodicals` WHERE name = 'Lancet'),   '2021-09-06', '2022-09-06'),
   (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'awa'),    (SELECT periodical_id FROM `periodicals` WHERE name = 'Janes'),    '2021-09-06', '2022-09-06'),
   (DEFAULT, (SELECT user_id FROM `users` WHERE username = 'admin'),  (SELECT periodical_id FROM `periodicals` WHERE name = 'Wired'),    '2021-09-06', '2022-09-06');
-
-
--- -------------------------------------------------------
--- Table `periodicalsdb`.`studen`
--- -------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicalsdb`.`studen` (
-    `idstuden`   INT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(45) NOT NULL,
-    `group` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`idstuden`),
-    UNIQUE INDEX `u_roles_name` (`name`)
-);
-
--- -------------------------------------------------------
--- Table `periodicalsdb`.`studen`
--- -------------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicalsdb`.`teacher` (
-    `idteacher`   INT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`idteacher`)
-);
-
--- -------------------------------------------------------
--- Table `periodicalsdb`.`studen_has_teacher`
--- -------------------------------------------------------
-CREATE TABLE `periodicalsdb`.`studen_has_teacher` (
-    `idstuden` int(11) NOT NULL,
-    `idteacher` int(11) NOT NULL,
-    INDEX `i_idteacher` (`idteacher`)
-);

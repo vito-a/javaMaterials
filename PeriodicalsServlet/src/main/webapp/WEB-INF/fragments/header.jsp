@@ -4,12 +4,12 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active"><a class="nav-link" href="/">Main<span class="sr-only">(current)</span></a></li>
             <li class="nav-item"><a class="nav-link" href="/app/admin/users">Users</a></li>
-            <li class="nav-item"><a class="nav-link" href="/app/periodicals">Periodicals</a></li>
-            <li class="nav-item"><a class="nav-link" href="/app/categories">Categories</a></li>
-            <li class="nav-item"><a class="nav-link" href="/app/subscriptions">Subscriptions</a></li>
-            <li class="nav-item"><a class="nav-link" href="/app/my-subscriptions">My subscriptions</a></li>
-            <li class="nav-item"><a class="nav-link" href="/app/replenish_account">Replenish account</a></li>
-            <li class="nav-item"><a class="nav-link" href="/app/about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/admin/categories">Categories</a></li>
+            <!-- li class="nav-item"><a class="nav-link" href="/app/admin/periodicals">Periodicals</a></li -->
+            <!-- li class="nav-item"><a class="nav-link" href="/app/admin/subscriptions">Subscriptions</a></li -->
+            <!-- li class="nav-item"><a class="nav-link" href="/app/my-subscriptions">My subscriptions</a></li -->
+            <!-- li class="nav-item"><a class="nav-link" href="/app/replenish_account">Replenish account</a></li -->
+            <!-- li class="nav-item"><a class="nav-link" href="/app/about">About</a></li -->
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>

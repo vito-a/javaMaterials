@@ -1,13 +1,9 @@
 package ua.training.model.entity;
 
-import javax.persistence.*;
-
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.io.Serializable;
-
-import static ua.training.model.constants.Constants.USER_ID;
+import java.util.List;
 
 /**
  * The User entity.
@@ -27,6 +23,7 @@ public class User implements Serializable {
     private String name;
     private boolean enabled;
     private long roleId;
+    private List<Role> roles = new ArrayList<>();
     private double balance;
     private Date createdDate;
     private Date lastUpdate;
@@ -197,15 +194,11 @@ public class User implements Serializable {
         this.passHash = passHash;
     }
 
-}
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-/*
-public class User {
-    JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }
-*/

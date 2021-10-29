@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 
-import static org.graalvm.compiler.options.OptionType.User;
-
-class CommandUtility {
+public class CommandUtility {
     static void setUserRole(HttpServletRequest request,
                      User.ROLE role, String name) {
         HttpSession session = request.getSession();

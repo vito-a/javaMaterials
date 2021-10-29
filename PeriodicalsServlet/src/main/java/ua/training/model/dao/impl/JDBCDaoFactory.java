@@ -1,13 +1,9 @@
 package ua.training.model.dao.impl;
 
-import ua.training.model.dao.DaoFactory;
-import ua.training.model.dao.StudentDao;
-import ua.training.model.dao.TeacherDao;
-import ua.training.model.dao.UserDao;
+import ua.training.model.dao.*;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
@@ -19,9 +15,11 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCUserDao(getConnection());
     }
     @Override
-    public StudentDao createStudentDao() {
-        return new JDBCStudentDao(getConnection());
+    public PeriodicalDao createStudentDao() {
+        return new JDBCPeriodicalDao(getConnection());
     }
+    @Override
+    public CategoriesDao createCategoryDao() { return new JDBCCategoryDao(getConnection()); }
 
     private Connection getConnection() {
         try {

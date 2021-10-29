@@ -1,18 +1,30 @@
 package ua.training.model.entity;
 
-import javax.persistence.*;
-
-/**
- * The Category entity.
- */
-@Entity
-@Table( name="categories",
-        uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cat_id", nullable = false)
-    private Long catId;
-    @Column(name = "name", nullable = false)
+    private long catId;
     private String name;
+
+    public Category() {
+    }
+
+    public Category(Long catId, String name) {
+        this.name = name;
+        this.catId = catId;
+    }
+
+    public long getCatId() {
+        return catId;
+    }
+
+    public void setCatId(long catId) {
+        this.catId = catId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

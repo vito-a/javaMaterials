@@ -1,14 +1,9 @@
 package ua.training.model.service;
 
-import ua.training.model.dao.StudentDao;
 import ua.training.model.dao.UserDao;
-import ua.training.model.entity.Student;
-import ua.training.model.entity.Subscription;
 import ua.training.model.entity.User;
 import ua.training.model.dao.DaoFactory;
-import ua.training.model.dao.TeacherDao;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 

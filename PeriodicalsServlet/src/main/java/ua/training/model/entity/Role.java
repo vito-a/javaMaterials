@@ -1,26 +1,30 @@
 package ua.training.model.entity;
 
-import javax.persistence.*;
-
-/**
- * The Role entity.
- */
-@Entity
-@Table(name = "roles")
 public class Role {
-    @Id
-    @Column(name = "role_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "name")
+    private long roleId;
     private String name;
 
-    /**
-     * Gets id.
-     *
-     * @return the role id
-     */
-    public Integer getId() {
-        return id;
+    public Role() {
+    }
+
+    public Role(Long roleId, String name) {
+        this.name = name;
+        this.roleId = roleId;
+    }
+
+    public long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

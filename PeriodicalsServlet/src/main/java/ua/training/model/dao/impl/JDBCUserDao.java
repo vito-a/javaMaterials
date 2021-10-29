@@ -2,18 +2,16 @@ package ua.training.model.dao.impl;
 
 import ua.training.controller.commands.Login;
 import ua.training.model.dao.UserDao;
+import ua.training.model.dao.mapper.RoleMapper;
 import ua.training.model.dao.mapper.UserMapper;
+import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.sql.*;
+import java.util.*;
 
 public class JDBCUserDao implements UserDao {
     private Connection connection;
@@ -32,7 +30,7 @@ public class JDBCUserDao implements UserDao {
     public User findById(int id) {
         return null;
     }
-
+/*
     @Override
     public List<User> findAll() {
         List<User> listUsers = new ArrayList<>();
@@ -48,6 +46,38 @@ public class JDBCUserDao implements UserDao {
             throw new RuntimeException(e);
         }
         return listUsers;
+    }
+*/
+    @Override
+    public List<User> findAll() {
+        Map<Long, User> users = new HashMap<>();
+        Map<Long, Role> roles = new HashMap<>();
+
+        final String query = "SELECT * FROM users u" +
+                " LEFT JOIN users_roles ur ON u.user_id = ur.user_id " +
+                " LEFT JOIN roles r ON r.role_id = ur.role_id";
+        try (Statement st = connection.createStatement()) {
+            ResultSet rs = st.executeQuery(query);
+
+            UserMapper userMapper = new UserMapper();
+            RoleMapper roleMapper = new RoleMapper();
+
+            while (rs.next()) {
+                User user = userMapper
+                        .extractFromResultSet(rs);
+                Role role = roleMapper
+                        .extractFromResultSet(rs);
+                user = userMapper
+                        .makeUnique(users, user);
+                role = roleMapper
+                        .makeUnique(roles, role);
+                user.getRoles().add(role);
+            }
+            return new ArrayList<>(users.values());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public List<User> getAllUsers(Connection connection, int currentPage, int recordsPerPage) throws SQLException {

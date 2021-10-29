@@ -1,17 +1,24 @@
 package ua.training.model.service;
 
+import ua.training.model.dao.DaoFactory;
+import ua.training.model.dao.PeriodicalDao;
 import ua.training.model.entity.Subscription;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The Subscriptions service.
  */
 public class SubscriptionsService {
+
+    DaoFactory daoFactory = DaoFactory.getInstance();
+
+    public List<Subscription> getAllSubscriptions() {
+        /*
+        try (PeriodicalDao dao = daoFactory.createSubscriptionDao()) {
+            return dao.findAll();
+        }
+         */
+        return null;
+    }
 }
