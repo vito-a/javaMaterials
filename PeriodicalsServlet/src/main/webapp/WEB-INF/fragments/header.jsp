@@ -3,7 +3,7 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active"><a class="nav-link" href="/">Main<span class="sr-only">(current)</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="/app/users">Users</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/admin/users">Users</a></li>
             <li class="nav-item"><a class="nav-link" href="/app/periodicals">Periodicals</a></li>
             <li class="nav-item"><a class="nav-link" href="/app/categories">Categories</a></li>
             <li class="nav-item"><a class="nav-link" href="/app/subscriptions">Subscriptions</a></li>

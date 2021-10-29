@@ -27,7 +27,7 @@ public class Servlet extends HttpServlet {
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
 
-        commands.put("users", new UsersList(new UserService()));
+        commands.put("admin/users", new UsersList(new UserService()));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(new UserService()));
         commands.put("registration", new Registration());
@@ -58,7 +58,7 @@ public class Servlet extends HttpServlet {
         path = path.replaceAll( regexPatch, "");
         path = path.replaceAll(".*/api/" , "");
 //        System.out.println(path);
-        Command command = commands.getOrDefault(path, (r) -> "/index.jsp)");
+        Command command = commands.getOrDefault(path, (r) -> "/index.jsp");
         String page = command.execute(request);
         if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:/", "/"));

@@ -148,6 +148,12 @@ public class User implements Serializable {
         this.roleId = roleId;
     }
 
+    public ROLE getRoleEnum() { return role; }
+
+    public void setRoleEnum(ROLE role) {
+        this.role = role;
+    }
+
     public double getBalance() {
         return balance;
     }
