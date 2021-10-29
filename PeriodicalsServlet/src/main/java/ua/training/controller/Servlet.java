@@ -33,6 +33,7 @@ public class Servlet extends HttpServlet {
         commands.put("registration", new Registration());
         commands.put("exception" , new Exception());
         commands.put("locale", new Locale());
+        commands.put("access-denied", new AccessDenied());
     }
     
     public void doGet(HttpServletRequest request,

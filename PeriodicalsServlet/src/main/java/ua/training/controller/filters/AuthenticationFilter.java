@@ -23,6 +23,7 @@ public class AuthenticationFilter implements Filter {
         anonPath.add("registration");
         anonPath.add("exception");
         anonPath.add("locale");
+        anonPath.add("access-denied");
     }
 
     @Override
@@ -42,7 +43,7 @@ public class AuthenticationFilter implements Filter {
         if (path.equals("/") || path.isEmpty() || anonPath.contains(path) || isLoggedIn) {
             chain.doFilter(request, response);
         } else {
-            resp.sendRedirect("/");
+            resp.sendRedirect("/app/access-denied");
         }
     }
 

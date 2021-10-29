@@ -12,6 +12,6 @@ public class LogOut implements Command {
         HttpSession session = request.getSession(false);
         session.invalidate();
         CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, "Guest");
-        return "redirect:/login.jsp";
+        return "redirect:/app/login";
     }
 }

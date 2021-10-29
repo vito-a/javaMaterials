@@ -11,23 +11,27 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-    <h2>
-        <fmt:message key="login.title" /> <br/>
-    </h2>
+    <div class="container text-center">
+        <div>
+            <h1>
+                <fmt:message key="login.title" /> <br/>
+            </h1>
 
-    <form action="${pageContext.request.contextPath}/app/login" method="post">
-        <input type="hidden" name="command" value="login">
-        <div class="mb-3">
-            <label for="inputLogin" class="form-label"><fmt:message key="login.username"/></label>
-            <input type="text" name="name" class="form-control" id="inputLogin"required>
+            <form action="${pageContext.request.contextPath}/app/login" method="post">
+                <input type="hidden" name="command" value="login">
+                <div class="mb-3">
+                    <label for="inputLogin" class="form-label"><fmt:message key="login.username"/></label>
+                    <input type="text" name="name" class="form-control" id="inputLogin"required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label"><fmt:message key="login.password"/></label>
+                    <input type="password" name="pass" class="form-control" id="inputPassword" required>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-success" value="<fmt:message key="login.form.signin"/>">
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="inputPassword" class="form-label"><fmt:message key="login.password"/></label>
-            <input type="password" name="pass" class="form-control" id="inputPassword" required>
-        </div>
-        <div class="mb-3">
-            <input type="submit" class="btn btn-success" value="<fmt:message key="login.form.signin"/>">
-        </div>
-    </form>
+    </div>
 
 <jsp:include page="/WEB-INF/fragments/footer.jsp"/>

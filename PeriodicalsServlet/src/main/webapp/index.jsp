@@ -11,8 +11,12 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-    <h2>
-        <fmt:message key="menu.greeting" />
-    </h2>
+    <div class="container text-center">
+        <div>
+            <h1>
+                <fmt:message key="menu.greeting" />
+            </h1>
+        </div>
+    </div>
 
 <jsp:include page="/WEB-INF/fragments/footer.jsp"/>

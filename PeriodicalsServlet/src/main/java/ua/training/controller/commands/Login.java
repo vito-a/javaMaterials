@@ -56,11 +56,11 @@ public class Login implements Command {
         //todo: check login with DB
         Optional<User> user = userService.login(name);
         // user.get().getPassHash() == pass.hashCode()
-        String newHash = BCrypt.hashpw(pass, BCrypt.gensalt(10));
+        String newHash = hash(pass);
+        logger.info("Login form sent with the hash : " + newHash);
         if (user.isPresent() && bcrypt.verifyAndUpdateHash(pass, user.get().getPassword(), update)) {
             request.getSession().setAttribute("user" , user.get());
-            logger.info("Login success (name, pass) ==> " +
-                    "(" + name + ", " + pass + ")");
+            logger.info("Login success (name, pass) : " + "(" + name + ", " + pass + ")");
             logger.info("User " + name + " is logged in.");
         } else {
             logger.info("Invalid attempt of user login:'" + name + "'");

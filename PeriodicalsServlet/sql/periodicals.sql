@@ -121,7 +121,7 @@ INSERT INTO users (user_id, username, password, email, firstname, lastname, bala
   (DEFAULT, 'magnum', 'magnum', 'sami@gmail.com',    'Sami', 'Wolking', 1200),
   (DEFAULT, 'kalma',  'kalma',  'kalma@gmail.com',   'Nick', 'Gore', 1300),
   (DEFAULT, 'kita',   'kita',   'kita@gmail.com',    'Sampsa', 'Astala', 1400),
-  (DEFAULT, 'user',   '$2a$10$wSXV/z6SGuGsS1JwuDM7w.P8sZmzhwbaxQJFbySo8x0eHq0DliQgG', 'user@gmail.com', 'User', 'name', 1500);
+  (DEFAULT, 'user',   '$2a$10$ItEIHWzotzIRHA4rXZ0sz.97OmlF37h56PM2r.OpDDckoP.E.6ttO', 'user@gmail.com', 'User', 'name', 1500);
 
 INSERT INTO users (user_id, username, password, email, firstname, lastname, balance) VALUES
   (DEFAULT, 'otus',   'otus',   'otus@gmail.com',    'Tonmi', 'Kristian Lillman', 1600),

@@ -17,9 +17,9 @@
 
     <div class="container text-center">
         <div>
-            <h1>Error Page</h2>
+            <h1>Access denied</h2>
             <br/>
-            <h2><i>Error ${exception}</i></h2>
+            <h2><fmt:message key="general.accessdenied" /></h2>
         </div>
     </div>
 

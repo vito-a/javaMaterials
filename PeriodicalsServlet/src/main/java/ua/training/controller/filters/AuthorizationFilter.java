@@ -30,7 +30,7 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession currentSession = req.getSession(false);
-        if (currentSession == null || currentSession.getAttribute("loggedUser") == null) {
+        if (currentSession == null || currentSession.getAttribute("user") == null) {
             chain.doFilter(request, response);
         } else {
             authorize(request, response, chain);
@@ -40,17 +40,21 @@ public class AuthorizationFilter implements Filter {
     private void authorize(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        User currentUser = (User) req.getSession().getAttribute("user");
-        boolean isAdmin = currentUser.getRoleEnum() == User.ROLE.ADMIN;
+        HttpSession currentSession = req.getSession(false);
+        User currentUser = (User) currentSession.getAttribute("user");
+        boolean isAdmin = currentSession.getAttribute("role") == User.ROLE.ADMIN;
 
         String path = req.getRequestURI().replaceAll(".*/app/" , "");
-        logger.info("Authentication filter path: " + path);
-        logger.info("Authentication filter loggedUser: " + currentUser);
+        logger.info("AuthorizationFilter filter path: " + path);
+        logger.info("AuthorizationFilter filter loggedUser: " + currentUser);
+        logger.info("AuthorizationFilter filter isAdmin: " + isAdmin);
+        logger.info("AuthorizationFilter filter role: " + currentUser.getRoleEnum());
 
         if (path.equals("/") || path.isEmpty() || isAdmin || !adminPath.contains(path)) {
             chain.doFilter(request, response);
         } else {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+            // resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+            resp.sendRedirect("/app/access-denied");
         }
     }
 
