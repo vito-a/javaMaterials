@@ -23,6 +23,7 @@ public class UserAuthorizationFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         userPath.add("user/*");
         userPath.add("logout");
+        userPath.add("user/periodicals");
         userPath.add("user/access-denied");
         userPath.add("user/my-subscriptions");
         userPath.add("user/replenish-account");

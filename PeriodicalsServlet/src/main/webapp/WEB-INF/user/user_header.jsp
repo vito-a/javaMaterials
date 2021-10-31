@@ -12,6 +12,7 @@
     <span class="navbar-brand"><fmt:message key="pages.periodicals" /></span>
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/app/user/periodicals"><fmt:message key="pages.periodicals" /></a></li>
             <li class="nav-item"><a class="nav-link" href="/app/user/my-subscriptions"><fmt:message key="subscriptions.my.title" /></a></li>
             <li class="nav-item"><a class="nav-link" href="/app/user/replenish-account"><fmt:message key="user.replenish.account" /></a></li>
         </ul>

@@ -10,6 +10,7 @@ import ua.training.controller.commands.admin.*;
 import ua.training.controller.commands.user.MySubscriptions;
 import ua.training.controller.commands.user.ReplenishAccount;
 import ua.training.controller.commands.user.UserAccessDenied;
+import ua.training.controller.commands.user.UserPeriodicalsList;
 import ua.training.model.service.CategoriesService;
 import ua.training.model.service.PeriodicalsService;
 import ua.training.model.service.SubscriptionsService;
@@ -36,11 +37,12 @@ public class Servlet extends HttpServlet {
 
         commands.put("admin/users", new UsersList(new UserService()));
         commands.put("admin/categories", new CategoriesList(new CategoriesService()));
-        commands.put("admin/periodicals", new PeriodicalsList(new PeriodicalsService()));
+        commands.put("admin/periodicals", new AdminPeriodicalsList(new PeriodicalsService()));
         commands.put("admin/subscriptions", new SubscriptionsList(new SubscriptionsService()));
         commands.put("admin/access-denied", new AdminAccessDenied());
         commands.put("user/my-subscriptions", new MySubscriptions(new SubscriptionsService(), new UserService()));
         commands.put("user/replenish-account", new ReplenishAccount(new UserService()));
+        commands.put("user/periodicals", new UserPeriodicalsList(new PeriodicalsService()));
         commands.put("user/access-denied", new UserAccessDenied());
         commands.put("access-denied", new AccessDenied());
         commands.put("logout", new LogOut());
