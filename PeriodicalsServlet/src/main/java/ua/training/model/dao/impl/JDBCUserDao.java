@@ -25,7 +25,8 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void create(User entity) {
+    public int create(User entity) {
+        int affectedRows = 0;
         String[] generatedColumns = {"user_id"};
         String userQuery = "INSERT INTO users (username, password, firstname, lastname, email) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(userQuery, generatedColumns)) {
@@ -34,7 +35,7 @@ public class JDBCUserDao implements UserDao {
             ps.setString(3, entity.getFirstname());
             ps.setString(4, entity.getLastname());
             ps.setString(5, entity.getEmail());
-            int affectedRows = ps.executeUpdate();
+            affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating user failed, no rows affected.");
             }
@@ -51,6 +52,8 @@ public class JDBCUserDao implements UserDao {
             logger.error("Cannot create user with params (name, password, firstName, userRole) ==> " +
                     "(" + entity.getUsername() + "," + entity.getPassword() + "," + entity.getFirstname() + "," + entity.getRoles() + ")", e);
         }
+
+        return affectedRows;
     }
 
     public void addRole(User entity, String roleName) {

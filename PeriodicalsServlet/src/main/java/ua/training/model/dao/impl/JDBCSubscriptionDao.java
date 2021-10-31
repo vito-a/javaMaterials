@@ -23,8 +23,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
     }
 
     @Override
-    public void create(Subscription entity) {
-    }
+    public int create(Subscription entity) { return 0; }
 
     @Override
     public Subscription findById(int id) {

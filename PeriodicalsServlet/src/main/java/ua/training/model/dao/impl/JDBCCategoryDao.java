@@ -22,8 +22,7 @@ public class JDBCCategoryDao implements CategoriesDao {
     public JDBCCategoryDao(Connection connection) { this.connection = connection; }
 
     @Override
-    public void create (Category entity){
-    }
+    public int create (Category entity) { return 0; }
 
     @Override
     public Category findById(int id) {

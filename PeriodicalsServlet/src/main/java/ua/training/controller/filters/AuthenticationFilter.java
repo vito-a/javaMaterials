@@ -21,6 +21,7 @@ public class AuthenticationFilter implements Filter {
         anonPath.add("logout");
         anonPath.add("login");
         anonPath.add("register");
+        anonPath.add("register-process");
         anonPath.add("exception");
         anonPath.add("locale");
         anonPath.add("access-denied");
@@ -34,6 +35,8 @@ public class AuthenticationFilter implements Filter {
         User currentUser = (User) req.getSession().getAttribute("user");
 
         boolean isLoggedIn = currentSession != null && currentSession.getAttribute("user") != null;
+
+        logger.info("Authentication request : " + "(" + request.getParameterMap().toString() + ")");
 
         String path = req.getRequestURI().replaceAll(".*/app/" , "");
         logger.info("Authentication filter path: " + path);

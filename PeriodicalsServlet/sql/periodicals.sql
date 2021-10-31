@@ -50,7 +50,8 @@ CREATE TABLE IF NOT EXISTS `periodicalsdb`.`users` (
 CREATE TABLE `users_roles` (
     `user_id` int(11) NOT NULL,
     `role_id` int(11) NOT NULL,
-    INDEX `i_user_id` (`user_id`)
+    INDEX `i_user_id` (`user_id`),
+    UNIQUE INDEX `u_users_roles` (`user_id`, `role_id`)
 );
 
 -- -------------------------------------------------------

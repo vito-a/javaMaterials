@@ -48,6 +48,8 @@ public class AuthorizationFilter implements Filter {
         User currentUser = (User) currentSession.getAttribute("user");
         boolean isAdmin = currentSession.getAttribute("role") == User.ROLE.ADMIN;
 
+        logger.info("AuthorizationFilter request : " + "(" + request.getParameterMap().toString() + ")");
+
         String path = req.getRequestURI().replaceAll(".*/app/" , "");
         logger.info("AuthorizationFilter filter path: " + path);
         logger.info("AuthorizationFilter filter loggedUser: " + currentUser);

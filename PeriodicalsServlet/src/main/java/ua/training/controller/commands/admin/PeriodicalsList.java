@@ -1,9 +1,7 @@
 package ua.training.controller.commands.admin;
 
 import ua.training.controller.commands.Command;
-import ua.training.model.entity.Category;
 import ua.training.model.entity.Periodical;
-import ua.training.model.service.CategoriesService;
 import ua.training.model.service.PeriodicalsService;
 
 import javax.servlet.http.HttpServletRequest;

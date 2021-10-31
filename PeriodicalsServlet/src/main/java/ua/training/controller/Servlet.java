@@ -1,6 +1,9 @@
 package ua.training.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.controller.commands.*;
+import ua.training.controller.commands.Locale;
 import ua.training.controller.commands.Registration;
 import ua.training.controller.commands.Exception;
 import ua.training.controller.commands.admin.CategoriesList;
@@ -18,14 +21,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class Servlet extends HttpServlet {
     private static final String regexPatch = ".*/app/";
-    UserService userService = new UserService();
     Map<String, Command> commands = new HashMap<>();
+
+    private final Logger logger = LogManager.getLogger(Servlet.class.getName());
 
     public void init(ServletConfig servletConfig) {
 
@@ -38,8 +40,7 @@ public class Servlet extends HttpServlet {
         commands.put("admin/subscriptions", new SubscriptionsList(new SubscriptionsService()));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(new UserService()));
-        commands.put("register", new Registration());
-        commands.put("register-process", new ProcessRegistration(new UserService()));
+        commands.put("register", new Registration(new UserService()));
         commands.put("exception" , new Exception());
         commands.put("locale", new Locale());
         commands.put("access-denied", new AccessDenied());
@@ -64,19 +65,14 @@ public class Servlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         String path = request.getRequestURI();
-//        System.out.println(path);
         path = path.replaceAll( regexPatch, "");
         path = path.replaceAll(".*/api/" , "");
-//        System.out.println(path);
         Command command = commands.getOrDefault(path, (r) -> "/index.jsp");
         String page = command.execute(request);
         if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:/", "/"));
-            // request.getRequestDispatcher(page.replace("redirect:", "/")).forward(request, response);
         } else {
             request.getRequestDispatcher(page).forward(request, response);
-            //chain.doFilter(request, response);
         }
-        //  response.getWriter().print("Hello from servlet");
     }
 }

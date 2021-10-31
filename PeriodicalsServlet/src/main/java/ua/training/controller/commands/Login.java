@@ -4,13 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import org.mindrot.jbcrypt.BCrypt;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.BCryptService;
 import ua.training.model.service.UserService;
 
-import java.security.AuthProvider;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -27,10 +25,6 @@ public class Login implements Command {
     private String[] mutableHash = new String[1];
     Function<String, Boolean> update = hash -> { mutableHash[0] = hash; return true; };
 
-    public static String hash(String password) {
-        return bcrypt.hash(password);
-    }
-
     public static boolean verifyAndUpdateHash(String password, String hash, Function<String, Boolean> updateFunc) {
         return bcrypt.verifyAndUpdateHash(password, hash, updateFunc);
     }
@@ -45,21 +39,19 @@ public class Login implements Command {
         String pass = request.getParameter("pass");
 
         if( name == null || name.equals("") || pass == null || pass.equals("")  ){
-            logger.info("Login attempt (name, pass) ==> " +
-                    "(" + name + ", " + pass + ")");
+            logger.info("Login form opened");
             return "/login.jsp";
         }
 
         // Check if user already logged in
         if (CommandUtility.checkUserIsLogged(request, name)) {
-            logger.info("Already logged in (name, pass) ==> " +
-                    "(" + name + ", " + pass + ")");
+            logger.info("Already logged in (name, pass) : " + "(" + name + ", " + pass + ")");
             return "/WEB-INF/error.jsp";
         }
 
         // Checking login with DB and BCrypt
         Optional<User> user = userService.login(name);
-        String newHash = hash(pass);
+        String newHash = bcrypt.hash(pass);
         logger.info("Login form sent with the hash : " + newHash);
         if (user.isPresent() && bcrypt.verifyAndUpdateHash(pass, user.get().getPassword(), update)) {
             request.getSession().setAttribute("user" , user.get());

@@ -31,12 +31,15 @@ public class UserService {
         }
     }
 
-    public void createUser(User user) {
+    public int createUser(User user) {
+        int result = 0;
         try (UserDao userDao = daoFactory.createUserDao()) {
-            userDao.create(user);
+            result = userDao.create(user);
             logger.info("Attempted to create user with params (userName, userRole) ==> " +
                     "(" + user.getUsername() + "," + user.getRoles() + ")");
         }
+
+        return result;
     }
 
 }

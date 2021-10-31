@@ -20,8 +20,7 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
     }
 
     @Override
-    public void create(Periodical entity) {
-    }
+    public int create(Periodical entity) { return 0; }
 
     @Override
     public Periodical findById(int id) {
