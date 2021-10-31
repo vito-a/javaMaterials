@@ -4,7 +4,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active"><a class="nav-link" href="/">Main<span class="sr-only">(current)</span></a></li>
             <li class="nav-item"><a class="nav-link" href="/app/user/my-subscriptions">My subscriptions</a></li>
-            <li class="nav-item"><a class="nav-link" href="/app/user/replenish_account">Replenish account</a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/user/replenish-account">Replenish account</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>

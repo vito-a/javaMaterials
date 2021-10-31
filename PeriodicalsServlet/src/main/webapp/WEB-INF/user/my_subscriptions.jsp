@@ -16,6 +16,9 @@
             <h1><fmt:message key="subscriptions.my.title" /></h1>
         </div>
         <div>
+            <h2><fmt:message key="menu.profile.balance" />:&nbsp;${balance}</h2>
+        </div>
+        <div>
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
                     <tr>

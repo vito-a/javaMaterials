@@ -21,7 +21,7 @@
                 <input type="hidden" name="command" value="login">
                 <div class="mb-3">
                     <label for="inputLogin" class="form-label"><fmt:message key="login.username"/></label>
-                    <input type="text" name="name" class="form-control" id="inputLogin"required>
+                    <input type="text" name="name" class="form-control" id="inputLogin" required>
                 </div>
                 <div class="mb-3">
                     <label for="inputPassword" class="form-label"><fmt:message key="login.password"/></label>

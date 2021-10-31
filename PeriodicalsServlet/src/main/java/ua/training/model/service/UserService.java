@@ -42,4 +42,29 @@ public class UserService {
         return result;
     }
 
+    /**
+     * Update balance.
+     *
+     * @param balance the user balance
+     * @param userId  the user ID
+     */
+    public int updateBalance(Double balance, Long userId) {
+        int result = 0;
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            result = userDao.updateBalance(balance, userId);
+            logger.info("Attempted to create user with params (balance, userId) : " + "(" + balance + "," + userId + ")");
+        }
+
+        return result;
+    }
+
+    public double getCurrentBalance(long userId) {
+        double balance = 0;
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            balance = userDao.getCurrentBalance(userId);
+            logger.info("Attempted to get user balance with params (userId) : " + "(" + userId + ")");
+        }
+
+        return balance;
+    }
 }

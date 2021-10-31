@@ -23,6 +23,7 @@ public class UserAuthorizationFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         userPath.add("user/*");
         userPath.add("user/my-subscriptions");
+        userPath.add("user/replenish_account");
     }
 
     @Override
@@ -44,11 +45,12 @@ public class UserAuthorizationFilter implements Filter {
         boolean isUser = currentSession.getAttribute("role") == User.ROLE.USER;
 
         String path = req.getRequestURI().replaceAll(".*/app/" , "");
-        logger.info("UserAuthorizationFilter (path, currentUser, role) : " + "(" + path + ", " + currentUser + ", " + currentUser.getRoleEnum() + ")");
 
         if (path.equals("/") || path.isEmpty() || isUser || !userPath.contains(path)) {
             chain.doFilter(request, response);
         } else {
+            logger.info("UserAuthorizationFilter triggered (path, currentUser, role) : "
+                    + "(" + path + ", " + currentUser + ", " + currentSession.getAttribute("role") + ")");
             resp.sendRedirect("/app/access-denied");
         }
     }

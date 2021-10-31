@@ -48,11 +48,12 @@ public class AdminAuthorizationFilter implements Filter {
         boolean isAdmin = currentSession.getAttribute("role") == User.ROLE.ADMIN;
 
         String path = req.getRequestURI().replaceAll(".*/app/" , "");
-        logger.info("AdminAuthorizationFilter (path, currentUser, role) : " + "(" + path + ", " + currentUser + ", " + currentUser.getRoleEnum() + ")");
 
         if (path.equals("/") || path.isEmpty() || isAdmin || !adminPath.contains(path)) {
             chain.doFilter(request, response);
         } else {
+            logger.info("AdminAuthorizationFilter triggered (path, currentUser, role) : "
+                    + "(" + path + ", " + currentUser + ", " + currentSession.getAttribute("role") + ")");
             resp.sendRedirect("/app/access-denied");
         }
     }

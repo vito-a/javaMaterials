@@ -168,4 +168,36 @@ public class JDBCUserDao implements UserDao {
         }
         return user;
     }
+
+    public int updateBalance(Double balance, Long userId) {
+        int affectedRows = 0;
+        String balanceQuery = "UPDATE users SET balance = ? WHERE user_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(balanceQuery)) {
+            ps.setDouble( 1, balance);
+            ps.setLong( 2, userId);
+            affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Adding role failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            logger.error("Cannot update balance with params (balance, userId) : " + "(" + balance + "," + userId + ")", e);
+        }
+        return affectedRows;
+    }
+
+    @Override
+    public double getCurrentBalance(long userId) {
+        double balance = 0.0;
+        String balanceQuery = "SELECT balance FROM users WHERE user_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(balanceQuery)) {
+            ps.setLong( 1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                balance = rs.getDouble("balance");
+            }
+        } catch (SQLException e) {
+            logger.error("Cannot get balance with params (userId) : " + "(" + userId + ")", e);
+        }
+        return balance;
+    }
 }

@@ -35,17 +35,13 @@ public class AuthenticationFilter implements Filter {
         User currentUser = (User) req.getSession().getAttribute("user");
 
         boolean isLoggedIn = currentSession != null && currentSession.getAttribute("user") != null;
-
-        logger.info("Authentication request : " + "(" + request.getParameterMap().toString() + ")");
-
         String path = req.getRequestURI().replaceAll(".*/app/" , "");
-        logger.info("Authentication filter path: " + path);
-        logger.info("Authentication filter user: " + currentUser);
-        logger.info("Authentication filter isLoggedIn: " + isLoggedIn);
 
         if (path.equals("/") || path.isEmpty() || anonPath.contains(path) || isLoggedIn) {
             chain.doFilter(request, response);
         } else {
+            logger.info("AuthenticationFilter triggered (path, currentUser) : "
+                    + "(" + path + ", " + currentUser + ")");
             resp.sendRedirect("/app/access-denied");
         }
     }
