@@ -23,6 +23,8 @@ public class JDBCDaoFactory extends DaoFactory {
     public CategoriesDao createCategoryDao() { return new JDBCCategoryDao(getConnection()); }
     @Override
     public SubscriptionDao createSubscriptionDao() { return new JDBCSubscriptionDao(getConnection()); }
+    @Override
+    public RoleDao createRoleDao() { return new JDBCRoleDao(getConnection()); }
 
     private Connection getConnection() {
         try {

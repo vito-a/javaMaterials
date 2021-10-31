@@ -38,7 +38,8 @@ public class Servlet extends HttpServlet {
         commands.put("admin/subscriptions", new SubscriptionsList(new SubscriptionsService()));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(new UserService()));
-        commands.put("registration", new Registration());
+        commands.put("register", new Registration());
+        commands.put("register-process", new ProcessRegistration(new UserService()));
         commands.put("exception" , new Exception());
         commands.put("locale", new Locale());
         commands.put("access-denied", new AccessDenied());

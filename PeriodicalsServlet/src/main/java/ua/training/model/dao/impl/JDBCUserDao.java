@@ -9,9 +9,12 @@ import ua.training.model.entity.User;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.training.model.service.RoleService;
 
 import java.sql.*;
 import java.util.*;
+
+import static ua.training.model.constants.Constants.ROLE_USER;
 
 public class JDBCUserDao implements UserDao {
     private Connection connection;
@@ -23,6 +26,48 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void create(User entity) {
+        String[] generatedColumns = {"user_id"};
+        String userQuery = "INSERT INTO users (username, password, firstname, lastname, email) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(userQuery, generatedColumns)) {
+            ps.setString( 1, entity.getUsername());
+            ps.setString(2, entity.getPassword());
+            ps.setString(3, entity.getFirstname());
+            ps.setString(4, entity.getLastname());
+            ps.setString(5, entity.getEmail());
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setId(generatedKeys.getLong(1));
+                    addRole(entity, ROLE_USER);
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Cannot create user with params (name, password, firstName, userRole) ==> " +
+                    "(" + entity.getUsername() + "," + entity.getPassword() + "," + entity.getFirstname() + "," + entity.getRoles() + ")", e);
+        }
+    }
+
+    public void addRole(User entity, String roleName) {
+        String roleQuery = "INSERT INTO users_roles (user_id, role_id) VALUES (?, ?)";
+        RoleService roleService = new RoleService();
+        Optional<Role> role = roleService.getByName(roleName);
+        try (PreparedStatement ps = connection.prepareStatement(roleQuery)) {
+            ps.setLong( 1, entity.getId());
+            ps.setLong( 2, role.get().getRoleId());
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Adding role failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            logger.error("Cannot add user role with params (name, role) ==> " +
+                    "(" + entity.getUsername() + "," + role.get().getName() + ")", e);
+        }
     }
 
     @Override
@@ -114,7 +159,7 @@ public class JDBCUserDao implements UserDao {
                 user = Optional.of(userMapper.extractFromResultSet(rs));
                 role = Optional.of(roleMapper.extractFromResultSet(rs));
                 user.get().getRoles().add(role.get());
-            }//TODO : ask question how avoid two Users with the same name
+            }
         } catch (Exception ex){
             throw new RuntimeException(ex);
         }

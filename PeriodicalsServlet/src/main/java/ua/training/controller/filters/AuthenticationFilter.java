@@ -20,7 +20,7 @@ public class AuthenticationFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         anonPath.add("logout");
         anonPath.add("login");
-        anonPath.add("registration");
+        anonPath.add("register");
         anonPath.add("exception");
         anonPath.add("locale");
         anonPath.add("access-denied");
