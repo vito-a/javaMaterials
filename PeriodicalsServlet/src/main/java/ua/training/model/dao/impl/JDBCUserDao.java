@@ -38,21 +38,15 @@ public class JDBCUserDao implements UserDao {
         final String query = "SELECT * FROM users u" +
                 " LEFT JOIN users_roles ur ON u.user_id = ur.user_id " +
                 " LEFT JOIN roles r ON r.role_id = ur.role_id";
-        try (Statement st = connection.createStatement()) {
-            ResultSet rs = st.executeQuery(query);
-
+        try (PreparedStatement ps = connection.prepareCall(query)) {
+            ResultSet rs = ps.executeQuery(query);
             UserMapper userMapper = new UserMapper();
             RoleMapper roleMapper = new RoleMapper();
-
             while (rs.next()) {
-                User user = userMapper
-                        .extractFromResultSet(rs);
-                Role role = roleMapper
-                        .extractFromResultSet(rs);
-                user = userMapper
-                        .makeUnique(users, user);
-                role = roleMapper
-                        .makeUnique(roles, role);
+                User user = userMapper.extractFromResultSet(rs);
+                Role role = roleMapper.extractFromResultSet(rs);
+                user = userMapper.makeUnique(users, user);
+                role = roleMapper.makeUnique(roles, role);
                 user.getRoles().add(role);
             }
             return new ArrayList<>(users.values());
@@ -105,18 +99,25 @@ public class JDBCUserDao implements UserDao {
     @Override
     public Optional<User> findByName(String name) {
 
-        Optional<User> result = Optional.empty();
-        try(PreparedStatement ps = connection.prepareCall("SELECT * FROM Users WHERE username = ?")){
+        Optional<User> user = Optional.empty();
+        Optional<Role> role;
+
+        final String query = "SELECT * FROM users u" +
+                " LEFT JOIN users_roles ur ON u.user_id = ur.user_id " +
+                " LEFT JOIN roles r ON r.role_id = ur.role_id WHERE username = ?";
+        try (PreparedStatement ps = connection.prepareCall(query)){
             ps.setString( 1, name);
-            ResultSet rs;
-            rs = ps.executeQuery();
-            UserMapper mapper = new UserMapper();
-            if (rs.next()){
-                result = Optional.of(mapper.extractFromResultSet(rs));
+            ResultSet rs = ps.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            RoleMapper roleMapper = new RoleMapper();
+            if (rs.next()) {
+                user = Optional.of(userMapper.extractFromResultSet(rs));
+                role = Optional.of(roleMapper.extractFromResultSet(rs));
+                user.get().getRoles().add(role.get());
             }//TODO : ask question how avoid two Users with the same name
         } catch (Exception ex){
             throw new RuntimeException(ex);
         }
-        return result;
+        return user;
     }
 }

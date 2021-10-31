@@ -1,7 +1,7 @@
 <%@ page import="java.util.*, java.text.*" %>
 
 <jsp:include page="/WEB-INF/fragments/head.jsp"/>
-<jsp:include page="/WEB-INF/fragments/header.jsp"/>
+<jsp:include page="/WEB-INF/admin/admin_header.jsp"/>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>

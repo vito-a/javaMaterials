@@ -5,13 +5,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.mindrot.jbcrypt.BCrypt;
+import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.service.BCryptService;
 import ua.training.model.service.UserService;
 
 import java.security.AuthProvider;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 public class Login implements Command {
@@ -47,15 +50,15 @@ public class Login implements Command {
             return "/login.jsp";
         }
 
+        // Check if user already logged in
         if (CommandUtility.checkUserIsLogged(request, name)) {
             logger.info("Already logged in (name, pass) ==> " +
                     "(" + name + ", " + pass + ")");
             return "/WEB-INF/error.jsp";
         }
 
-        //todo: check login with DB
+        // Checking login with DB and BCrypt
         Optional<User> user = userService.login(name);
-        // user.get().getPassHash() == pass.hashCode()
         String newHash = hash(pass);
         logger.info("Login form sent with the hash : " + newHash);
         if (user.isPresent() && bcrypt.verifyAndUpdateHash(pass, user.get().getPassword(), update)) {
@@ -67,13 +70,14 @@ public class Login implements Command {
             return "/login.jsp";
         }
 
-        if (name.equals("admin")) {
+        // Check loaded user's roles
+        List<String> rolesList = user.get().getRoles().stream().map(Role::getName).collect(Collectors.toList());
+        if (rolesList.contains("ADMIN")) {
             CommandUtility.setUserRole(request, User.ROLE.ADMIN, name);
             return "redirect:/app/admin/users";
-//            return "/WEB-INF/userlist.jsp";
-        } else if(name.equals("user")) {
+        } else if(rolesList.contains("USER")) {
             CommandUtility.setUserRole(request, User.ROLE.USER, name);
-            return "redirect:/app/user";
+            return "redirect:/app/user/my-subscriptions";
         } else {
             CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, name);
             return "/login.jsp";
