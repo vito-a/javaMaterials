@@ -6,12 +6,10 @@ import ua.training.controller.commands.*;
 import ua.training.controller.commands.Locale;
 import ua.training.controller.commands.Registration;
 import ua.training.controller.commands.Exception;
-import ua.training.controller.commands.admin.CategoriesList;
-import ua.training.controller.commands.admin.PeriodicalsList;
-import ua.training.controller.commands.admin.SubscriptionsList;
-import ua.training.controller.commands.admin.UsersList;
+import ua.training.controller.commands.admin.*;
 import ua.training.controller.commands.user.MySubscriptions;
 import ua.training.controller.commands.user.ReplenishAccount;
+import ua.training.controller.commands.user.UserAccessDenied;
 import ua.training.model.service.CategoriesService;
 import ua.training.model.service.PeriodicalsService;
 import ua.training.model.service.SubscriptionsService;
@@ -40,14 +38,16 @@ public class Servlet extends HttpServlet {
         commands.put("admin/categories", new CategoriesList(new CategoriesService()));
         commands.put("admin/periodicals", new PeriodicalsList(new PeriodicalsService()));
         commands.put("admin/subscriptions", new SubscriptionsList(new SubscriptionsService()));
+        commands.put("admin/access-denied", new AdminAccessDenied());
         commands.put("user/my-subscriptions", new MySubscriptions(new SubscriptionsService(), new UserService()));
         commands.put("user/replenish-account", new ReplenishAccount(new UserService()));
+        commands.put("user/access-denied", new UserAccessDenied());
+        commands.put("access-denied", new AccessDenied());
         commands.put("logout", new LogOut());
         commands.put("login", new Login(new UserService()));
         commands.put("register", new Registration(new UserService()));
         commands.put("exception" , new Exception());
         commands.put("locale", new Locale());
-        commands.put("access-denied", new AccessDenied());
     }
     
     public void doGet(HttpServletRequest request,

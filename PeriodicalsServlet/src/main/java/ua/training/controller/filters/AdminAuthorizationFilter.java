@@ -27,6 +27,7 @@ public class AdminAuthorizationFilter implements Filter {
         adminPath.add("admin/categories");
         adminPath.add("admin/periodicals");
         adminPath.add("admin/subscriptions");
+        adminPath.add("admin/access-denied");
     }
 
     @Override
@@ -49,12 +50,16 @@ public class AdminAuthorizationFilter implements Filter {
 
         String path = req.getRequestURI().replaceAll(".*/app/" , "");
 
-        if (path.equals("/") || path.isEmpty() || isAdmin || !adminPath.contains(path)) {
-            chain.doFilter(request, response);
+        if (isAdmin) {
+            if (adminPath.contains(path)) {
+                chain.doFilter(request, response);
+            } else {
+                logger.info("AdminAuthorizationFilter triggered (path, currentUser, role) : "
+                        + "(" + path + ", " + currentUser + ", " + currentSession.getAttribute("role") + ")");
+                resp.sendRedirect("/app/admin/access-denied");
+            }
         } else {
-            logger.info("AdminAuthorizationFilter triggered (path, currentUser, role) : "
-                    + "(" + path + ", " + currentUser + ", " + currentSession.getAttribute("role") + ")");
-            resp.sendRedirect("/app/access-denied");
+            chain.doFilter(request, response);
         }
     }
 
