@@ -1,6 +1,7 @@
 package ua.training.model.dao.impl;
 
 import ua.training.model.dao.*;
+import ua.training.model.entity.Subscription;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -20,6 +21,8 @@ public class JDBCDaoFactory extends DaoFactory {
     }
     @Override
     public CategoriesDao createCategoryDao() { return new JDBCCategoryDao(getConnection()); }
+    @Override
+    public SubscriptionDao createSubscriptionDao() { return new JDBCSubscriptionDao(getConnection()); }
 
     private Connection getConnection() {
         try {

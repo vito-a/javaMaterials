@@ -1,44 +1,78 @@
 package ua.training.model.entity;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-
-import static ua.training.model.constants.Constants.USER_ID;
-import static ua.training.model.constants.Constants.PERIODICAL_ID;
-import static ua.training.model.constants.Constants.SUBSCRIPTION_ID;
+import java.util.Date;
+import java.util.List;
 
 /**
  * The Subscription entity.
  */
-@Entity
-@Table( name="subscriptions",
-        uniqueConstraints={@UniqueConstraint(columnNames={"sub_id"})})
 public class Subscription {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = SUBSCRIPTION_ID, nullable = false)
     private Long subId;
-    @Column(name = USER_ID, nullable = false)
     private Long userId;
-    @Column(name = PERIODICAL_ID, nullable = false)
     private Long periodicalId;
-    @Column(name = "startdate", nullable = false)
-    private LocalDate startdate;
-    @Column(name = "enddate", nullable = false)
-    private LocalDate enddate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    /**
-     * Instantiates a new Subscription.
-     *
-     * @param userId       the user id
-     * @param periodicalId the periodical id
-     * @param startDate    the Subscription start date
-     * @param endDate      the Subscription end date
-     */
-    public Subscription(Long userId, Long periodicalId, LocalDate startDate, LocalDate endDate) {
+    public Subscription() {
+    }
+
+    public Subscription(Long subId, Long userId, Long periodicalId, LocalDate startDate, LocalDate endDate) {
+        this.subId = subId;
         this.userId = userId;
         this.periodicalId = periodicalId;
-        this.startdate = startDate;
-        this.enddate = endDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public long getSubId() {
+        return subId;
+    }
+
+    public void setSubId(long subId) {
+        this.subId = subId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public long getPeriodicalId() {
+        return periodicalId;
+    }
+
+    public void setPeriodicalId(long periodicalId) {
+        this.periodicalId = periodicalId;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Subscription {" +
+                "subId=" + subId +
+                ", userId='" + userId + '\'' +
+                ", periodicalId='" + periodicalId + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate=" + endDate +
+                '}';
     }
 }

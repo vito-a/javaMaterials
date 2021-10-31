@@ -1,7 +1,7 @@
 package ua.training.model.service;
 
 import ua.training.model.dao.DaoFactory;
-import ua.training.model.dao.PeriodicalDao;
+import ua.training.model.dao.SubscriptionDao;
 import ua.training.model.entity.Subscription;
 
 import java.util.List;
@@ -14,11 +14,8 @@ public class SubscriptionsService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public List<Subscription> getAllSubscriptions() {
-        /*
-        try (PeriodicalDao dao = daoFactory.createSubscriptionDao()) {
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
             return dao.findAll();
         }
-         */
-        return null;
     }
 }

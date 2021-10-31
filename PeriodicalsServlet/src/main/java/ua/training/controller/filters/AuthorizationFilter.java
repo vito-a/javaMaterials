@@ -23,9 +23,11 @@ public class AuthorizationFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         logger.info("AuthorizationFilter started");
         adminPath.add("admin/*");
+        adminPath.add("logout");
         adminPath.add("admin/users");
         adminPath.add("admin/categories");
         adminPath.add("admin/periodicals");
+        adminPath.add("admin/subscriptions");
     }
 
     @Override
