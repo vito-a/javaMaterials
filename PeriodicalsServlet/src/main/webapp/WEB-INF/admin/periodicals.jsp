@@ -16,7 +16,6 @@
             <h1><fmt:message key="periodicals.title" /></h1>
         </div>
         <div>
-        ${periodicals}
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
                     <tr>
@@ -25,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="periodicals" items="${periodical}">
+                    <c:forEach var="periodical" items="${periodicals}">
                         <tr>
                             <td>${periodical.id}</td>
                             <td>${periodical.name}</td>

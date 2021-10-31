@@ -34,11 +34,8 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
         ResultSet rs = null;
         try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM periodicals")) {
             rs = ps.executeQuery();
-            logger.info("Periodicals: " + rs);
             PeriodicalMapper mapper = new PeriodicalMapper();
             while (rs.next()) {
-                logger.info("Periodical ID: " + rs.getLong("periodical_id"));
-                logger.info("Periodical name: " + rs.getString("name"));
                 listPeriodicals.add(mapper.extractFromResultSet(rs));
             }
         } catch (Exception e) {
