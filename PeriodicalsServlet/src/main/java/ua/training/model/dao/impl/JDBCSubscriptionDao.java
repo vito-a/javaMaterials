@@ -47,6 +47,22 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
         return listSubscriptions;
     }
 
+    public List<Subscription> findMySubscriptions (Long userId) {
+        List<Subscription> mySubscriptions = new ArrayList<>();
+        ResultSet rs = null;
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM subscriptions WHERE user_id = ?")) {
+            ps.setLong( 1, userId);
+            rs = ps.executeQuery();
+            SubscriptionMapper mapper = new SubscriptionMapper();
+            while (rs.next()) {
+                mySubscriptions.add(mapper.extractFromResultSet(rs));
+            }
+        } catch (Exception e) {
+            logger.error("Cannot get subscriptions list", e);
+            throw new RuntimeException(e);
+        }
+        return mySubscriptions;
+    }
 
     @Override
     public void update(Subscription entity) {

@@ -18,4 +18,10 @@ public class SubscriptionsService {
             return dao.findAll();
         }
     }
+
+    public List<Subscription> getMySubscriptions(Long userId) {
+        try (SubscriptionDao dao = daoFactory.createSubscriptionDao()) {
+            return dao.findMySubscriptions(userId);
+        }
+    }
 }

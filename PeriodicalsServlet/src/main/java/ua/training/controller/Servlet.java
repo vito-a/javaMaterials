@@ -10,6 +10,7 @@ import ua.training.controller.commands.admin.CategoriesList;
 import ua.training.controller.commands.admin.PeriodicalsList;
 import ua.training.controller.commands.admin.SubscriptionsList;
 import ua.training.controller.commands.admin.UsersList;
+import ua.training.controller.commands.user.MySubscriptions;
 import ua.training.model.service.CategoriesService;
 import ua.training.model.service.PeriodicalsService;
 import ua.training.model.service.SubscriptionsService;
@@ -38,6 +39,7 @@ public class Servlet extends HttpServlet {
         commands.put("admin/categories", new CategoriesList(new CategoriesService()));
         commands.put("admin/periodicals", new PeriodicalsList(new PeriodicalsService()));
         commands.put("admin/subscriptions", new SubscriptionsList(new SubscriptionsService()));
+        commands.put("user/my-subscriptions", new MySubscriptions(new SubscriptionsService()));
         commands.put("logout", new LogOut());
         commands.put("login", new Login(new UserService()));
         commands.put("register", new Registration(new UserService()));

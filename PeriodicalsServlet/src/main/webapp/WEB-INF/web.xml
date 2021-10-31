@@ -66,11 +66,20 @@
   </filter-mapping>
 
   <filter>
-    <filter-name>AuthorizationFilter</filter-name>
-    <filter-class>ua.training.controller.filters.AuthorizationFilter</filter-class>
+    <filter-name>AdminAuthorizationFilter</filter-name>
+    <filter-class>ua.training.controller.filters.AdminAuthorizationFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>AuthorizationFilter</filter-name>
+    <filter-name>AdminAuthorizationFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>UserAuthorizationFilter</filter-name>
+    <filter-class>ua.training.controller.filters.UserAuthorizationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>UserAuthorizationFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
