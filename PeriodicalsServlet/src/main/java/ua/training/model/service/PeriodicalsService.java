@@ -26,6 +26,13 @@ public class PeriodicalsService {
         }
     }
 
+    public static void delete(int id) {
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
+            dao.delete(id);
+        }
+    }
+
     public List<Periodical> getAllPeriodicals(int offset, int recordsOnPage,
                                               Sorting sorting, SortingType sortingType) {
         try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {

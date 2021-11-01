@@ -209,7 +209,13 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
     @Override
     public void delete(int id) {
-
+        String query = "DELETE FROM periodicals WHERE periodical_id = ?";
+        try (PreparedStatement ps = connection.prepareCall(query)) {
+            ps.setInt( 1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

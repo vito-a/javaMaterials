@@ -20,6 +20,15 @@ public class DeletePeriodical implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        return "redirect:/app/admin/periodicals";
+        String name = request.getParameter("name");
+        String periodical_id = request.getParameter("periodical_id");
+
+        if (periodical_id != null && !periodical_id.equals("")) {
+            logger.info("Periodical deleting (periodical_id) : " + periodical_id);
+            PeriodicalsService.delete(Integer.parseInt(periodical_id));
+            return "redirect:/app/admin/periodicals";
+        }
+
+        return "/WEB-INF/error.jsp";
     }
 }
