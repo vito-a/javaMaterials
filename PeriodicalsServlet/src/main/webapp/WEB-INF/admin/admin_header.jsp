@@ -38,10 +38,10 @@
                             <a href="${pageContext.request.contextPath}?lang=en"><fmt:message key="lang.EN" /></a>
                         </button>
                         <button class="dropdown-item" type="button">
-                            <a href="${pageContext.request.contextPath}?lang=fr"><fmt:message key="lang.FR" />/a>
+                            <a href="${pageContext.request.contextPath}?lang=fr"><fmt:message key="lang.FR" /></a>
                         </button>
                         <button class="dropdown-item" type="button">
-                            <a href="${pageContext.request.contextPath}?lang=ru"><fmt:message key="lang.RU" />/a>
+                            <a href="${pageContext.request.contextPath}?lang=ru"><fmt:message key="lang.RU" /></a>
                         </button>
                         <button class="dropdown-item" type="button">
                             <a href="${pageContext.request.contextPath}?lang=ua"><fmt:message key="lang.UA" /></a>
