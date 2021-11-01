@@ -1,6 +1,5 @@
 package ua.training.controller.filters;
 
-
 import ua.training.model.entity.User;
 
 import javax.servlet.*;
