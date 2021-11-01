@@ -4,6 +4,8 @@ import ua.training.controller.commands.Login;
 import ua.training.model.dao.UserDao;
 import ua.training.model.dao.mapper.RoleMapper;
 import ua.training.model.dao.mapper.UserMapper;
+import ua.training.model.dao.util.Sorting;
+import ua.training.model.dao.util.SortingType;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 
@@ -104,25 +106,51 @@ public class JDBCUserDao implements UserDao {
         }
     }
 
-    public List<User> getAllUsers(Connection connection, int currentPage, int recordsPerPage) throws SQLException {
-        List<User> listUsers = new ArrayList<>();
-        ResultSet rs = null;
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM users LIMIT ?, ?")) {
-            int start = currentPage * recordsPerPage - recordsPerPage;
-            int i = 1;
-            ps.setInt(i++, start);
-            ps.setInt(i++, recordsPerPage);
-            rs = ps.executeQuery();
-            UserMapper mapper = new UserMapper();
-            while (rs.next()) {
-                listUsers.add(mapper.extractFromResultSet(rs));
-            }
-        } catch (Exception e) {
-            logger.error("Cannot get users list", e);
-            throw new RuntimeException(e);
+    /**
+     * Query used to return the users of role.
+     * The method allows to get sorted list of products by
+     * name or price in one direction or opposite.
+     *
+     * @param roleId the role ID of users
+     * @param offset value allow to retrieve just a portion of the rows
+     * @param recordsOnPage the amount of data per request
+     * @param sorting the way of the data sorting
+     * @param sortingType the possible sorting type, e.g. name or price
+     * @return list of users
+     */
+    public List<User> getAllUsers(Long roleId, int offset, int recordsOnPage,
+                                         Sorting sorting, SortingType sortingType) {
+        Map<Long, User> users = new HashMap<>();
+        Map<Long, Role> roles = new HashMap<>();
+        StringBuilder queryBuilder = new StringBuilder();
+        final String query = "SELECT SQL_CALC_FOUND_ROWS * FROM users u" +
+                " LEFT JOIN users_roles ur ON u.user_id = ur.user_id " +
+                " LEFT JOIN roles r ON r.role_id = ur.role_id";
+        queryBuilder.append(query);
+        if (roleId > 0) {
+            queryBuilder.append("WHERE ur.role_id = ").append(roleId);
         }
-        return listUsers;
+        if (!Sorting.DEFAULT.equals(sorting)) {
+            queryBuilder.append(" ORDER BY ").append(sortingType.getValue()).append(" ").append(sorting.getType());
+        }
+        queryBuilder.append(" LIMIT ").append(offset).append(", ").append(recordsOnPage);
 
+        try (PreparedStatement ps = connection.prepareStatement(queryBuilder.toString())) {
+            UserMapper userMapper = new UserMapper();
+            RoleMapper roleMapper = new RoleMapper();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = userMapper.extractFromResultSet(rs);
+                Role role = roleMapper.extractFromResultSet(rs);
+                user = userMapper.makeUnique(users, user);
+                role = roleMapper.makeUnique(roles, role);
+                user.getRoles().add(role);
+            }
+            return new ArrayList<>(users.values());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
