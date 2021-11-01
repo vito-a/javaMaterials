@@ -33,6 +33,13 @@ public class PeriodicalsService {
         }
     }
 
+    public static void subscribe(int periodicalId, long userId) {
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
+            dao.subscribe(periodicalId, userId);
+        }
+    }
+
     public List<Periodical> getAllPeriodicals(int offset, int recordsOnPage,
                                               Sorting sorting, SortingType sortingType) {
         try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {

@@ -12,4 +12,6 @@ public interface PeriodicalDao extends GenericDao<Periodical> {
     int getPeriodicalsCount(long catId);
 
     List<Periodical> search(String s);
+
+    int subscribe(int periodicalId, long userId);
 }

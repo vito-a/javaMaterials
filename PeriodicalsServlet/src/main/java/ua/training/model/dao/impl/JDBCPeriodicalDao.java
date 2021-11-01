@@ -14,6 +14,7 @@ import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -216,6 +217,41 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public int subscribe(int periodicalId, long userId) {
+        long subId = 0L;
+        int affectedRows = 0;
+        String[] generatedColumns = {"sub_id"};
+        String userQuery = "INSERT INTO subscriptions (user_id, periodical_id, startdate, enddate) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(userQuery, generatedColumns)) {
+            LocalDate startDate = LocalDate.now();
+            logger.info("subscription startDate = " + startDate);
+            LocalDate endDate = LocalDate.now().plusYears(1);
+            logger.info("subscription endDate = " + endDate);
+            ps.setLong( 1, userId);
+            ps.setInt(2, periodicalId);
+            ps.setDate( 3, Date.valueOf(startDate));
+            ps.setDate(4, Date.valueOf(endDate));
+            affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating subscription failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    subId = generatedKeys.getLong(1);
+                }
+                else {
+                    throw new SQLException("Creating subscription failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Cannot create subscription with params (sub_id, user_id, periodical_id) : " +
+                    "(" + subId + "," + userId + "," + periodicalId + ")", e);
+        }
+
+        return affectedRows;
     }
 
     @Override

@@ -46,6 +46,7 @@
                                     <fmt:message key="periodicals.price" />
                                 </a>
                             </th>
+                            <th class="p-3"><span class="nav-link"><fmt:message key="actions.actions" /></span></th>
                         </tr>
                     </thead>
                     <c:forEach var="periodical" items="${periodicals}">
@@ -55,6 +56,9 @@
                             <td>${periodical.description}</td>
                             <td>${periodical.catId}</td>
                             <td>${periodical.price}</td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/app/user/subscribe/periodical?periodical_id=${periodical.id}"><fmt:message key="actions.subscribe" /></a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table>
