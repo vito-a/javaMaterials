@@ -14,6 +14,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" href="/app/user/periodicals"><fmt:message key="pages.periodicals" /></a></li>
             <li class="nav-item"><a class="nav-link" href="/app/user/my-subscriptions"><fmt:message key="subscriptions.my.title" /></a></li>
+            <li class="nav-item"><a class="nav-link" href="/app/user/categories"><fmt:message key="pages.categories" /></a></li>
             <li class="nav-item"><a class="nav-link" href="/app/user/replenish-account"><fmt:message key="user.replenish.account" /></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

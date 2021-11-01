@@ -24,11 +24,13 @@ public class UserAuthorizationFilter implements Filter {
         userPath.add("user/*");
         userPath.add("logout");
         userPath.add("user/periodicals");
+        userPath.add("user/categories");
         userPath.add("user/access-denied");
         userPath.add("user/my-subscriptions");
         userPath.add("user/replenish-account");
         userPath.add("user/search/periodicals");
         userPath.add("user/subscribe/periodical");
+        userPath.add("user/category/periodicals");
     }
 
     @Override

@@ -179,6 +179,30 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
         }
     }
 
+    /**
+     * Search list.
+     *
+     * @param catId the category ID
+     * @return the periodicals list
+     */
+    @Override
+    public List<Periodical> categoryPeriodicals(long catId) {
+        List<Periodical> listPeriodicals = new ArrayList<>();
+        String query = "SELECT * FROM periodicals WHERE cat_id = ?";
+        try (PreparedStatement ps = connection.prepareCall(query);) {
+            ps.setLong( 1, catId);
+            ResultSet rs = ps.executeQuery();
+            PeriodicalMapper mapper = new PeriodicalMapper();
+            while (rs.next()) {
+                listPeriodicals.add(mapper.extractFromResultSet(rs));
+            }
+            return listPeriodicals;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     public int update(Periodical entity) {
         int affectedRows = 0;

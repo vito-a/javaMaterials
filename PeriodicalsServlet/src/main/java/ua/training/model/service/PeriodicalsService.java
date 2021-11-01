@@ -90,4 +90,10 @@ public class PeriodicalsService {
 
         return result;
     }
+
+    public List<Periodical> categoryPeriodicals(long catId) {
+        try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
+            return dao.categoryPeriodicals(catId);
+        }
+    }
 }
