@@ -107,8 +107,8 @@ public class JDBCUserDao implements UserDao {
 
     /**
      * Query used to return the users of role.
-     * The method allows to get sorted list of products by
-     * name or price in one direction or opposite.
+     * The method allows to get sorted list of users by
+     * name or ID in one direction or opposite.
      *
      * @param roleId the role ID of users
      * @param offset value allow to retrieve just a portion of the rows
@@ -132,7 +132,6 @@ public class JDBCUserDao implements UserDao {
             queryBuilder.append(" ORDER BY ").append("u.").append(sortingType.getValue()).append(" ").append(sorting.getType());
         }
         queryBuilder.append(" LIMIT ").append(offset).append(", ").append(recordsOnPage);
-//        logger.info("getAllUsers queryBuilder : " + queryBuilder.toString());
 
         try (PreparedStatement ps = connection.prepareCall(queryBuilder.toString()); ResultSet rs = ps.executeQuery();) {
             UserMapper userMapper = new UserMapper();
@@ -227,7 +226,7 @@ public class JDBCUserDao implements UserDao {
     }
 
     /**
-     * Return the total count of products for a certain role.
+     * Return the total count of users for a certain role.
      */
     public int getUsersCount(long roleId) {
         int usersCount = 0;

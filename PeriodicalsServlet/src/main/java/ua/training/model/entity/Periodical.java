@@ -7,8 +7,8 @@ public class Periodical {
     private Long id;
     private String name;
     private String description;
-    private String categoryId;
-    private Long price;
+    private Long catId;
+    private Double price;
 
     public Periodical() {
     }
@@ -38,5 +38,21 @@ public class Periodical {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getCatId() {
+        return catId;
+    }
+
+    public void setCatId(Long catId) {
+        this.catId = catId;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

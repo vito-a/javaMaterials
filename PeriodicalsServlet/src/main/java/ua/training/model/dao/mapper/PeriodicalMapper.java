@@ -14,6 +14,8 @@ public class PeriodicalMapper implements ObjectMapper<Periodical> {
         periodical.setId(rs.getLong("periodical_id"));
         periodical.setName(rs.getString("name"));
         periodical.setDescription(rs.getString("description"));
+        periodical.setCatId(rs.getLong("cat_id"));
+        periodical.setPrice(rs.getDouble("price"));
         return periodical;
     }
 

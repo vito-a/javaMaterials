@@ -11,6 +11,7 @@ import java.util.List;
  */
 public enum SortingType {
 	USER_ID("user_id"),
+	PERIODICAL_ID("periodical_id"),
 	NAME("name"),
 	USERNAME("username"),
 	FIRSTNAME("firstname"),
