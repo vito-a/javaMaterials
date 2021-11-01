@@ -2,13 +2,15 @@ package ua.training.model.dao.impl;
 
 import ua.training.model.dao.RoleDao;
 import ua.training.model.dao.mapper.RoleMapper;
+import ua.training.model.dao.mapper.UserMapper;
 import ua.training.model.entity.Role;
+import ua.training.model.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
-import java.util.Optional;
+import java.sql.SQLException;
+import java.util.*;
 
 public class JDBCRoleDao implements RoleDao {
     private Connection connection;
@@ -28,7 +30,19 @@ public class JDBCRoleDao implements RoleDao {
 
     @Override
     public List<Role> findAll() {
-        return null;
+        ArrayList<Role> roles = new ArrayList<>();
+        final String query = "SELECT * FROM roles";
+        try (PreparedStatement ps = connection.prepareCall(query); ResultSet rs = ps.executeQuery(query);) {
+            RoleMapper roleMapper = new RoleMapper();
+            while (rs.next()) {
+                Role role = roleMapper.extractFromResultSet(rs);
+                roles.add(role);
+            }
+            return roles;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -48,7 +62,7 @@ public class JDBCRoleDao implements RoleDao {
 
     public Optional<Role> findByName(String name) {
         Optional<Role> role = Optional.empty();
-        final String query = "SELECT * FROM Roles r WHERE name = ?";
+        final String query = "SELECT * FROM roles WHERE name = ?";
         try (PreparedStatement ps = connection.prepareCall(query)){
             ps.setString( 1, name);
             ResultSet rs = ps.executeQuery();

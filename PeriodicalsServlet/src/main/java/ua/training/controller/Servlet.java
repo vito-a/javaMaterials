@@ -11,10 +11,7 @@ import ua.training.controller.commands.user.MySubscriptions;
 import ua.training.controller.commands.user.ReplenishAccount;
 import ua.training.controller.commands.user.UserAccessDenied;
 import ua.training.controller.commands.user.UserPeriodicalsList;
-import ua.training.model.service.CategoriesService;
-import ua.training.model.service.PeriodicalsService;
-import ua.training.model.service.SubscriptionsService;
-import ua.training.model.service.UserService;
+import ua.training.model.service.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

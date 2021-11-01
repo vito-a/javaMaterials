@@ -3,6 +3,8 @@ package ua.training.model.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.dao.UserDao;
+import ua.training.model.dao.util.Sorting;
+import ua.training.model.dao.util.SortingType;
 import ua.training.model.entity.User;
 import ua.training.model.dao.DaoFactory;
 
@@ -28,6 +30,13 @@ public class UserService {
     public List<User> getAllUsers() {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findAll();
+        }
+    }
+
+    public List<User> getAllUsers(long roleId, int offset, int recordsOnPage,
+                                  Sorting sorting, SortingType sortingType) {
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.getAllUsers(roleId, offset, recordsOnPage, sorting, sortingType);
         }
     }
 
@@ -66,5 +75,14 @@ public class UserService {
         }
 
         return balance;
+    }
+
+    public int getUsersCount(long activeRoleId) {
+        int usersCount = 0;
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            usersCount = userDao.getUsersCount(activeRoleId);
+        }
+
+        return usersCount;
     }
 }

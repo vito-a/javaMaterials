@@ -20,6 +20,7 @@ public enum SortingType {
 	BALANCE("balance"),
 	DESCRIPTION("description"),
 	CAT_ID("cat_id"),
+	ENABLED("enabled"),
 	PRICE("price");
 
 	private String value;

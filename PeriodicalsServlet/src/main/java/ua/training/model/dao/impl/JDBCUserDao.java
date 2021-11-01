@@ -88,8 +88,7 @@ public class JDBCUserDao implements UserDao {
         final String query = "SELECT * FROM users u" +
                 " LEFT JOIN users_roles ur ON u.user_id = ur.user_id " +
                 " LEFT JOIN roles r ON r.role_id = ur.role_id";
-        try (PreparedStatement ps = connection.prepareCall(query)) {
-            ResultSet rs = ps.executeQuery(query);
+        try (PreparedStatement ps = connection.prepareCall(query); ResultSet rs = ps.executeQuery(query);) {
             UserMapper userMapper = new UserMapper();
             RoleMapper roleMapper = new RoleMapper();
             while (rs.next()) {
@@ -118,35 +117,33 @@ public class JDBCUserDao implements UserDao {
      * @param sortingType the possible sorting type, e.g. name or price
      * @return list of users
      */
-    public List<User> getAllUsers(Long roleId, int offset, int recordsOnPage,
+    public List<User> getAllUsers(long roleId, int offset, int recordsOnPage,
                                          Sorting sorting, SortingType sortingType) {
-        Map<Long, User> users = new HashMap<>();
-        Map<Long, Role> roles = new HashMap<>();
+        ArrayList<User> users = new ArrayList<>();
         StringBuilder queryBuilder = new StringBuilder();
-        final String query = "SELECT SQL_CALC_FOUND_ROWS * FROM users u" +
+        String query = "SELECT * FROM users u" +
                 " LEFT JOIN users_roles ur ON u.user_id = ur.user_id " +
                 " LEFT JOIN roles r ON r.role_id = ur.role_id";
         queryBuilder.append(query);
         if (roleId > 0) {
-            queryBuilder.append("WHERE ur.role_id = ").append(roleId);
+            queryBuilder.append(" WHERE ur.role_id = ").append(roleId);
         }
         if (!Sorting.DEFAULT.equals(sorting)) {
-            queryBuilder.append(" ORDER BY ").append(sortingType.getValue()).append(" ").append(sorting.getType());
+            queryBuilder.append(" ORDER BY ").append("u.").append(sortingType.getValue()).append(" ").append(sorting.getType());
         }
         queryBuilder.append(" LIMIT ").append(offset).append(", ").append(recordsOnPage);
+//        logger.info("getAllUsers queryBuilder : " + queryBuilder.toString());
 
-        try (PreparedStatement ps = connection.prepareStatement(queryBuilder.toString())) {
+        try (PreparedStatement ps = connection.prepareCall(queryBuilder.toString()); ResultSet rs = ps.executeQuery();) {
             UserMapper userMapper = new UserMapper();
             RoleMapper roleMapper = new RoleMapper();
-            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = userMapper.extractFromResultSet(rs);
                 Role role = roleMapper.extractFromResultSet(rs);
-                user = userMapper.makeUnique(users, user);
-                role = roleMapper.makeUnique(roles, role);
                 user.getRoles().add(role);
+                users.add(user);
             }
-            return new ArrayList<>(users.values());
+            return users;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -227,5 +224,28 @@ public class JDBCUserDao implements UserDao {
             logger.error("Cannot get balance with params (userId) : " + "(" + userId + ")", e);
         }
         return balance;
+    }
+
+    /**
+     * Return the total count of products for a certain role.
+     */
+    public int getUsersCount(long roleId) {
+        int usersCount = 0;
+        final String query = "SELECT COUNT(*) AS count FROM users u" +
+                " LEFT JOIN users_roles ur ON u.user_id = ur.user_id " +
+                " LEFT JOIN roles r ON r.role_id = ur.role_id";
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(query);
+        if (roleId > 0) {
+            queryBuilder.append(" WHERE ur.role_id = ").append(roleId);
+        }
+        try (PreparedStatement ps = connection.prepareCall(queryBuilder.toString()); ResultSet rs = ps.executeQuery();) {
+            if (rs.next()) {
+                usersCount = rs.getInt("count");
+            }
+        } catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+        return usersCount;
     }
 }

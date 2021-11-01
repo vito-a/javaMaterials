@@ -6,7 +6,7 @@ package ua.training.model.dao.util;
 public enum Sorting {
 	DESC("DESC"),
 	ASC("ASC"),
-	DEFAULT("");
+	DEFAULT("ASC");
 	
 	private String type;
 	
