@@ -65,8 +65,8 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
     }
 
     @Override
-    public void update(Subscription entity) {
-
+    public int update(Subscription entity) {
+        return 0;
     }
 
     @Override

@@ -150,8 +150,8 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void update(User entity) {
-
+    public int update(User entity) {
+       return 0;
     }
 
     @Override

@@ -59,7 +59,20 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
 
     @Override
     public Periodical findById(int id) {
-        return null;
+        Periodical periodical = new Periodical();
+        String query = "SELECT * FROM periodicals WHERE periodical_id = ?";
+        try (PreparedStatement ps = connection.prepareCall(query);) {
+            ps.setInt( 1, id);
+            ResultSet rs = ps.executeQuery();
+            PeriodicalMapper mapper = new PeriodicalMapper();
+            while (rs.next()) {
+                periodical = mapper.extractFromResultSet(rs);
+            }
+            return periodical;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -166,8 +179,32 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
     }
 
     @Override
-    public void update(Periodical entity) {
+    public int update(Periodical entity) {
+        int affectedRows = 0;
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE periodicals " +
+                " SET name = ?, description = ?, cat_id = ?, price = ? WHERE periodical_id = ?")) {
+            ps.setString(1, entity.getName());
+            ps.setString(2, entity.getDescription());
+            ps.setLong(3, entity.getCatId());
+            ps.setDouble(4, entity.getPrice());
+            ps.setLong(5, entity.getId());
+            affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating periodical failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setId(generatedKeys.getLong(1));
+                } else {
+                    throw new SQLException("Creating periodical failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Cannot create periodical with params (name, description, catId, price) : " +
+                    "(" + entity.getName() + "," + entity.getDescription() + "," + entity.getCatId() + "," + entity.getPrice() + ")", e);
+        }
 
+        return affectedRows;
     }
 
     @Override

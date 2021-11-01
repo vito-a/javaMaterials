@@ -20,6 +20,10 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCPeriodicalDao(getConnection());
     }
     @Override
+    public PeriodicalDao updatePeriodicalDao() {
+        return new JDBCPeriodicalDao(getConnection());
+    }
+    @Override
     public CategoriesDao createCategoryDao() { return new JDBCCategoryDao(getConnection()); }
     @Override
     public SubscriptionDao createSubscriptionDao() { return new JDBCSubscriptionDao(getConnection()); }

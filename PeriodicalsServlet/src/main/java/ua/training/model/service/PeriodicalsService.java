@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.dao.DaoFactory;
 import ua.training.model.dao.PeriodicalDao;
-import ua.training.model.dao.UserDao;
 import ua.training.model.dao.util.Sorting;
 import ua.training.model.dao.util.SortingType;
 import ua.training.model.entity.Periodical;
@@ -19,6 +18,13 @@ public class PeriodicalsService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     private final Logger logger = LogManager.getLogger(PeriodicalsService.class.getName());
+
+    public static Periodical findById(int id) {
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
+            return dao.findById(id);
+        }
+    }
 
     public List<Periodical> getAllPeriodicals(int offset, int recordsOnPage,
                                               Sorting sorting, SortingType sortingType) {
@@ -53,7 +59,18 @@ public class PeriodicalsService {
         int result = 0;
         try (PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
             result = periodicalDao.create(periodical);
-            logger.info("Attempted to create user with params (name, description) : " +
+            logger.info("Attempted to create periodical with params (name, description) : " +
+                    "(" + periodical.getName() + "," + periodical.getDescription() + ")");
+        }
+
+        return result;
+    }
+
+    public int update(Periodical periodical) {
+        int result = 0;
+        try (PeriodicalDao periodicalDao = daoFactory.updatePeriodicalDao()) {
+            result = periodicalDao.update(periodical);
+            logger.info("Attempted to update periodical with params (name, description) : " +
                     "(" + periodical.getName() + "," + periodical.getDescription() + ")");
         }
 

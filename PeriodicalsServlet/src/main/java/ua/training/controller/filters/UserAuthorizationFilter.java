@@ -28,6 +28,7 @@ public class UserAuthorizationFilter implements Filter {
         userPath.add("user/my-subscriptions");
         userPath.add("user/replenish-account");
         userPath.add("user/search/periodicals");
+        userPath.add("user/subscribe/periodical");
     }
 
     @Override

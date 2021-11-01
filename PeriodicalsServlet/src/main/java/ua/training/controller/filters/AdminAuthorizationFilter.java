@@ -29,6 +29,8 @@ public class AdminAuthorizationFilter implements Filter {
         adminPath.add("admin/subscriptions");
         adminPath.add("admin/access-denied");
         adminPath.add("admin/add/periodical");
+        adminPath.add("admin/edit/periodical");
+        adminPath.add("admin/delete/periodical");
     }
 
     @Override

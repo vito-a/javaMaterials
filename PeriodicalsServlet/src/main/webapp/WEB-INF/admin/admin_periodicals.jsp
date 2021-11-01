@@ -53,6 +53,7 @@
                                     <fmt:message key="periodicals.price" />
                                 </a>
                             </th>
+                            <th class="p-3"><span class="nav-link"><fmt:message key="actions.actions" /></span></th>
                         </tr>
                     </thead>
                     <c:forEach var="periodical" items="${periodicals}">
@@ -62,6 +63,13 @@
                             <td>${periodical.description}</td>
                             <td>${periodical.catId}</td>
                             <td>${periodical.price}</td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/app/admin/subscribe/periodical?user_id=${user_id}&periodical_id=${periodical.id}"><fmt:message key="actions.subscribe" /></a>
+                                &nbsp;
+                                <a href="${pageContext.request.contextPath}/app/admin/edit/periodical?periodical_id=${periodical.id}"><fmt:message key="actions.edit" /></a>
+                                &nbsp;
+                                <a href="${pageContext.request.contextPath}/app/admin/delete/periodical?periodical_id=${periodical.id}"><fmt:message key="actions.delete" /></a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table>

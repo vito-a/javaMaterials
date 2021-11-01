@@ -46,8 +46,8 @@ public class JDBCRoleDao implements RoleDao {
     }
 
     @Override
-    public void update(Role entity) {
-
+    public int update(Role entity) {
+        return 0;
     }
 
     @Override
