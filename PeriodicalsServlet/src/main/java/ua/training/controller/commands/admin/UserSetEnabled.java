@@ -12,11 +12,19 @@ import ua.training.model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The Admin Users enabled/disabled setting command.
+ */
 public class UserSetEnabled implements Command {
 
     private final UserService userService;
     private final Logger logger = LogManager.getLogger(Registration.class.getName());
 
+    /**
+     * Instantiates a new User set enabled.
+     *
+     * @param userService the user service
+     */
     public UserSetEnabled(UserService userService) {
         this.userService = userService;
     }

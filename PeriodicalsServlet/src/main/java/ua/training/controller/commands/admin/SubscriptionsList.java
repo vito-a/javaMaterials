@@ -7,10 +7,18 @@ import ua.training.model.service.SubscriptionsService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The Admin Subscriptions list command.
+ */
 public class SubscriptionsList implements Command {
 
     private final SubscriptionsService subscriptionsService;
 
+    /**
+     * Instantiates a new Subscriptions list.
+     *
+     * @param subscriptionsService the subscriptions service
+     */
     public SubscriptionsList(SubscriptionsService subscriptionsService) { this.subscriptionsService = subscriptionsService; }
 
     @Override

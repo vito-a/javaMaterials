@@ -9,11 +9,19 @@ import ua.training.model.service.PeriodicalsService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ *  Add periodical command.
+ */
 public class AddPeriodical implements Command {
 
     private final PeriodicalsService periodicalService;
     private final Logger logger = LogManager.getLogger(Registration.class.getName());
 
+    /**
+     * Instantiates a new Add periodical command.
+     *
+     * @param periodicalService the periodical service
+     */
     public AddPeriodical(PeriodicalsService periodicalService) {
         this.periodicalService = periodicalService;
     }

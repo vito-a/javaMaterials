@@ -9,6 +9,9 @@ import ua.training.model.service.PeriodicalsService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * Admin periodicals list command.
+ */
 public class AdminPeriodicalsList implements Command {
 
     private final PeriodicalsService periodicalsService;
@@ -21,6 +24,11 @@ public class AdminPeriodicalsList implements Command {
     private Sorting activeSortingWay = Sorting.ASC;
     private SortingType activeSortingType = SortingType.PERIODICAL_ID;
 
+    /**
+     * Instantiates a new Admin periodicals list.
+     *
+     * @param periodicalsService the periodicals service
+     */
     public AdminPeriodicalsList(PeriodicalsService periodicalsService) {
         this.periodicalsService = periodicalsService;
     }

@@ -9,6 +9,9 @@ import ua.training.model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The Admin Users list command.
+ */
 public class UsersList implements Command {
 
     private final UserService userService;
@@ -22,6 +25,11 @@ public class UsersList implements Command {
     private Sorting activeSortingWay = Sorting.ASC;
     private SortingType activeSortingType = SortingType.USER_ID;
 
+    /**
+     * Instantiates a new Users list.
+     *
+     * @param userService the user service
+     */
     public UsersList(UserService userService) { this.userService = userService; }
 
     @Override

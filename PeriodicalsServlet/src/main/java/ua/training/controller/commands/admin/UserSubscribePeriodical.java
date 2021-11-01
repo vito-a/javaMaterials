@@ -12,12 +12,21 @@ import ua.training.model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The Admin User subscribe periodical command.
+ */
 public class UserSubscribePeriodical implements Command {
 
     private final UserService userService;
     private final PeriodicalsService periodicalService;
     private final Logger logger = LogManager.getLogger(Registration.class.getName());
 
+    /**
+     * Instantiates a new User subscribe periodical.
+     *
+     * @param userService       the user service
+     * @param periodicalService the periodical service
+     */
     public UserSubscribePeriodical(UserService userService, PeriodicalsService periodicalService) {
         this.userService = userService;
         this.periodicalService = periodicalService;

@@ -7,10 +7,18 @@ import ua.training.model.service.CategoriesService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The Admin Categories list command.
+ */
 public class CategoriesList implements Command {
 
     private final CategoriesService categoriesService;
 
+    /**
+     * Instantiates a new Admin Categories list.
+     *
+     * @param categoriesService the categories service
+     */
     public CategoriesList(CategoriesService categoriesService) {
         this.categoriesService = categoriesService;
     }
