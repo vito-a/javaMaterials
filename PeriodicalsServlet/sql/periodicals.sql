@@ -175,7 +175,8 @@ INSERT INTO periodicals (periodical_id, name, description, cat_id, price) VALUES
   (DEFAULT, 'Wall Street Journal', 'Breaking news and analysis from the U.S. and around the world at WSJ.com.', 1, 400),
   (DEFAULT, 'Lancet', 'Regional Health - Europe publishes a Series of eleven papers by experts from different areas of public health', 2, 500),
   (DEFAULT, 'Janes', 'The latest defence and security news - the trusted source for defence intelligence', 4, 600),
-  (DEFAULT, 'Wired', 'A monthly American magazine, published in print and online editions, that focuses on how emerging technologies affect culture, the economy, and politics.', 4, 700);
+  (DEFAULT, 'Wired', 'A monthly American magazine, published in print and online editions, that focuses on how emerging technologies affect culture, the economy, and politics.', 4, 700),
+  (DEFAULT, 'The Economist', 'The Economist is an international weekly newspaper printed in magazine-format and published digitally that focuses on current affairs', 1, 800);
 
 -- --------------------------------------------------------------------------------------------
 -- Subscriptions

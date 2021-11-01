@@ -16,6 +16,13 @@
             <h1><fmt:message key="periodicals.title" /></h1>
         </div>
         <div>
+        <div>
+            <h2><a href="${pageContext.request.contextPath}/app/admin/add/periodical">
+                <fmt:message key="actions.add" />
+                </a>
+            </h2>
+        </div>
+        <div>
         <div class="container text-center">
             <div>
                 <table class="table table-striped table-bordered">

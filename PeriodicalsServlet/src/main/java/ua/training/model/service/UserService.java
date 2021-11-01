@@ -44,7 +44,7 @@ public class UserService {
         int result = 0;
         try (UserDao userDao = daoFactory.createUserDao()) {
             result = userDao.create(user);
-            logger.info("Attempted to create user with params (userName, userRole) ==> " +
+            logger.info("Attempted to create user with params (userName, userRole) : " +
                     "(" + user.getUsername() + "," + user.getRoles() + ")");
         }
 

@@ -17,6 +17,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ua.training.model.constants.Constants.ROLE_USER;
+
 public class JDBCPeriodicalDao implements PeriodicalDao {
     private Connection connection;
     private final Logger logger = LogManager.getLogger(Login.class.getName());
@@ -26,7 +28,34 @@ public class JDBCPeriodicalDao implements PeriodicalDao {
     }
 
     @Override
-    public int create(Periodical entity) { return 0; }
+    public int create(Periodical entity) {
+        int affectedRows = 0;
+        String[] generatedColumns = {"periodical_id"};
+        String userQuery = "INSERT INTO periodicals (name, description, cat_id, price) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(userQuery, generatedColumns)) {
+            ps.setString( 1, entity.getName());
+            ps.setString(2, entity.getDescription());
+            ps.setLong(3, entity.getCatId());
+            ps.setDouble(4, entity.getPrice());
+            affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating periodical failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setId(generatedKeys.getLong(1));
+                }
+                else {
+                    throw new SQLException("Creating periodical failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Cannot create periodical with params (name, description, catId, price) : " +
+                    "(" + entity.getName() + "," + entity.getDescription() + "," + entity.getCatId() + "," + entity.getPrice() + ")", e);
+        }
+
+        return affectedRows;
+    }
 
     @Override
     public Periodical findById(int id) {

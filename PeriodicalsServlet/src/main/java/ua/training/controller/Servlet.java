@@ -32,6 +32,7 @@ public class Servlet extends HttpServlet {
         commands.put("admin/users", new UsersList(new UserService()));
         commands.put("admin/categories", new CategoriesList(new CategoriesService()));
         commands.put("admin/periodicals", new AdminPeriodicalsList(new PeriodicalsService()));
+        commands.put("admin/add/periodical", new AddPeriodical(new PeriodicalsService()));
         commands.put("admin/subscriptions", new SubscriptionsList(new SubscriptionsService()));
         commands.put("admin/access-denied", new AdminAccessDenied());
         commands.put("user/my-subscriptions", new MySubscriptions(new SubscriptionsService(), new UserService()));

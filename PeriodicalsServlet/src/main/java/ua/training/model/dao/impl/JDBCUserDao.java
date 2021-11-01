@@ -51,7 +51,7 @@ public class JDBCUserDao implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Cannot create user with params (name, password, firstName, userRole) ==> " +
+            logger.error("Cannot create user with params (name, password, firstName, userRole) : " +
                     "(" + entity.getUsername() + "," + entity.getPassword() + "," + entity.getFirstname() + "," + entity.getRoles() + ")", e);
         }
 
@@ -70,7 +70,7 @@ public class JDBCUserDao implements UserDao {
                 throw new SQLException("Adding role failed, no rows affected.");
             }
         } catch (SQLException e) {
-            logger.error("Cannot add user role with params (name, role) ==> " +
+            logger.error("Cannot add user role with params (name, role) : " +
                     "(" + entity.getUsername() + "," + role.get().getName() + ")", e);
         }
     }
