@@ -2,14 +2,12 @@ package ua.training.model.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * The User entity.
  */
-public class User implements Serializable {
-    private static final long serialVersionUID = 2054602555563947985L;
+public class User {
     private long userId;
     private String username;
     private String fullname;
@@ -43,10 +41,6 @@ public class User implements Serializable {
         this.name = name;
         this.enabled = enabled;
         this.roleId = roleId;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public long getId() {

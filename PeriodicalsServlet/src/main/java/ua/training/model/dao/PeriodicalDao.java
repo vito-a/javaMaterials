@@ -10,4 +10,6 @@ public interface PeriodicalDao extends GenericDao<Periodical> {
     List<Periodical> getAllPeriodicals(int offset, int recordsOnPage,
                                        Sorting sorting, SortingType sortingType);
     int getPeriodicalsCount(long catId);
+
+    List<Periodical> search(String s);
 }

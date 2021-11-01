@@ -19,7 +19,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <div class="mr-2">
-                    <form class="form-inline" action="/user/search/periodicals">
+                    <form class="form-inline" action="${pageContext.request.contextPath}/app/user/search/periodicals">
                         <input class="form-control mr-sm-2" type="search" id="keyword" name="keyword" placeholder="<fmt:message key="actions.search" />" aria-label="<fmt:message key="actions.search" />">
                         <button class="btn btn-primary my-2 my-sm-0" type="submit"><fmt:message key="actions.search" /></button>
                     </form>
