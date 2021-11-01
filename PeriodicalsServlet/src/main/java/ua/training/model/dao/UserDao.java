@@ -18,4 +18,6 @@ public interface UserDao extends GenericDao<User> {
     List<User> getAllUsers(long roleId, int offset, int recordsOnPage, Sorting sorting, SortingType sortingType);
 
     int getUsersCount(long activeRoleId);
+
+    int setEnabled(Long userId, Boolean enabled);
 }

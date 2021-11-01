@@ -247,4 +247,24 @@ public class JDBCUserDao implements UserDao {
         }
         return usersCount;
     }
+
+    /**
+     * Setting enabled status for a user.
+     */
+    @Override
+    public int setEnabled(Long userId, Boolean enabled) {
+        int affectedRows = 0;
+        String balanceQuery = "UPDATE users SET enabled = ? WHERE user_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(balanceQuery)) {
+            ps.setBoolean( 1, enabled);
+            ps.setLong( 2, userId);
+            affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Setting enabled status failed, no rows affected.");
+            }
+        } catch (SQLException e) {
+            logger.error("Cannot set enabled status with params (enabled, userId) : " + "(" + enabled + "," + userId + ")", e);
+        }
+        return affectedRows;
+    }
 }

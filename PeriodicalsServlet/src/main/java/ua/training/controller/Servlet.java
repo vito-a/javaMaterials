@@ -8,6 +8,7 @@ import ua.training.controller.commands.Registration;
 import ua.training.controller.commands.Exception;
 import ua.training.controller.commands.admin.*;
 import ua.training.controller.commands.user.*;
+import ua.training.model.entity.User;
 import ua.training.model.service.*;
 
 import javax.servlet.ServletConfig;
@@ -35,6 +36,7 @@ public class Servlet extends HttpServlet {
         commands.put("admin/add/periodical", new AddPeriodical(new PeriodicalsService()));
         commands.put("admin/edit/periodical", new EditPeriodical(new PeriodicalsService()));
         commands.put("admin/delete/periodical", new DeletePeriodical(new PeriodicalsService()));
+        commands.put("admin/enabled/user", new UserSetEnabled(new UserService()));
         commands.put("admin/subscriptions", new SubscriptionsList(new SubscriptionsService()));
         commands.put("admin/access-denied", new AdminAccessDenied());
         commands.put("user/my-subscriptions", new MySubscriptions(new SubscriptionsService(), new UserService()));

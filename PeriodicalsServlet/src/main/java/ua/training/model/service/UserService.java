@@ -85,4 +85,14 @@ public class UserService {
 
         return usersCount;
     }
+
+    public int setEnabled(Long userId, Boolean enabled) {
+        int result = 0;
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            result = userDao.setEnabled(userId, enabled);
+            logger.info("Attempted to set enabled status for user with params (userId, enabled) : " + "(" + userId + "," + enabled + ")");
+        }
+
+        return result;
+    }
 }

@@ -31,6 +31,7 @@ public class AdminAuthorizationFilter implements Filter {
         adminPath.add("admin/add/periodical");
         adminPath.add("admin/edit/periodical");
         adminPath.add("admin/delete/periodical");
+        adminPath.add("admin/enabled/user");
     }
 
     @Override

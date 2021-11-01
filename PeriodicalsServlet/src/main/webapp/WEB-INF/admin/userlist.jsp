@@ -51,6 +51,7 @@
                                     <fmt:message key="users.status" />
                                 </a>
                             </th>
+                            <th class="p-3"><span class="nav-link"><fmt:message key="users.status" /></span></th>
                         </tr>
                     </thead>
                     <c:forEach var="user" items="${users}">
@@ -60,7 +61,18 @@
                             <td>${user.firstname}</td>
                             <td>${user.lastname}</td>
                             <td>${user.email}</td>
-                            <td>${user.enabled}</td>
+                            <c:if test="${!user.enabled}">
+                                <td><fmt:message key="users.disabled" /></td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/app/admin/enabled/user?user_id=${user.id}&enabled=true"><fmt:message key="user.enable" /></a>
+                                </td>
+                            </c:if>
+                            <c:if test="${user.enabled}">
+                                <td><fmt:message key="users.enabled" /></td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/app/admin/enabled/user?user_id=${user.id}&enabled=false"><fmt:message key="user.disable" /></a>
+                                </td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </table>
