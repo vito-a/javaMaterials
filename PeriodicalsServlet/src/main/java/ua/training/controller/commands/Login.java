@@ -46,7 +46,7 @@ public class Login implements Command {
         // Check if user already logged in
         if (CommandUtility.checkUserIsLogged(request, name)) {
             logger.info("Already logged in (name, pass) : " + "(" + name + ", " + pass + ")");
-            return "/WEB-INF/error.jsp";
+            return "/WEB-INF/already_logged.jsp";
         }
 
         // Checking login with DB and BCrypt
