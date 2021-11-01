@@ -22,27 +22,27 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>
-                                <a href="${pageContext.request.contextPath}/app/admin/periodicals?page=1&${sortedPeriodicalIdColumn}=periodical_id">
+                                <a href="${pageContext.request.contextPath}/app/user/periodicals?page=1&${sortedPeriodicalIdColumn}=periodical_id">
                                     <fmt:message key="periodicals.id" />
                                 </a>
                             </th>
                             <th>
-                                <a href="${pageContext.request.contextPath}/app/admin/periodicals?page=1&${sortedNameColumn}=name">
+                                <a href="${pageContext.request.contextPath}/app/user/periodicals?page=1&${sortedNameColumn}=name">
                                     <fmt:message key="periodicals.name" />
                                 </a>
                             </th>
                             <th>
-                                <a href="${pageContext.request.contextPath}/app/admin/periodicals?page=1&${sortedDescriptionColumn}=description">
+                                <a href="${pageContext.request.contextPath}/app/user/periodicals?page=1&${sortedDescriptionColumn}=description">
                                     <fmt:message key="periodicals.description" />
                                 </a>
                             </th>
                             <th>
-                                <a href="${pageContext.request.contextPath}/app/admin/periodicals?page=1&${sortedCategoryColumn}=cat_id">
+                                <a href="${pageContext.request.contextPath}/app/user/periodicals?page=1&${sortedCategoryColumn}=cat_id">
                                     <fmt:message key="periodicals.category" />
                                 </a>
                             </th>
                             <th>
-                                <a href="${pageContext.request.contextPath}/app/admin/periodicals?page=1&${sortedPriceColumn}=price">
+                                <a href="${pageContext.request.contextPath}/app/user/periodicals?page=1&${sortedPriceColumn}=price">
                                     <fmt:message key="periodicals.price" />
                                 </a>
                             </th>
@@ -71,7 +71,7 @@
                     <span id="previous">
                         <!--For displaying previous link except for the 1st page -->
                         <c:if test="${currentPage != 1}">
-                            <td><a href="${pageContext.request.contextPath}/app/admin/periodicals?page=${currentPage - 1}&${activeSortingWay}=${activeSortingType}">Previous</a></td>
+                            <td><a href="${pageContext.request.contextPath}/app/user/periodicals?page=${currentPage - 1}&${activeSortingWay}=${activeSortingType}">Previous</a></td>
                         </c:if>
                     </span>
 
@@ -83,7 +83,7 @@
                                     <span>${i}&nbsp;</span>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="${pageContext.request.contextPath}/app/admin/periodicals?page=${i}&${activeSortingWay}=${activeSortingType}">${i}</a></td>
+                                    <td><a href="${pageContext.request.contextPath}/app/user/periodicals?page=${i}&${activeSortingWay}=${activeSortingType}">${i}</a></td>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
@@ -92,7 +92,7 @@
                     <span id="next">
                         <!-- For displaying Next link except for the last page. -->
                         <c:if test="${currentPage lt numberOfPages}">
-                            <td><a href="${pageContext.request.contextPath}/app/admin/periodicals?page=${currentPage + 1}&${activeSortingWay}=${activeSortingType}">Next</a></td>
+                            <td><a href="${pageContext.request.contextPath}/app/user/periodicals?page=${currentPage + 1}&${activeSortingWay}=${activeSortingType}">Next</a></td>
                         </c:if>
                     </span>
                 </div>
