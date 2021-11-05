@@ -1,9 +1,11 @@
 package ua.training.model.util;
 
-import java.util.Calendar;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class DateTimeTag extends TagSupport{
     public int doStartTag() throws JspException {
@@ -11,8 +13,11 @@ public class DateTimeTag extends TagSupport{
         JspWriter out=pageContext.getOut();
         try{
             // Printing date and time using JspWriter
-            out.print(Calendar.getInstance().getTime());
-        }catch(Exception e){
+            LocalDateTime ldt = LocalDateTime.now();
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("HH.mm", Locale.ENGLISH);
+            String formatter = dateFormat.format(ldt);
+            out.print(formatter);
+        } catch(Exception e) {
             System.out.println(e);
         }
         // Will not evaluate the body content of the tag
