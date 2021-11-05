@@ -4,22 +4,51 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.function.Function;
 
+/**
+ * The BCrypt service.
+ */
 public class BCryptService {
 
     private final int logRounds;
 
+    /**
+     * Instantiates a new BCrypt service.
+     *
+     * @param logRounds the log rounds
+     */
     public BCryptService(int logRounds) {
         this.logRounds = logRounds;
     }
 
+    /**
+     * Hash string.
+     *
+     * @param password the password
+     * @return the string
+     */
     public String hash(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt(logRounds));
     }
 
+    /**
+     * Verify hash.
+     *
+     * @param password the password
+     * @param hash     the hash
+     * @return the boolean
+     */
     public boolean verifyHash(String password, String hash) {
         return BCrypt.checkpw(password, hash);
     }
 
+    /**
+     * Verify and update hash.
+     *
+     * @param password   the password
+     * @param hash       the hash
+     * @param updateFunc the update func
+     * @return the boolean
+     */
     public boolean verifyAndUpdateHash(String password, String hash, Function<String, Boolean> updateFunc) {
         if (BCrypt.checkpw(password, hash)) {
             int rounds = getRounds(hash);
@@ -35,9 +64,10 @@ public class BCryptService {
     }
 
     /*
-     * Copy pasted from BCrypt internals :(. Ideally a method
-     * to exports parts would be public. We only care about rounds
-     * currently.
+     * Gets the number of encoding rounds.
+     *
+     * We only care about rounds currently among the other BCrypt internals.
+     *
      */
     private int getRounds(String salt) {
         char minor = (char)0;
