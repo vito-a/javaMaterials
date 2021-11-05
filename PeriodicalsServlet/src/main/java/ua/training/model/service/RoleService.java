@@ -15,24 +15,43 @@ import java.util.Optional;
  * The Role service.
  */
 public class RoleService {
+    /**
+     * The Dao factory.
+     */
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     private final Logger logger = LogManager.getLogger(RoleService.class.getName());
 
+    /**
+     * Login.
+     *
+     * @param name the name
+     * @return the optional
+     */
     public Optional<Role> login(String name) {
-        Optional<Role> result; //= Optional.empty();
+        Optional<Role> result;
         try (RoleDao roleDao = daoFactory.createRoleDao()) {
             result = roleDao.findByName(name);
         }
         return result;
     }
 
+    /**
+     * Get all roles list.
+     *
+     * @return the list
+     */
     public List<Role> getAllRoles(){
         try (RoleDao dao = daoFactory.createRoleDao()) {
             return dao.findAll();
         }
     }
 
+    /**
+     * Create role.
+     *
+     * @param role the role
+     */
     public void createRole(Role role) {
         try (RoleDao roleDao = daoFactory.createRoleDao()) {
             roleDao.create(role);
@@ -40,6 +59,12 @@ public class RoleService {
         }
     }
 
+    /**
+     * Get role by name.
+     *
+     * @param name the name
+     * @return the by name
+     */
     public Optional<Role> getByName(String name) {
         try (RoleDao dao = daoFactory.createRoleDao()) {
             return dao.findByName(name);

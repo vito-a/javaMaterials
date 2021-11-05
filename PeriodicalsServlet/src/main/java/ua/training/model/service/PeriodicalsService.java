@@ -15,10 +15,19 @@ import java.util.Optional;
  * The Periodicals service.
  */
 public class PeriodicalsService {
+    /**
+     * The Dao factory.
+     */
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     private final Logger logger = LogManager.getLogger(PeriodicalsService.class.getName());
 
+    /**
+     * Find periodical by id.
+     *
+     * @param id the id
+     * @return the periodical
+     */
     public static Periodical findById(int id) {
         DaoFactory daoFactory = DaoFactory.getInstance();
         try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
@@ -26,6 +35,11 @@ public class PeriodicalsService {
         }
     }
 
+    /**
+     * Delete periodical.
+     *
+     * @param id the id
+     */
     public static void delete(int id) {
         DaoFactory daoFactory = DaoFactory.getInstance();
         try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
@@ -33,6 +47,12 @@ public class PeriodicalsService {
         }
     }
 
+    /**
+     * Subscribe to periodical.
+     *
+     * @param periodicalId the periodical id
+     * @param userId       the user id
+     */
     public static void subscribe(int periodicalId, long userId) {
         DaoFactory daoFactory = DaoFactory.getInstance();
         try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
@@ -40,6 +60,15 @@ public class PeriodicalsService {
         }
     }
 
+    /**
+     * Gets all periodicals.
+     *
+     * @param offset        the offset
+     * @param recordsOnPage the records on page
+     * @param sorting       the sorting
+     * @param sortingType   the sorting type
+     * @return the all periodicals
+     */
     public List<Periodical> getAllPeriodicals(int offset, int recordsOnPage,
                                               Sorting sorting, SortingType sortingType) {
         try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
@@ -47,6 +76,12 @@ public class PeriodicalsService {
         }
     }
 
+    /**
+     * Gets periodicals count.
+     *
+     * @param catId the cat id
+     * @return the periodicals count
+     */
     public int getPeriodicalsCount(long catId) {
         try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
             return dao.getPeriodicalsCount(catId);
@@ -69,6 +104,12 @@ public class PeriodicalsService {
         }
     }
 
+    /**
+     * Create periodical.
+     *
+     * @param periodical the periodical
+     * @return the int
+     */
     public int create(Periodical periodical) {
         int result = 0;
         try (PeriodicalDao periodicalDao = daoFactory.createPeriodicalDao()) {
@@ -80,6 +121,12 @@ public class PeriodicalsService {
         return result;
     }
 
+    /**
+     * Update periodical.
+     *
+     * @param periodical the periodical
+     * @return the int
+     */
     public int update(Periodical periodical) {
         int result = 0;
         try (PeriodicalDao periodicalDao = daoFactory.updatePeriodicalDao()) {
@@ -91,6 +138,12 @@ public class PeriodicalsService {
         return result;
     }
 
+    /**
+     * Category periodicals list.
+     *
+     * @param catId the cat id
+     * @return the list
+     */
     public List<Periodical> categoryPeriodicals(long catId) {
         try (PeriodicalDao dao = daoFactory.createPeriodicalDao()) {
             return dao.categoryPeriodicals(catId);
