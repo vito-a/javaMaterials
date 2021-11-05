@@ -6,7 +6,13 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.HashSet;
 
-
+/**
+ * The Session listener.
+ *
+ * Removes the additional user session values
+ * when user logs out.
+ *
+ */
 public class SessionListener implements HttpSessionListener {
     private final Logger logger = LogManager.getLogger(SessionListener.class.getName());
 

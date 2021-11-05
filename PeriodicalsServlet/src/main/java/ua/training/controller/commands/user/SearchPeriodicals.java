@@ -9,10 +9,18 @@ import ua.training.model.service.PeriodicalsService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The Search periodicals command.
+ */
 public class SearchPeriodicals implements Command {
 
     private final PeriodicalsService periodicalsService;
 
+    /**
+     * Instantiates a new Search periodicals command.
+     *
+     * @param periodicalsService the periodicals service
+     */
     public SearchPeriodicals(PeriodicalsService periodicalsService) {
         this.periodicalsService = periodicalsService;
     }

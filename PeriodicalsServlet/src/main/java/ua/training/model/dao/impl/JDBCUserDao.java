@@ -18,10 +18,18 @@ import java.util.*;
 
 import static ua.training.model.constants.Constants.ROLE_USER;
 
+/**
+ * The JDBC User DAO.
+ */
 public class JDBCUserDao implements UserDao {
     private Connection connection;
     private final Logger logger = LogManager.getLogger(Login.class.getName());
 
+    /**
+     * Instantiates a new JDBC User DAO.
+     *
+     * @param connection the connection
+     */
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
@@ -58,6 +66,12 @@ public class JDBCUserDao implements UserDao {
         return affectedRows;
     }
 
+    /**
+     * Add role.
+     *
+     * @param entity   the entity
+     * @param roleName the role name
+     */
     public void addRole(User entity, String roleName) {
         String roleQuery = "INSERT INTO users_roles (user_id, role_id) VALUES (?, ?)";
         RoleService roleService = new RoleService();

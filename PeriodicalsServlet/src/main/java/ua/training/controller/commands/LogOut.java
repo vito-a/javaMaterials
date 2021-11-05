@@ -5,6 +5,9 @@ import ua.training.model.entity.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The Logout command.
+ */
 public class LogOut implements Command {
     @Override
     public String execute(HttpServletRequest request) {

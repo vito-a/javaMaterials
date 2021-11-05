@@ -9,12 +9,19 @@ import org.apache.logging.log4j.Logger;
 import ua.training.model.service.BCryptService;
 import ua.training.model.service.UserService;
 
-
+/**
+ * The Registration command.
+ */
 public class Registration implements Command {
     private final UserService userService;
     private static final BCryptService bcrypt = new BCryptService(10);
     private final Logger logger = LogManager.getLogger(Registration.class.getName());
 
+    /**
+     * Instantiates a new Registration command.
+     *
+     * @param userService the user service
+     */
     public Registration(UserService userService) {
         this.userService = userService;
     }

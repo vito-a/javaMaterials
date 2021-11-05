@@ -1,9 +1,11 @@
 package ua.training.controller.filters;
 
-
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * The Encoding filter.
+ */
 public class EncodingFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

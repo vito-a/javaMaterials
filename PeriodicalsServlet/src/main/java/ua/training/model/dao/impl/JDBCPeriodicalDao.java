@@ -20,10 +20,18 @@ import java.util.List;
 
 import static ua.training.model.constants.Constants.ROLE_USER;
 
+/**
+ * The JDBC Periodical DAO.
+ */
 public class JDBCPeriodicalDao implements PeriodicalDao {
     private Connection connection;
     private final Logger logger = LogManager.getLogger(Login.class.getName());
 
+    /**
+     * Instantiates a new JDBC Periodical DAO.
+     *
+     * @param connection the connection
+     */
     public JDBCPeriodicalDao(Connection connection) {
         this.connection = connection;
     }

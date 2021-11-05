@@ -14,7 +14,9 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
+/**
+ * The Login command.
+ */
 public class Login implements Command {
 
     private UserService userService;
@@ -23,12 +25,28 @@ public class Login implements Command {
 
     private static final BCryptService bcrypt = new BCryptService(10);
     private String[] mutableHash = new String[1];
+    /**
+     * The Update.
+     */
     Function<String, Boolean> update = hash -> { mutableHash[0] = hash; return true; };
 
+    /**
+     * Verify and update hash.
+     *
+     * @param password   the password
+     * @param hash       the hash
+     * @param updateFunc the update func
+     * @return boolean the user checking status
+     */
     public static boolean verifyAndUpdateHash(String password, String hash, Function<String, Boolean> updateFunc) {
         return bcrypt.verifyAndUpdateHash(password, hash, updateFunc);
     }
 
+    /**
+     * Instantiates a new Login command.
+     *
+     * @param userService the user service
+     */
     public Login(UserService userService) {
         this.userService = userService;
     }

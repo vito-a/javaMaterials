@@ -12,8 +12,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Admin authorization filter.
+ */
 public class AdminAuthorizationFilter implements Filter {
 
+    /**
+     * The Admin paths list.
+     */
     List<String> adminPath = new ArrayList<>();
 
     private final Logger logger = LogManager.getLogger(AdminAuthorizationFilter.class.getName());

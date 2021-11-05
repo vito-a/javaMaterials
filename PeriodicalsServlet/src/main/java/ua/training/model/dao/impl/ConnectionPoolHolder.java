@@ -4,8 +4,20 @@ import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
 
+/**
+ * The Connection pool holder.
+ *
+ * Manages the JDBC connections pool.
+ *
+ */
 public class ConnectionPoolHolder {
     private static volatile DataSource dataSource;
+
+    /**
+     * Get data source data source.
+     *
+     * @return the data source
+     */
     public static DataSource getDataSource(){
 
         if (dataSource == null){

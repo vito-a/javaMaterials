@@ -7,7 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 
+/**
+ * The general Command utility.
+ */
 public class CommandUtility {
+    /**
+     * Sets user role.
+     *
+     * @param request the request
+     * @param role    the role
+     * @param name    the name
+     */
     static void setUserRole(HttpServletRequest request,
                      User.ROLE role, String name) {
         HttpSession session = request.getSession();
@@ -18,6 +28,13 @@ public class CommandUtility {
         session.setAttribute("userName", name);
     }
 
+    /**
+     * Checks if user is logged in.
+     *
+     * @param request  the request
+     * @param userName the user name
+     * @return boolean the user status
+     */
     static boolean checkUserIsLogged(HttpServletRequest request, String userName){
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
                 .getAttribute("loggedUsers");
