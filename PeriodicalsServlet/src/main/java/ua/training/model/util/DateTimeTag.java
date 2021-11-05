@@ -7,7 +7,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class DateTimeTag extends TagSupport{
+/**
+ * The Date time tag.
+ */
+public class DateTimeTag extends TagSupport {
     public int doStartTag() throws JspException {
         // Returns the instance of JspWriter
         JspWriter out=pageContext.getOut();
