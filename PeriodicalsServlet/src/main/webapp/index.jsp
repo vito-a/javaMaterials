@@ -5,11 +5,14 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="WEB-INF/tags.tld" prefix="m" %>
 <%@ page isELIgnored="false"%>
 <%@ page import="java.util.*, java.text.*" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
+
+<div style="float:right"><m:today/></div>
 
     <div class="container text-center">
         <div>
