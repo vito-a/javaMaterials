@@ -211,14 +211,21 @@ public class JDBCUserDao implements UserDao {
         int affectedRows = 0;
         String balanceQuery = "UPDATE users SET balance = ? WHERE user_id = ?";
         try (PreparedStatement ps = connection.prepareStatement(balanceQuery)) {
+            connection.setAutoCommit(false);
             ps.setDouble( 1, balance);
             ps.setLong( 2, userId);
             affectedRows = ps.executeUpdate();
+            connection.commit();
             if (affectedRows == 0) {
                 throw new SQLException("Adding role failed, no rows affected.");
             }
         } catch (SQLException e) {
             logger.error("Cannot update balance with params (balance, userId) : " + "(" + balance + "," + userId + ")", e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                logger.info("Adding role failed, no rows affected.");
+            }
         }
         return affectedRows;
     }
