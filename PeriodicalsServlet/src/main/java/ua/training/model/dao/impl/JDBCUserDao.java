@@ -226,6 +226,12 @@ public class JDBCUserDao implements UserDao {
             } catch (SQLException ex) {
                 logger.info("Adding role failed, no rows affected.");
             }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return affectedRows;
     }
