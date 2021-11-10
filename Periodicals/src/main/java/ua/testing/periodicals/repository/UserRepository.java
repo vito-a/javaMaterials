@@ -61,6 +61,7 @@ public interface UserRepository extends JpaRepository<User, Long>, CrudRepositor
      */
     @Query("UPDATE User u SET u.failedAttempt = ?1 WHERE u.email = ?2")
     @Modifying
+    @Transactional
     void updateFailedAttempts(int failedAttempt, String email);
 
     /**
