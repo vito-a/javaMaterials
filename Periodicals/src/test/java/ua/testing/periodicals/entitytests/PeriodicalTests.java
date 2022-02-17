@@ -29,6 +29,6 @@ public class PeriodicalTests {
         assertEquals(periodical.getPrice(), 150L,0);
         assertEquals(periodical.getDescription(), "Test description 1");
         assertEquals(periodical.getCategoryId(), "News");
-        assertEquals(periodical.toString(),"Periodical(periodicalId=100, name=Forbes, description=Test description 1, categoryId=News, price=150)");
+        assertEquals(periodical.toString(),"Periodical{id=100, name='Forbes', description='Test description 1', catId='News', price='150'}");
     }
 }
