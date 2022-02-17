@@ -18,10 +18,18 @@ import java.util.*;
 
 import static ua.training.model.constants.Constants.ROLE_USER;
 
+/**
+ * The JDBC User DAO.
+ */
 public class JDBCUserDao implements UserDao {
     private Connection connection;
     private final Logger logger = LogManager.getLogger(Login.class.getName());
 
+    /**
+     * Instantiates a new JDBC User DAO.
+     *
+     * @param connection the connection
+     */
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
@@ -58,6 +66,12 @@ public class JDBCUserDao implements UserDao {
         return affectedRows;
     }
 
+    /**
+     * Add role.
+     *
+     * @param entity   the entity
+     * @param roleName the role name
+     */
     public void addRole(User entity, String roleName) {
         String roleQuery = "INSERT INTO users_roles (user_id, role_id) VALUES (?, ?)";
         RoleService roleService = new RoleService();
@@ -197,14 +211,27 @@ public class JDBCUserDao implements UserDao {
         int affectedRows = 0;
         String balanceQuery = "UPDATE users SET balance = ? WHERE user_id = ?";
         try (PreparedStatement ps = connection.prepareStatement(balanceQuery)) {
+            connection.setAutoCommit(false);
             ps.setDouble( 1, balance);
             ps.setLong( 2, userId);
             affectedRows = ps.executeUpdate();
+            connection.commit();
             if (affectedRows == 0) {
                 throw new SQLException("Adding role failed, no rows affected.");
             }
         } catch (SQLException e) {
             logger.error("Cannot update balance with params (balance, userId) : " + "(" + balance + "," + userId + ")", e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                logger.info("Adding role failed, no rows affected.");
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return affectedRows;
     }

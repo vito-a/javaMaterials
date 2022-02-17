@@ -2,19 +2,27 @@ package ua.training.model.dao.impl;
 
 import ua.training.model.dao.RoleDao;
 import ua.training.model.dao.mapper.RoleMapper;
-import ua.training.model.dao.mapper.UserMapper;
 import ua.training.model.entity.Role;
-import ua.training.model.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+/**
+ * The JDBC Role DAO.
+ */
 public class JDBCRoleDao implements RoleDao {
     private Connection connection;
 
+    /**
+     * Instantiates a new JDBC Role DAO.
+     *
+     * @param connection the connection
+     */
     public JDBCRoleDao(Connection connection) {
         this.connection = connection;
     }

@@ -22,7 +22,7 @@ public class UserSubscribePeriodical implements Command {
     private final Logger logger = LogManager.getLogger(Registration.class.getName());
 
     /**
-     * Instantiates a new User subscribe periodical.
+     * Instantiates a new User subscribe periodical command.
      *
      * @param userService       the user service
      * @param periodicalService the periodical service

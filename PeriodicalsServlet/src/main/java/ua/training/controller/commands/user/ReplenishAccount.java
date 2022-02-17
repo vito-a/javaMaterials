@@ -9,12 +9,20 @@ import ua.training.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Replenish account command.
+ */
 public class ReplenishAccount implements Command {
 
     private final UserService userService;
 
     private final Logger logger = LogManager.getLogger(Registration.class.getName());
 
+    /**
+     * Instantiates a new Replenish account command.
+     *
+     * @param userService the user service
+     */
     public ReplenishAccount(UserService userService) { this.userService = userService; }
 
     @Override

@@ -15,10 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The JDBC Category DAO.
+ */
 public class JDBCCategoryDao implements CategoriesDao {
     private Connection connection;
     private final Logger logger = LogManager.getLogger(Login.class.getName());
 
+    /**
+     * Instantiates a new JDBC Category DAO.
+     *
+     * @param connection the connection
+     */
     public JDBCCategoryDao(Connection connection) { this.connection = connection; }
 
     @Override
@@ -46,6 +54,15 @@ public class JDBCCategoryDao implements CategoriesDao {
         return listCategories;
     }
 
+    /**
+     * Gets all categories.
+     *
+     * @param connection     the connection
+     * @param currentPage    the current page
+     * @param recordsPerPage the records per page
+     * @return the all categories
+     * @throws SQLException the sql exception
+     */
     public List<Category> getAllCategories (Connection connection,int currentPage, int recordsPerPage) throws SQLException {
         List<Category> listCategories = new ArrayList<>();
         ResultSet rs = null;

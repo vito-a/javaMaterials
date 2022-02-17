@@ -9,11 +9,20 @@ import ua.training.model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * My subscriptions command.
+ */
 public class MySubscriptions implements Command {
 
     private final SubscriptionsService subscriptionsService;
     private final UserService userService;
 
+    /**
+     * Instantiates a new My subscriptions command.
+     *
+     * @param subscriptionsService the subscriptions service
+     * @param userService          the user service
+     */
     public MySubscriptions(SubscriptionsService subscriptionsService, UserService userService) { this.subscriptionsService = subscriptionsService;
         this.userService = userService;
     }

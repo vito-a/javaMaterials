@@ -1,6 +1,5 @@
 package ua.training.controller.filters;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.model.entity.User;
@@ -13,8 +12,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The User authorization filter.
+ */
 public class UserAuthorizationFilter implements Filter {
 
+    /**
+     * The User paths list.
+     */
     List<String> userPath = new ArrayList<>();
 
     private final Logger logger = LogManager.getLogger(UserAuthorizationFilter.class.getName());

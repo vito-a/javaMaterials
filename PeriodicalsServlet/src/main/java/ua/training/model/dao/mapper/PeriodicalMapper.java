@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * The Periodical mapper.
+ */
 public class PeriodicalMapper implements ObjectMapper<Periodical> {
 
     @Override

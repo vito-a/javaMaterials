@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * The User mapper.
+ */
 public class UserMapper implements ObjectMapper<User> {
 
     @Override
@@ -18,12 +21,10 @@ public class UserMapper implements ObjectMapper<User> {
         user.setEmail(rs.getString("email"));
         user.setLastname(rs.getString("lastname"));
         user.setEnabled(rs.getBoolean("enabled"));
-//        User.setRoleId(rs.getInt("RoleId"));
         return user;
     }
 
-    public User makeUnique(Map<Long, User> cache,
-                              User User) {
+    public User makeUnique(Map<Long, User> cache, User User) {
         cache.putIfAbsent(User.getId(), User);
         return cache.get(User.getId());
     }

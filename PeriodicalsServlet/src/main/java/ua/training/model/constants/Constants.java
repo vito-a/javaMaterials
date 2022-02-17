@@ -1,7 +1,7 @@
 package ua.training.model.constants;
 
 /**
- * The interface Constants.
+ * The Constants interface.
  */
 public interface Constants {
 

@@ -2,6 +2,11 @@ package ua.training.controller.commands;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The Locale command.
+ *
+ * Does the localization and the language switching.
+ */
 public class Locale implements Command {
 
     @Override

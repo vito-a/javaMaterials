@@ -14,10 +14,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The  JDBC Subscription DAO.
+ */
 public class JDBCSubscriptionDao implements SubscriptionDao {
     private Connection connection;
     private final Logger logger = LogManager.getLogger(Login.class.getName());
 
+    /**
+     * Instantiates a new JDBC Subscription DAO.
+     *
+     * @param connection the connection
+     */
     public JDBCSubscriptionDao(Connection connection) {
         this.connection = connection;
     }

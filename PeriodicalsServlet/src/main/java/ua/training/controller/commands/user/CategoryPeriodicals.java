@@ -7,10 +7,18 @@ import ua.training.model.service.PeriodicalsService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The Category periodicals command.
+ */
 public class CategoryPeriodicals implements Command {
 
     private final PeriodicalsService periodicalsService;
 
+    /**
+     * Instantiates a new Category periodicals command.
+     *
+     * @param periodicalsService the periodicals service
+     */
     public CategoryPeriodicals(PeriodicalsService periodicalsService) {
         this.periodicalsService = periodicalsService;
     }

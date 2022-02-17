@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * The Subscription mapper.
+ */
 public class SubscriptionMapper implements ObjectMapper<Subscription> {
 
     @Override

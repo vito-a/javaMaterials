@@ -12,7 +12,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Authentication filter.
+ */
 public class AuthenticationFilter implements Filter {
+    /**
+     * The Anonymous paths.
+     */
     List<String> anonPath = new ArrayList<>();
     private final Logger logger = LogManager.getLogger(AuthenticationFilter.class.getName());
 

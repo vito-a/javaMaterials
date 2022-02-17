@@ -15,10 +15,19 @@ import java.util.Optional;
  * The User service.
  */
 public class UserService {
+    /**
+     * The Dao factory.
+     */
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     private final Logger logger = LogManager.getLogger(UserService.class.getName());
 
+    /**
+     * Login.
+     *
+     * @param name the name
+     * @return the optional
+     */
     public Optional<User> login(String name){
         Optional<User> result; //= Optional.empty();
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -27,12 +36,27 @@ public class UserService {
         return result;
     }
 
+    /**
+     * Gets all users.
+     *
+     * @return the all users
+     */
     public List<User> getAllUsers() {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findAll();
         }
     }
 
+    /**
+     * Gets all users with pagination and sorting.
+     *
+     * @param roleId        the role id
+     * @param offset        the offset
+     * @param recordsOnPage the records on page
+     * @param sorting       the sorting
+     * @param sortingType   the sorting type
+     * @return the all users
+     */
     public List<User> getAllUsers(long roleId, int offset, int recordsOnPage,
                                   Sorting sorting, SortingType sortingType) {
         try (UserDao dao = daoFactory.createUserDao()) {
@@ -40,6 +64,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Create user.
+     *
+     * @param user the user
+     * @return the int
+     */
     public int createUser(User user) {
         int result = 0;
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -52,10 +82,11 @@ public class UserService {
     }
 
     /**
-     * Update balance.
+     * Update user balance.
      *
      * @param balance the user balance
      * @param userId  the user ID
+     * @return the int
      */
     public int updateBalance(Double balance, Long userId) {
         int result = 0;
@@ -67,6 +98,12 @@ public class UserService {
         return result;
     }
 
+    /**
+     * Get current user balance.
+     *
+     * @param userId the user id
+     * @return the current balance
+     */
     public double getCurrentBalance(long userId) {
         double balance = 0;
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -77,6 +114,12 @@ public class UserService {
         return balance;
     }
 
+    /**
+     * Gets users count.
+     *
+     * @param activeRoleId the active role id
+     * @return the users count
+     */
     public int getUsersCount(long activeRoleId) {
         int usersCount = 0;
         try (UserDao userDao = daoFactory.createUserDao()) {
@@ -86,6 +129,13 @@ public class UserService {
         return usersCount;
     }
 
+    /**
+     * Sets enabled status.
+     *
+     * @param userId  the user id
+     * @param enabled the enabled
+     * @return the enabled
+     */
     public int setEnabled(Long userId, Boolean enabled) {
         int result = 0;
         try (UserDao userDao = daoFactory.createUserDao()) {
