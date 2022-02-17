@@ -25,10 +25,10 @@ public class PeriodicalTests {
         periodical.setCategoryId("News");
 
         assertEquals(periodical.getPeriodicalId(), 100L, 0);
-        assertEquals(periodical.getName(), "Пізнайко");
+        assertEquals(periodical.getName(), "Forbes");
         assertEquals(periodical.getPrice(), 150L,0);
         assertEquals(periodical.getDescription(), "Test description 1");
         assertEquals(periodical.getCategoryId(), "News");
-        assertEquals(periodical.toString(),"Publication [name=Forbes,price=150,description=Test description1,CategoryId=News,PeriodicalId=100];");
+        assertEquals(periodical.toString(),"Periodical(periodicalId=100, name=Forbes, description=Test description 1, categoryId=News, price=150)");
     }
 }

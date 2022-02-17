@@ -15,7 +15,7 @@
     <description>Periodicals project</description>
 
     <properties>
-        <java.version>15</java.version>
+        <java.version>11</java.version>
         <maven.compiler.source>9</maven.compiler.source>
         <maven.compiler.target>9</maven.compiler.target>
     </properties>

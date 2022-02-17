@@ -23,6 +23,6 @@ public class CategoryTests {
 
         assertEquals(category.getCatId(), 100L, 0);
         assertEquals(category.getName(), "News");
-        assertEquals(category.toString(),"Category[CatId=100,name=News]");
+        assertEquals(category.toString(),"Category(catId=100, name=News)");
     }
 }

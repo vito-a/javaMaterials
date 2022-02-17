@@ -25,6 +25,6 @@ public class SubscriptionTests {
         assertEquals(subscription.getSubId(), 100L, 0);
         assertEquals(subscription.getUserId(), 100L, 0);
         assertEquals(subscription.getPeriodicalId(), 100L, 0);
-        assertEquals(subscription.toString(),"Order [getSubId=100,getUserId=100,getPeriodicalId()=100]");
+        assertEquals(subscription.toString(),"Subscription(subId=100, userId=100, periodicalId=100, startdate=null, enddate=null)");
     }
 }
