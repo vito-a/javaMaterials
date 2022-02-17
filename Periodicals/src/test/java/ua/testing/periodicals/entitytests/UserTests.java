@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -17,10 +18,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
+import ua.testing.periodicals.PeriodicalsApplication;
 import ua.testing.periodicals.model.entity.Role;
 import ua.testing.periodicals.model.entity.User;
 import ua.testing.periodicals.repository.RoleRepository;
 import ua.testing.periodicals.repository.UserRepository;
+import ua.testing.periodicals.service.UsersService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +32,7 @@ import java.util.List;
  * The Periodicals users tests.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@ContextConfiguration(classes=ua.testing.periodicals.PeriodicalsApplication.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
@@ -39,6 +42,8 @@ public class UserTests {
 
     @Autowired
     private UserRepository usersRepo;
+
+    private UsersService usersService;
 
     @Autowired
     private RoleRepository roleRepo;
@@ -55,6 +60,7 @@ public class UserTests {
         user.setUserId(100L);
         user.setFirstName("Test first name 1");
         user.setLastName("Test last name 1");
+        user.setUsername("test1");
         user.setEmail("test1@gmail.com");
         user.setBalance(1000.0);
 
@@ -70,7 +76,7 @@ public class UserTests {
         assertEquals(user.getEmail(), "test1@gmail.com");
         assertEquals(user.getBalance(), 1000.0,0);
         assertEquals(user.getRoles(), new HashSet<>(List.of(userRole)));
-        assertEquals(user.toString(),"User [login=Test first name 1,balance=10000,email=test1@gmail.com,userRole=1]");
+        assertEquals(user.toString(),"User{id=100, username='test1', firstname='Test first name 1', lastname='Test last name 1', email=test1@gmail.com, lastUpdate=true, enabled=true, balance=1000.0}");
     }
 
     /**
@@ -79,10 +85,11 @@ public class UserTests {
     @Test
     public void testUserCreation() {
         User user = new User();
-        user.setEmail("test2@gmail.com");
+        user.setEmail("test3@gmail.com");
         user.setPassword("test2021");
-        user.setFirstName("Test first name 2");
-        user.setLastName("Test last name 2");
+        user.setFirstName("Test first name 3");
+        user.setLastName("Test last name 3");
+        user.setUsername("test3");
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -92,13 +99,20 @@ public class UserTests {
         user.setLockTime(null);
         user.setFailedAttempt(0);
         Role userRole = roleRepo.findByName(ROLE_USER);
+        System.out.println(userRole.toString());
         user.setRoles(new HashSet<>(List.of(userRole)));
 
         User savedUser = usersRepo.save(user);
 
-        User existingUser = entityManager.find(User.class, savedUser.getUserId());
+        System.out.println(savedUser.getUserId());
+        // User existingUser = entityManager.find(User.class, savedUser.getUserId());
+        User existingUser = usersService.get(savedUser.getUserId());
+        System.out.println(existingUser.toString());
 
         assertThat(user.getEmail()).isEqualTo(existingUser.getEmail());
+
+        // usersService.delete(savedUser.getUserId());
+        entityManager.remove(existingUser);
     }
 }
 

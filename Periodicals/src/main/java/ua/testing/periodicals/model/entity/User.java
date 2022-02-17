@@ -53,7 +53,22 @@ public class User {
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            inverseJoinColumns = @JoinColumn(name = "role_id", nullable=false, insertable=false)
     )
     private Set<Role> roles = new HashSet<>();
+    // Overriding toString() method of String class
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + userId +
+                ", username='" + username + '\'' +
+                ", firstname='" + firstName + '\'' +
+                ", lastname='" + lastName + '\'' +
+                ", email=" + email +
+                ", lastUpdate=" + accountNonLocked +
+                ", enabled=" + enabled +
+                ", balance=" + balance +
+                '}';
+    }
 }

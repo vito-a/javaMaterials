@@ -32,4 +32,15 @@ public class Periodical {
     private String categoryId;
     @Column(name = "price", nullable = false)
     private Long price;
+
+    @Override
+    public String toString() {
+        return "Periodical{" +
+                "id=" + periodicalId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", catId='" + categoryId + '\'' +
+                ", price='" + price + '\'' +
+                '}';
+    }
 }

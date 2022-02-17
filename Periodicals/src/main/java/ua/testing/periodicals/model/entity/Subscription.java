@@ -49,4 +49,15 @@ public class Subscription {
         this.startdate = startDate;
         this.enddate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "Subscription {" +
+                "subId=" + subId +
+                ", userId='" + userId + '\'' +
+                ", periodicalId='" + periodicalId + '\'' +
+                ", startDate='" + startdate + '\'' +
+                ", endDate=" + enddate +
+                '}';
+    }
 }
