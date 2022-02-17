@@ -2,6 +2,9 @@ package ua.testing.periodicals.form;
 
 /**
  * The Subscribe form.
+ * TODO: change amount from Double to Long or Integer
+ * TODO: check again why Double's are not used for sums
+ * TODO: change amounts to BigDecimal
  */
 public class SubscribeForm {
     private Long fromUserId;

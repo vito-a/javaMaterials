@@ -1,20 +1,17 @@
 package ua.testing.periodicals.entitytests;
 
-import org.junit.*;
+import org.junit.Test;
 import ua.testing.periodicals.model.entity.Periodical;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
- * The Periodical tests.
+ * The CustomUserDetailsTests tests.
  */
-public class PeriodicalTests {
+public class CustomUserDetailsTests {
     /**
-     * Test periodical entity.
-     * TODO: in mocking usually mocks are used, spy's are rare
-     * TODO: argumentCaptures are widely used
-     * TODO: when you are testing different environments, the main goal is to make sure that these are the same
-     * TODO: so testing
+     * Test CustomUserDetailsTests entity.
      */
     @Test
     public void testPeriodicalEntity() {
@@ -33,6 +30,6 @@ public class PeriodicalTests {
         assertEquals(periodical.getPrice(), 150L,0);
         assertEquals(periodical.getDescription(), "Test description 1");
         assertEquals(periodical.getCategoryId(), "News");
-        assertEquals(periodical.toString(),"Periodical{id=100, name='Forbes', description='Test description 1', catId='News', price='150'}");
+        assertEquals(periodical.toString(),"CustomUserDetailsTests {id=100, name='Forbes', description='Test description 1', catId='News', price='150'}");
     }
 }

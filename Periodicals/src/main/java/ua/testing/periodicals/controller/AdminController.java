@@ -20,6 +20,7 @@ import java.util.Optional;
 
 /**
  * The Admin controller.
+ * TODO: unit testing the controllers
  */
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -48,6 +49,14 @@ public class AdminController {
      *
      * @param model the model
      * @return users list template name
+     * TODO: we can test that users.html is returned
+     * TODO: we can test that the List that is userRepo.findAll() will be returned here
+     * TODO: test the attribute listUsers
+     * TODO: integration test - we can do the MockMVC to test is as a whole here
+     * TODO: to check that everything is working as expected the MockMVC is needed
+     * TODO: good MockMVC guide https://www.baeldung.com/integration-testing-in-spring
+     * TODO: MockMVC checks all logic
+     * TODO: usually used for REST controllers
      */
     @GetMapping("/users")
     public String listUsers(Model model) {

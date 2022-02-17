@@ -78,43 +78,5 @@ public class UserTests {
         assertEquals(user.getRoles(), new HashSet<>(List.of(userRole)));
         assertEquals(user.toString(),"User{id=100, username='test1', firstname='Test first name 1', lastname='Test last name 1', email=test1@gmail.com, lastUpdate=true, enabled=true, balance=1000.0}");
     }
-
-    /**
-     * Test user creation.
-     */
-    /*
-    @Test
-    public void testUserCreation() {
-        User user = new User();
-        user.setEmail("test3@gmail.com");
-        user.setPassword("test2021");
-        user.setFirstName("Test first name 3");
-        user.setLastName("Test last name 3");
-        user.setUsername("test3");
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        user.setEnabled(STATUS_ENABLED);
-        user.setAccountNonLocked(true);
-        user.setLockTime(null);
-        user.setFailedAttempt(0);
-        Role userRole = roleRepo.findByName(ROLE_USER);
-        System.out.println(userRole.toString());
-        user.setRoles(new HashSet<>(List.of(userRole)));
-
-        User savedUser = usersRepo.save(user);
-
-        System.out.println(savedUser.getUserId());
-        // User existingUser = entityManager.find(User.class, savedUser.getUserId());
-        User existingUser = usersService.get(savedUser.getUserId());
-        System.out.println(existingUser.toString());
-
-        assertThat(user.getEmail()).isEqualTo(existingUser.getEmail());
-
-        // usersService.delete(savedUser.getUserId());
-        entityManager.remove(existingUser);
-    }
-     */
 }
 

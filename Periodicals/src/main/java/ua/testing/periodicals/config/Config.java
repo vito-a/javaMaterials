@@ -17,6 +17,9 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 /**
  * The application MVC Configurer Config class.
+ *  TODO: it is needed to cover configs with unit tests also
+ *  TODO: but it is a specific case if it is needed to cover configs or not
+ *  TODO: not always unit tests are done here
  */
 @Configuration
 public class Config implements WebMvcConfigurer {

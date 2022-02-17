@@ -7,6 +7,10 @@ import static org.junit.Assert.*;
 
 /**
  * The Subscription tests.
+ * TODO: Subscribe method check DBException
+ * TODO: check only subscribe method
+ * TODO: second method: with exception
+ * TODO: third method: without exception
  */
 public class SubscriptionTests {
     /**

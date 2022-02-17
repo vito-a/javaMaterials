@@ -17,6 +17,7 @@ import java.util.Optional;
 
 /**
  * The Subscriptions service.
+ * TODO: Subscribe method check DBException
  */
 @Service
 public class SubscriptionsService {

@@ -20,6 +20,7 @@ import java.util.Optional;
 
 /**
  * The Periodicals service.
+ * TODO: cover listAll
  */
 @Service
 public class PeriodicalsService {
@@ -39,6 +40,20 @@ public class PeriodicalsService {
      *
      * @param keyword the search keyword
      * @return the periodicals list
+     *
+     * TODO: Optional is not needed here as findAll() won't return null
+     * TODO: what to test: 2 unit tests - one without params pass the null there
+     * TODO: check that periodicalsRepo.findAll() will be called in that case
+     * TODO: and second unit test with non-null parameter
+     * TODO: check that periodicalsRepo.findAll() will be called in that case
+     * TODO: abbreviation like periodicalsRepo is a bad practice, write full
+     * TODO: autowire through field is a bad practice
+     * TODO: if you autowire through constructor you can pass additional params like other repository
+     * TODO: for tests you can pass mocked repositories there
+     * TODO: if you do only null param passing, it will be only 50% of coverage
+     * TODO: Crtl+Shift+T - IDEA generates the test class
+     * TODO: listAll must check that Pageable that went to finaAll is that one
+     * TODO: the whole idea
      */
     public List<Periodical> listAll(String keyword) {
         Optional<String> optionalKeyword = Optional.ofNullable(keyword);
@@ -55,6 +70,19 @@ public class PeriodicalsService {
      * @param sortField the sort field
      * @param sortDir   the sort dir
      * @return the periodical paginated object
+     *
+     * TODO: what to test: 2 unit tests - one without params pass the null there
+     * TODO: check that periodicalsRepo.findAll() will be called in that case
+     * TODO: and second unit test with non-null parameter
+     * TODO: check that periodicalsRepo.findAll() will be called in that case
+     * TODO: abbreviation like periodicalsRepo is a bad practice, write full
+     * TODO: autowire through field is a bad practice
+     * TODO: if you autowire through constructor you can pass additional params like other repository
+     * TODO: for tests you can pass mocked repositories there
+     * TODO: if you do only null param passing, it will be only 50% of coverage
+     * TODO: Crtl+Shift+T - IDEA generates the test class
+     * TODO: listAll must check that Pageable that went to finaAll is that one
+     * TODO: the whole idea
      */
     public Page<Periodical> listAll(int pageNum, String sortField, String sortDir) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
@@ -69,6 +97,19 @@ public class PeriodicalsService {
      * Save periodical.
      *
      * @param periodical the periodical object
+     * TODO: 2 cases with Exception and without
+     * TODO: if Repo.save throws Exception and service should not throw exception
+     * TODO: catching the general Exception is a bad practice
+     * TODO: add Throws particular exception
+     * TODO: add the particular DBException and other exceptions
+     * TODO: process exceptions properly
+     * TODO: add correct processing here return something to user
+     * TODO: return normal error that save did not passed fine
+     * TODO: redirect user somewhere here to show him that an exception have happened
+     * TODO: use the Spring exceptions and the good practice is using these
+     * TODO: check the Spring article about custom handlers
+     * TODO: https://www.baeldung.com/exception-handling-for-rest-with-spring
+     * TODO: there will be normal REST handlers here not these saves
      */
     public void save(Periodical periodical) {
         try {
@@ -114,6 +155,8 @@ public class PeriodicalsService {
      *
      * @param id the id
      * @return the optional periodical object
+     *
+     * TODO: null will never be returned here
      */
     public Optional<Periodical> get(Long id) {
         return periodicalsRepo.findById(id);

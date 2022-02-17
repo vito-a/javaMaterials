@@ -13,6 +13,10 @@ import java.util.Optional;
 
 /**
  * The Categories repo test.
+ * TODO: Ctrl+Shift+T IDEA will create the packages properly in the folders
+ * TODO: autowiring the categoryRepo is a bad practice
+ * TODO: it is needed to pass the mocked Repos
+ * TODO: repo tests are not unit tests
  */
 public class CategoriesRepoTest {
 

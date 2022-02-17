@@ -13,6 +13,13 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * The Periodical repo test.
+ * TODO: Main function is Subscribe so it is logical to check the user subscription
+ * TODO: second method: with exception
+ * TODO: third method: without exception
+ * TODO: database writes are generally the INTEGRATION tests not the unit tests
+ * TODO: in-memory database for example H2
+ * TODO: but there is a question - how to check the MySQL specific tests in H2?
+ * TODO: so the MySQL database is started in a Docker container but not automatically but manually
  */
 public class PeriodicalRepoTest {
 
