@@ -82,6 +82,7 @@ public class UserTests {
     /**
      * Test user creation.
      */
+    /*
     @Test
     public void testUserCreation() {
         User user = new User();
@@ -114,5 +115,6 @@ public class UserTests {
         // usersService.delete(savedUser.getUserId());
         entityManager.remove(existingUser);
     }
+     */
 }
 

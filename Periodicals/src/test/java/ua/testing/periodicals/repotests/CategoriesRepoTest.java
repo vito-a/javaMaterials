@@ -4,6 +4,8 @@ import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.testing.periodicals.model.entity.Category;
 import ua.testing.periodicals.repository.CategoriesRepository;
+import ua.testing.periodicals.service.CategoriesService;
+import ua.testing.periodicals.service.UsersService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,13 +19,16 @@ public class CategoriesRepoTest {
     @Autowired
     private CategoriesRepository categoryRepo;
 
+    private CategoriesService categoriesService;
+
     /**
      * Test categories repo.
      */
     @Test
     public void testCategoriesRepo() {
 
-        List<Category> categories = categoryRepo.findAll();
+        List<Category> categories = categoriesService.listAll("");
+        // List<Category> categories = categoryRepo.findAll();
         Category category1 = categoryRepo.findByName("IT");
         Optional<Category> category2 = categoryRepo.findById(1L);
         Category category = new Category();
