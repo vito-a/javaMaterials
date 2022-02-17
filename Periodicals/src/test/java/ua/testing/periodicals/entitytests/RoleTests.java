@@ -8,11 +8,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * The Periodical tests.
+ * The Role tests.
  */
 public class RoleTests {
     /**
-     * Test periodical entity.
+     * Test role entity.
      */
     @Test
     public void testRoleEntity() {
