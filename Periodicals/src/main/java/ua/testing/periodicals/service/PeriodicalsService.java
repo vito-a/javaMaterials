@@ -1,5 +1,6 @@
 package ua.testing.periodicals.service;
 
+import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import java.util.Optional;
 @Service
 public class PeriodicalsService {
     @Autowired
-    private PeriodicalsRepository periodicalsRepo;
+    private PeriodicalsRepository periodicalsRepository;
 
     @Autowired
     private SubscriptionsService subscriptionsService;
@@ -43,7 +44,7 @@ public class PeriodicalsService {
      *
      * TODO: Optional is not needed here as findAll() won't return null
      * TODO: what to test: 2 unit tests - one without params pass the null there
-     * TODO: check that periodicalsRepo.findAll() will be called in that case
+     * TODO: check that periodicalsRepo.findAll() will not be called in that case
      * TODO: and second unit test with non-null parameter
      * TODO: check that periodicalsRepo.findAll() will be called in that case
      * TODO: abbreviation like periodicalsRepo is a bad practice, write full
@@ -56,11 +57,14 @@ public class PeriodicalsService {
      * TODO: the whole idea
      */
     public List<Periodical> listAll(String keyword) {
-        Optional<String> optionalKeyword = Optional.ofNullable(keyword);
-        if (optionalKeyword.isPresent()) {
-            return periodicalsRepo.search(optionalKeyword.get());
+        List<Periodical> result = null;
+        try {
+            result = (keyword != null) && !keyword.isEmpty() ? periodicalsRepository.search(keyword) : periodicalsRepository.findAll();
+        } catch (NullPointerException e) {
+            logger.error("listAll(String keyword) - cannot list periodicals for: " + keyword);
         }
-        return periodicalsRepo.findAll();
+
+        return result;
     }
 
     /**
@@ -90,7 +94,7 @@ public class PeriodicalsService {
                         : Sort.by(sortField).descending()
         );
 
-        return periodicalsRepo.findAll(pageable);
+        return periodicalsRepository.findAll(pageable);
     }
 
     /**
@@ -113,8 +117,8 @@ public class PeriodicalsService {
      */
     public void save(Periodical periodical) {
         try {
-            periodicalsRepo.save(periodical);
-        } catch (Exception e) {
+            periodicalsRepository.save(periodical);
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
             logger.error("Cannot save periodical " + periodical.getPeriodicalId());
             logger.error(e.getMessage());
@@ -159,7 +163,7 @@ public class PeriodicalsService {
      * TODO: null will never be returned here
      */
     public Optional<Periodical> get(Long id) {
-        return periodicalsRepo.findById(id);
+        return periodicalsRepository.findById(id);
     }
 
     /**
@@ -168,6 +172,6 @@ public class PeriodicalsService {
      * @param id the periodical id
      */
     public void delete(Long id) {
-        periodicalsRepo.deleteById(id);
+        periodicalsRepository.deleteById(id);
     }
 }

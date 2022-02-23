@@ -169,7 +169,7 @@ INSERT INTO categories (cat_id, name) VALUES (1, 'News'), (2, 'Medicine'), (3, '
 -- Periodicals
 -- --------------------------------------------------------------------------------------------
 INSERT INTO periodicals (periodical_id, name, description, cat_id, price) VALUES
-  (DEFAULT, 'Guardian', 'Latest news, sport, business, comment, analysis and reviews from the , the world\'s leading liberal voice', 1, 200),
+  (DEFAULT, 'Guardian', 'Latest news, sport, business, comment, analysis and reviews from the world\'s leading liberal voice', 1, 200),
   (DEFAULT, 'New York Times', 'Live news, investigations, opinion, photos and video by the journalists from more than 150 countries around the world.', 1, 300),
   (DEFAULT, 'Wall Street Journal', 'Breaking news and analysis from the U.S. and around the world at WSJ.com.', 1, 400),
   (DEFAULT, 'Lancet', 'Regional Health - Europe publishes a Series of eleven papers by experts from different areas of public health', 2, 500),

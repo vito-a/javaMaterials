@@ -29,7 +29,7 @@ public class Periodical {
     @Column(name = "description")
     private String description;
     @Column(name = CATEGORY_ID, nullable = false)
-    private String categoryId;
+    private Long categoryId;
     @Column(name = "price", nullable = false)
     private Long price;
 

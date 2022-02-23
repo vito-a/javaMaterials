@@ -23,13 +23,13 @@ public class CustomUserDetailsTests {
         periodical.setName("Forbes");
         periodical.setPrice(150L);
         periodical.setDescription("Test description 1");
-        periodical.setCategoryId("News");
+        periodical.setCategoryId(5L);
 
         assertEquals(periodical.getPeriodicalId(), 100L, 0);
         assertEquals(periodical.getName(), "Forbes");
         assertEquals(periodical.getPrice(), 150L,0);
         assertEquals(periodical.getDescription(), "Test description 1");
-        assertEquals(periodical.getCategoryId(), "News");
-        assertEquals(periodical.toString(),"CustomUserDetailsTests {id=100, name='Forbes', description='Test description 1', catId='News', price='150'}");
+        assertEquals(periodical.getCategoryId(), 5L, 0);
+        assertEquals(periodical.toString(),"Periodical{id=100, name='Forbes', description='Test description 1', catId='5', price='150'}");
     }
 }

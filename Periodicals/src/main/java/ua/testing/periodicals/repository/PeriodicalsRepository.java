@@ -39,5 +39,6 @@ public interface PeriodicalsRepository extends JpaRepository<Periodical, Long> {
             + " OR p.description LIKE %?1%"
             + " OR p.categoryId LIKE %?1%"
             + " OR CONCAT(p.price, '') LIKE %?1%")
+    // Optional<List<Periodical>> search(String keyword);
     List<Periodical> search(String keyword);
 }
