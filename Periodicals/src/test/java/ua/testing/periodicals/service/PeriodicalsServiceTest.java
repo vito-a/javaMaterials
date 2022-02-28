@@ -1,24 +1,30 @@
 package ua.testing.periodicals.service;
 
+import antlr.Utils;
 import junit.framework.TestCase;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.parameters.P;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import ua.testing.periodicals.model.entity.Periodical;
+import ua.testing.periodicals.repository.PeriodicalsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-
-import static org.mockito.Mockito.*;
 
 public class PeriodicalsServiceTest extends TestCase {
 
     final PeriodicalsService periodicalsService = new PeriodicalsService();
+    private PeriodicalsRepository periodicalsRepository;
+
     private static final Logger logger = LoggerFactory.getLogger(PeriodicalsServiceTest.class);
 
-    public void testListAllNull() {
+    public void testListAllNonNull() {
         List<Periodical> testList = new ArrayList<Periodical>();
 
         // Periodical periodical1 = mock(Periodical.class);
@@ -58,12 +64,68 @@ public class PeriodicalsServiceTest extends TestCase {
         assertEquals(periodical2.toString(),"Periodical{id=5, name='Janes', description='The latest defence and security news - the trusted source for defence intelligence', catId='5', price='600'}");
     }
 
-    public void testListAllNonNull() {
-        List<Periodical> testList = periodicalsService.listAll("liberal");
+    public void testListAllNull() {
+        List<Periodical> testList = periodicalsService.listAll(null);
         assertNull(testList);
     }
 
     public void testTestListAll() {
+        List<Periodical> testList = new ArrayList<Periodical>();
+
+        // Periodical periodical1 = mock(Periodical.class);
+        Periodical periodical1 = new Periodical();
+        periodical1.setPeriodicalId(1L);
+        periodical1.setName("Guardian");
+        periodical1.setPrice(200L);
+        periodical1.setDescription("Latest news, sport, business, comment, analysis and reviews from the world's leading liberal voice");
+        periodical1.setCategoryId(1L);
+        testList.add(periodical1);
+
+        // Periodical periodical2 = mock(Periodical.class);
+        Periodical periodical2 = new Periodical();
+        periodical2.setPeriodicalId(2L);
+        periodical2.setName("New York Times");
+        periodical2.setPrice(300L);
+        periodical2.setDescription("Live news, investigations, opinion, photos and video by the journalists from more than 150 countries around the world.");
+        periodical2.setCategoryId(1L);
+        testList.add(periodical2);
+
+        // Periodical periodical3 = mock(Periodical.class);
+        Periodical periodical3 = new Periodical();
+        periodical3.setPeriodicalId(3L);
+        periodical3.setName("Wall Street Journal");
+        periodical3.setPrice(400L);
+        periodical3.setDescription("Breaking news and analysis from the U.S. and around the world at WSJ.com.");
+        periodical3.setCategoryId(2L);
+        testList.add(periodical3);
+
+        // Periodical periodical4 = mock(Periodical.class);
+        Periodical periodical4 = new Periodical();
+        periodical4.setPeriodicalId(4L);
+        periodical4.setName("Lancet");
+        periodical4.setPrice(500L);
+        periodical4.setDescription("Regional Health - Europe publishes a Series of eleven papers by experts from different areas of public health");
+        periodical4.setCategoryId(2L);
+        testList.add(periodical4);
+
+        // Periodical periodical5 = mock(Periodical.class);
+        Periodical periodical5 = new Periodical();
+        periodical5.setPeriodicalId(5L);
+        periodical5.setName("Janes");
+        periodical5.setPrice(600L);
+        periodical5.setDescription("The latest defence and security news - the trusted source for defence intelligence");
+        periodical5.setCategoryId(4L);
+        testList.add(periodical5);
+
+        PeriodicalsService mock = org.mockito.Mockito.mock(PeriodicalsService.class);
+        Page<Periodical> pagedResponse = new PageImpl(testList);
+        when(mock.listAll(1, "PeriodicalId", "asc")).thenReturn((pagedResponse));
+
+        Page<Periodical> result = mock.listAll(1, "PeriodicalId", "asc");
+
+        assertNotNull(result);
+        assertEquals(result.getTotalElements(), 5);
+        assertEquals(result.getTotalPages(), 1);
     }
 
     public void testSave() {
