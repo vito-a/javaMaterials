@@ -1,10 +1,10 @@
 package ua.testing.periodicals.service;
 
 import junit.framework.TestCase;
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
 import org.jooq.tools.jdbc.*;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -12,11 +12,11 @@ import org.springframework.data.domain.PageImpl;
 import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 
+import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,29 +127,84 @@ public class PeriodicalsServiceTest extends TestCase {
         assertEquals(result.getTotalPages(), 1);
     }
 
-    public class Mocking {
-        public Mocking () throws SQLException {
+    static class JooqMockFileDatabaseMock {
+        public boolean periodicalInsertMock () {
+            int insertedRowCount = 0;
             MockDataProvider db;
             try {
-                db = new MockFileDatabase(
-                        Mocking.class.getResourceAsStream("/mocking.txt"));
+                db = new MockFileDatabase(new File(getClass().getResource("/periodicalServiceTestSaveInsert.txt").toURI()));
                 Connection c = new MockConnection(db);
                 Statement s = c.createStatement();
-                    System.out.println("Actors:");
-                    System.out.println("-------");
-                    try (ResultSet rs = s.executeQuery(
-                            "select first_name, last_name from actor")) {
-                        while (rs.next())
-                            System.out.println(rs.getString(1)
-                                    + " " + rs.getString(2));
-                }
-            } catch (IOException e) {
+                String insertQuery = "INSERT INTO `periodicalsdb`.`periodicals` (`periodical_id`, `name`, `description`, `cat_id`, `price`) VALUES ('7', 'Test', 'Test description 1', '4', '800.0')";
+                insertedRowCount = s.executeUpdate(insertQuery);
+            } catch (IOException | SQLException | URISyntaxException e) {
                 e.printStackTrace();
             }
+
+            return (insertedRowCount == 1);
+        }
+
+        public boolean periodicalSelectMock () {
+            int selectCount = 0;
+            MockDataProvider db;
+            try {
+                db = new MockFileDatabase(new File(getClass().getResource("/periodicalServiceTestSaveSelect.txt").toURI()));
+                Connection c = new MockConnection(db);
+                Statement s = c.createStatement();
+                selectCount = 0;
+                //String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals WHERE periodical_id = '7' AND name = 'Test' AND description = 'Test description 1' AND cat_id = '4' AND price = '800.0';";
+                //String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals WHERE periodical_id = ? AND name = ? AND description = ? AND cat_id = ? AND price = ?;";
+                String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals";
+                try (PreparedStatement ps = c.prepareStatement(selectQuery)) {
+                    /*
+                    ps.setString(1, "7");
+                    ps.setString(2, "Test");
+                    ps.setString(3, "Test description 1");
+                    ps.setString(4, "4");
+                    ps.setString(5, "800.0");
+                    */
+                    ResultSet rs = ps.executeQuery();
+
+                    System.out.println("Periodicals:");
+                    System.out.println("------------");
+                    while (rs.next()) {
+                        System.out.println(rs.getString(1) + " " + rs.getString(2)
+                                + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5));
+                        selectCount++;
+                    }
+                }
+                assertEquals(selectCount, 7);
+            } catch (IOException | SQLException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+
+            return (selectCount == 7);
         }
     }
 
     public void testSave() {
+        JooqMockFileDatabaseMock mock = new JooqMockFileDatabaseMock();
+
+        Periodical periodical1 = new Periodical();
+        periodical1.setPeriodicalId(7L);
+        periodical1.setName("Test");
+        periodical1.setPrice(800L);
+        periodical1.setDescription("Test description 1");
+        periodical1.setCategoryId(4L);
+
+        PeriodicalsService mock2 = org.mockito.Mockito.mock(PeriodicalsService.class);
+
+        Mockito.doAnswer(new Answer<Void>() {
+            public Void answer(InvocationOnMock invocation) {
+                mock.periodicalInsertMock();
+                return null;
+            }
+        }).when(mock2).save(periodical1);
+
+        mock2.save(periodical1);
+
+        assertTrue(mock.periodicalInsertMock());
+        assertTrue(mock.periodicalSelectMock());
     }
 
     public void testSubscribe() {
