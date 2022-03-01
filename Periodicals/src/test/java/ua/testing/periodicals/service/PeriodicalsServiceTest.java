@@ -1,20 +1,25 @@
 package ua.testing.periodicals.service;
 
-import antlr.Utils;
 import junit.framework.TestCase;
-import org.mockito.Mockito;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+import org.jooq.tools.jdbc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class PeriodicalsServiceTest extends TestCase {
@@ -47,7 +52,6 @@ public class PeriodicalsServiceTest extends TestCase {
 
         PeriodicalsService mock = org.mockito.Mockito.mock(PeriodicalsService.class);
 
-        // periodicalsService.listAll() returns "List<Periodical>"
         when(mock.listAll("latest")).thenReturn(testList);
 
         List<Periodical> result = mock.listAll("latest");
@@ -72,7 +76,6 @@ public class PeriodicalsServiceTest extends TestCase {
     public void testTestListAll() {
         List<Periodical> testList = new ArrayList<Periodical>();
 
-        // Periodical periodical1 = mock(Periodical.class);
         Periodical periodical1 = new Periodical();
         periodical1.setPeriodicalId(1L);
         periodical1.setName("Guardian");
@@ -81,7 +84,6 @@ public class PeriodicalsServiceTest extends TestCase {
         periodical1.setCategoryId(1L);
         testList.add(periodical1);
 
-        // Periodical periodical2 = mock(Periodical.class);
         Periodical periodical2 = new Periodical();
         periodical2.setPeriodicalId(2L);
         periodical2.setName("New York Times");
@@ -90,7 +92,6 @@ public class PeriodicalsServiceTest extends TestCase {
         periodical2.setCategoryId(1L);
         testList.add(periodical2);
 
-        // Periodical periodical3 = mock(Periodical.class);
         Periodical periodical3 = new Periodical();
         periodical3.setPeriodicalId(3L);
         periodical3.setName("Wall Street Journal");
@@ -99,7 +100,6 @@ public class PeriodicalsServiceTest extends TestCase {
         periodical3.setCategoryId(2L);
         testList.add(periodical3);
 
-        // Periodical periodical4 = mock(Periodical.class);
         Periodical periodical4 = new Periodical();
         periodical4.setPeriodicalId(4L);
         periodical4.setName("Lancet");
@@ -108,7 +108,6 @@ public class PeriodicalsServiceTest extends TestCase {
         periodical4.setCategoryId(2L);
         testList.add(periodical4);
 
-        // Periodical periodical5 = mock(Periodical.class);
         Periodical periodical5 = new Periodical();
         periodical5.setPeriodicalId(5L);
         periodical5.setName("Janes");
@@ -126,6 +125,28 @@ public class PeriodicalsServiceTest extends TestCase {
         assertNotNull(result);
         assertEquals(result.getTotalElements(), 5);
         assertEquals(result.getTotalPages(), 1);
+    }
+
+    public class Mocking {
+        public Mocking () throws SQLException {
+            MockDataProvider db;
+            try {
+                db = new MockFileDatabase(
+                        Mocking.class.getResourceAsStream("/mocking.txt"));
+                Connection c = new MockConnection(db);
+                Statement s = c.createStatement();
+                    System.out.println("Actors:");
+                    System.out.println("-------");
+                    try (ResultSet rs = s.executeQuery(
+                            "select first_name, last_name from actor")) {
+                        while (rs.next())
+                            System.out.println(rs.getString(1)
+                                    + " " + rs.getString(2));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void testSave() {
