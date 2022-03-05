@@ -1,0 +1,4 @@
+INSERT INTO `periodicalsdb`.`periodicals` (`periodical_id`, `name`, `description`, `cat_id`, `price`) VALUES ('7', 'Test', 'Test description 1', '4', '800.0');
+Query executed OK, 1 row affected. (0.012 s)
+@ rows: 1
+

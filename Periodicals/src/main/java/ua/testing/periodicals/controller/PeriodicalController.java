@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
+import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 import ua.testing.periodicals.repository.UserRepository;
@@ -58,7 +59,11 @@ public class PeriodicalController {
      */
     @RequestMapping(value = "/periodical/save", method = RequestMethod.POST)
     public String savePeriodical(@ModelAttribute("periodical") Periodical periodical) {
-        periodicalService.save(periodical);
+        try {
+            periodicalService.save(periodical);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
 
         return "redirect:/periodicals";
     }

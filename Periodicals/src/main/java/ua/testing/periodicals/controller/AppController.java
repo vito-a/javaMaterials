@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Category;
 import ua.testing.periodicals.model.entity.Periodical;
 import ua.testing.periodicals.model.entity.Subscription;
@@ -152,7 +153,12 @@ public class AppController {
      */
     @RequestMapping("/search/periodicals")
     public String searchPeriodicals(Model model, @Param("keyword") String keyword) {
-        List<Periodical> listPeriodicals = periodicalsService.listAll(keyword);
+        List<Periodical> listPeriodicals = null;
+        try {
+            listPeriodicals = periodicalsService.listAll(keyword);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
         model.addAttribute("listPeriodicals", listPeriodicals);
         model.addAttribute("keyword", keyword);
         return "search/periodicals.html";

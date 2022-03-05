@@ -56,12 +56,13 @@ public class PeriodicalsService {
      * TODO: listAll must check that Pageable that went to finaAll is that one
      * TODO: the whole idea
      */
-    public List<Periodical> listAll(String keyword) {
+    public List<Periodical> listAll(String keyword) throws DBException {
         List<Periodical> result = null;
         try {
             result = (keyword != null) && !keyword.isEmpty() ? periodicalsRepository.search(keyword) : periodicalsRepository.findAll();
         } catch (NullPointerException e) {
             logger.error("listAll(String keyword) - cannot list periodicals for: " + keyword);
+            throw new DBException("Cannot list periodicals", e);
         }
 
         return result;
@@ -115,13 +116,14 @@ public class PeriodicalsService {
      * TODO: https://www.baeldung.com/exception-handling-for-rest-with-spring
      * TODO: there will be normal REST handlers here not these saves
      */
-    public void save(Periodical periodical) {
+    public void save(Periodical periodical) throws DBException {
         try {
             periodicalsRepository.save(periodical);
         } catch (HibernateException e) {
             logger.error(e.getMessage());
             logger.error("Cannot save periodical " + periodical.getPeriodicalId());
             logger.error(e.getMessage());
+            throw new DBException("Cannot save periodical", e);
         }
     }
 
@@ -143,15 +145,6 @@ public class PeriodicalsService {
                     "(" + periodicalId + "," + userId + "," + startDate + "," + endDate + ")", e);
             throw new DBException("Cannot create subscription", e);
         }
-    }
-
-    /**
-     * Get optional.
-     *
-     * @return the optional periodical object
-     */
-    public Optional<Periodical> get() {
-        return Optional.of(new Periodical());
     }
 
     /**

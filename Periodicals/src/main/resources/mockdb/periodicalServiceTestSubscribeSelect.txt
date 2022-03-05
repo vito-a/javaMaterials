@@ -1,0 +1,11 @@
+SELECT periodical_id, name, description, cat_id, price FROM periodicals;
+> periodical_id name description cat_id price
+> ------------- ---- ----------- ------ -----
+> 1	Guardian	Latest news, sport, business, comment, analysis and reviews from the , the world's leading liberal voice	1	200.00
+> 2	New York Times	Live news, investigations, opinion, photos and video by the journalists from more than 150 countries around the world.	1	300.00
+> 3	Wall Street Journal	Breaking news and analysis from the U.S. and around the world at WSJ.com.	1	400.00
+> 4	Lancet	Regional Health - Europe publishes a Series of eleven papers by experts from different areas of public health	2	500.00
+> 5	Janes	The latest defence and security news - the trusted source for defence intelligence	4	600.00
+> 6	Wired	A monthly American magazine, published in print and online editions, that focuses on how emerging technologies affect culture, the economy, and politics.	4	700.00
+> 7	Test	Test description 1	4	800.00
+@ rows: 7

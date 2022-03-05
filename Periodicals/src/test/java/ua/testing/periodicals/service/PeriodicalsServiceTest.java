@@ -9,17 +9,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Periodical;
+import ua.testing.periodicals.model.entity.Subscription;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 public class PeriodicalsServiceTest extends TestCase {
@@ -52,9 +55,13 @@ public class PeriodicalsServiceTest extends TestCase {
 
         PeriodicalsService mock = org.mockito.Mockito.mock(PeriodicalsService.class);
 
-        when(mock.listAll("latest")).thenReturn(testList);
-
-        List<Periodical> result = mock.listAll("latest");
+        List<Periodical> result = null;
+        try {
+            when(mock.listAll("latest")).thenReturn(testList);
+            result = mock.listAll("latest");
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
 
         assertNotNull(result);
         assertEquals(result.size(), 2);
@@ -69,7 +76,12 @@ public class PeriodicalsServiceTest extends TestCase {
     }
 
     public void testListAllNull() {
-        List<Periodical> testList = periodicalsService.listAll(null);
+        List<Periodical> testList = null;
+        try {
+            testList = periodicalsService.listAll(null);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
         assertNull(testList);
     }
 
@@ -128,14 +140,13 @@ public class PeriodicalsServiceTest extends TestCase {
     }
 
     static class JooqMockFileDatabaseMock {
-        public boolean periodicalInsertMock () {
+        public boolean periodicalInsertMock (String path, String insertQuery) {
             int insertedRowCount = 0;
             MockDataProvider db;
             try {
-                db = new MockFileDatabase(new File(getClass().getResource("/periodicalServiceTestSaveInsert.txt").toURI()));
+                db = new MockFileDatabase(new File(getClass().getResource(path).toURI()));
                 Connection c = new MockConnection(db);
                 Statement s = c.createStatement();
-                String insertQuery = "INSERT INTO `periodicalsdb`.`periodicals` (`periodical_id`, `name`, `description`, `cat_id`, `price`) VALUES ('7', 'Test', 'Test description 1', '4', '800.0')";
                 insertedRowCount = s.executeUpdate(insertQuery);
             } catch (IOException | SQLException | URISyntaxException e) {
                 e.printStackTrace();
@@ -144,45 +155,35 @@ public class PeriodicalsServiceTest extends TestCase {
             return (insertedRowCount == 1);
         }
 
-        public boolean periodicalSelectMock () {
+        public int periodicalSelectMock (String path, String selectQuery) {
             int selectCount = 0;
             MockDataProvider db;
             try {
-                db = new MockFileDatabase(new File(getClass().getResource("/periodicalServiceTestSaveSelect.txt").toURI()));
+                db = new MockFileDatabase(new File(getClass().getResource(path).toURI()));
                 Connection c = new MockConnection(db);
                 Statement s = c.createStatement();
-                selectCount = 0;
-                //String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals WHERE periodical_id = '7' AND name = 'Test' AND description = 'Test description 1' AND cat_id = '4' AND price = '800.0';";
-                //String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals WHERE periodical_id = ? AND name = ? AND description = ? AND cat_id = ? AND price = ?;";
-                String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals";
-                try (PreparedStatement ps = c.prepareStatement(selectQuery)) {
-                    /*
-                    ps.setString(1, "7");
-                    ps.setString(2, "Test");
-                    ps.setString(3, "Test description 1");
-                    ps.setString(4, "4");
-                    ps.setString(5, "800.0");
-                    */
-                    ResultSet rs = ps.executeQuery();
 
-                    System.out.println("Periodicals:");
-                    System.out.println("------------");
+                try (PreparedStatement ps = c.prepareStatement(selectQuery)) {
+                    ResultSet rs = ps.executeQuery();
+                    System.out.println("Result:");
+                    System.out.println("-------");
                     while (rs.next()) {
                         System.out.println(rs.getString(1) + " " + rs.getString(2)
-                                + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5));
+                                + " " + rs.getString(3) + " " + rs.getString(4)
+                                + " " + rs.getString(5));
                         selectCount++;
                     }
                 }
-                assertEquals(selectCount, 7);
             } catch (IOException | SQLException | URISyntaxException e) {
                 e.printStackTrace();
             }
 
-            return (selectCount == 7);
+            return selectCount;
         }
     }
 
     public void testSave() {
+        final Boolean[] resultInsert = new Boolean[1];
         JooqMockFileDatabaseMock mock = new JooqMockFileDatabaseMock();
 
         Periodical periodical1 = new Periodical();
@@ -194,26 +195,77 @@ public class PeriodicalsServiceTest extends TestCase {
 
         PeriodicalsService mock2 = org.mockito.Mockito.mock(PeriodicalsService.class);
 
-        Mockito.doAnswer(new Answer<Void>() {
-            public Void answer(InvocationOnMock invocation) {
-                mock.periodicalInsertMock();
-                return null;
-            }
-        }).when(mock2).save(periodical1);
+        try {
+            String insertPath = "/mockdb/periodicalServiceTestSaveInsert.txt";
+            String insertQuery = "INSERT INTO `periodicalsdb`.`periodicals` (`periodical_id`, `name`, `description`, `cat_id`, `price`) VALUES ('7', 'Test', 'Test description 1', '4', '800.0')";
+            Mockito.doAnswer(new Answer<Void>() {
+                public Void answer(InvocationOnMock invocation) {
+                    resultInsert[0] = mock.periodicalInsertMock(insertPath, insertQuery);
+                    return null;
+                }
+            }).when(mock2).save(periodical1);
+            mock2.save(periodical1);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
 
-        mock2.save(periodical1);
+        assertTrue(resultInsert[0]);
 
-        assertTrue(mock.periodicalInsertMock());
-        assertTrue(mock.periodicalSelectMock());
+        String selectPath = "/mockdb/periodicalServiceTestSaveSelect.txt";
+        // String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals WHERE periodical_id = '7' AND name = 'Test' AND description = 'Test description 1' AND cat_id = '4' AND price = '800.0';";
+        // String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals WHERE periodical_id = ? AND name = ? AND description = ? AND cat_id = ? AND price = ?;";
+        String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals";
+
+        assertEquals(mock.periodicalSelectMock(selectPath, selectQuery), 7);
     }
 
     public void testSubscribe() {
+        final Boolean[] resultInsert = new Boolean[1];
+        JooqMockFileDatabaseMock mock = new JooqMockFileDatabaseMock();
+
+        PeriodicalsService mock2 = org.mockito.Mockito.mock(PeriodicalsService.class);
+
+        try {
+            String insertPath = "/mockdb/periodicalServiceTestSubscribeInsert.txt";
+            String insertQuery = "INSERT INTO `periodicalsdb`.`periodicals` (`periodical_id`, `name`, `description`, `cat_id`, `price`) VALUES ('7', 'Test', 'Test description 1', '4', '800.0')";
+            LocalDate startDate = LocalDate.now();
+            LocalDate endDate = LocalDate.now().plusYears(1);
+
+            Mockito.doAnswer(new Answer<Void>() {
+                public Void answer(InvocationOnMock invocation) {
+                    resultInsert[0] = mock.periodicalInsertMock(insertPath, insertQuery);
+                    return null;
+                }
+            }).when(mock2).subscribe(1L, 1L, startDate, endDate);
+            mock2.subscribe(1L, 1L, startDate, endDate);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue(resultInsert[0]);
+
+        String selectPath = "/mockdb/periodicalServiceTestSubscribeSelect.txt";
+        // String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals WHERE periodical_id = '7' AND name = 'Test' AND description = 'Test description 1' AND cat_id = '4' AND price = '800.0';";
+        // String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals WHERE periodical_id = ? AND name = ? AND description = ? AND cat_id = ? AND price = ?;";
+        String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals";
+
+        assertEquals(mock.periodicalSelectMock(selectPath, selectQuery), 7);
     }
 
     public void testGet() {
-    }
+        JooqMockFileDatabaseMock mock = new JooqMockFileDatabaseMock();
 
-    public void testTestGet() {
+        Periodical periodical1 = new Periodical();
+        periodical1.setPeriodicalId(1L);
+        periodical1.setName("Guardian");
+        periodical1.setDescription("Latest news, sport, business, comment, analysis and reviews from the world's leading liberal voice");
+        periodical1.setCategoryId(1L);
+        periodical1.setPrice(200L);
+
+        String selectPath = "/mockdb/periodicalServiceTestGetSelect.txt";
+        String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals";
+
+        assertEquals(mock.periodicalSelectMock(selectPath, selectQuery), 1);
     }
 
     public void testDelete() {
