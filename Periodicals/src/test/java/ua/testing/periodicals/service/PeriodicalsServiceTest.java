@@ -269,5 +269,14 @@ public class PeriodicalsServiceTest extends TestCase {
     }
 
     public void testDelete() {
+        JooqMockFileDatabaseMock mock = new JooqMockFileDatabaseMock();
+        PeriodicalsService mock2 = org.mockito.Mockito.mock(PeriodicalsService.class);
+
+        mock2.delete(1L);
+
+        String selectPath = "/mockdb/periodicalServiceTestDeleteSelect.txt";
+        String selectQuery = "SELECT periodical_id, name, description, cat_id, price FROM periodicals";
+
+        assertEquals(mock.periodicalSelectMock(selectPath, selectQuery), 5);
     }
 }
