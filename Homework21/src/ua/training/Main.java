@@ -42,66 +42,18 @@ public class Main {
     // Streams Homework Task 6(Optional)
     // It should be possible to concurrently collect stream results in a single ArrayList, instead of merging multiple array lists, provided it
     // has been constructed with the stream's size, since concurrent set operations at disjoint positions are threadsafe. How can you achieve this?
-    public static <T> Stream<T> zipParallel(Stream<T> first, Stream<T> second, BiFunction<T, T, T> zipper) {
-        final Iterator<T> i1 = first.iterator();
-        final Iterator<T> i2 = second.iterator();
-        final Iterator<T> i3 = new Iterator<T>() {
-            @Override
-            public boolean hasNext() {
-                return i1.hasNext() && i2.hasNext();
-            }
-
-            @Override
-            public T next() {
-                return zipper.apply(i1.next(), i2.next());
-            }
-        };
-        final boolean parallel = first.isParallel() || second.isParallel();
-        return iteratorToFiniteStream(i3, parallel);
-    }
-
-    public static <T> Stream<T> iteratorToFiniteStream(Iterator<T> iterator, boolean parallel) {
-        final Iterable<T> iterable = () -> iterator;
-        return StreamSupport.stream(iterable.spliterator(), parallel);
-    }
-
-    public static<T> Stream<T> zipParallel2(Stream<? extends T> a,
-                                         Stream<? extends T> b,
-                                         BiFunction<? super T, ? super T, ? extends T> zipper) {
-        Objects.requireNonNull(zipper);
-        Spliterator<? extends T> aSpliterator = Objects.requireNonNull(a).spliterator();
-        Spliterator<? extends T> bSpliterator = Objects.requireNonNull(b).spliterator();
-
-        // Zipping looses DISTINCT and SORTED characteristics
-        int characteristics = aSpliterator.characteristics() & bSpliterator.characteristics() &
-                ~(Spliterator.DISTINCT | Spliterator.SORTED);
-
-        long zipSize = ((characteristics & Spliterator.SIZED) != 0)
-                ? Math.min(aSpliterator.getExactSizeIfKnown(), bSpliterator.getExactSizeIfKnown())
-                : -1;
-
-        Iterator<T> aIterator = Spliterators.iterator(aSpliterator);
-        Iterator<T> bIterator = Spliterators.iterator(bSpliterator);
-        Iterator<T> cIterator = new Iterator<T>() {
-            @Override
-            public boolean hasNext() {
-                return aIterator.hasNext() && bIterator.hasNext();
-            }
-
-            @Override
-            public T next() {
-                return zipper.apply(aIterator.next(), bIterator.next());
-            }
-        };
-
-        Spliterator<T> split = Spliterators.spliterator(cIterator, zipSize, characteristics);
-        return (a.isParallel() || b.isParallel())
-                ? StreamSupport.stream(split, true)
-                : StreamSupport.stream(split, false);
-    }
-
-    private static String zipper(String o1, String o2) {
-        return o1 + "," + o2;
+    public static synchronized <T> List<List<T>> zipParallel(List<List<T>> listOfLists) {
+        int size = listOfLists.get(0).size();
+        List<List<T>> result = new ArrayList<>(size);
+        for (int i = 0; i < size; ++i) {
+            int finalI = i;
+            result.add(
+                    listOfLists.parallelStream()
+                            .map(list -> list.get(finalI))
+                            .takeWhile(Objects::nonNull)
+                            .collect(Collectors.toList()));
+        }
+        return result;
     }
 
     public static void main(String[] args) {
@@ -127,6 +79,8 @@ public class Main {
         System.out.println("(Task 5)  " + zip(first, second).map(Object::toString).collect(Collectors.joining(",")) + "\r\n");
 
         // Streams Homework Task 6(Optional)
-        System.out.println("(Task 6)  " + zipParallel2(first.parallel(), second.parallel(), Main::zipper).map(Object::toString).collect(Collectors.joining(",")) + "\r\n");
+        List<String> third = Arrays.asList("A", "B", "C");
+        List<String> fourth = Arrays.asList("Apple", "Banana", "Carrot", "Doughnut");
+        System.out.println("(Task 6)  " + zipParallel(List.of(third, fourth)).stream().map(Object::toString).collect(Collectors.joining(",")) + "\r\n");
     }
 }
