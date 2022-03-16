@@ -3,12 +3,12 @@ package ua.training.service;
 /**
  * The Number test thread service.
  */
-public class NumberTestThreadService implements Runnable {
+public class SimpleNumberThreadService implements Runnable {
     long threadNum;
     long max;
     long end;
 
-    public NumberTestThreadService(long threadNum, long max, long end) {
+    public SimpleNumberThreadService(long threadNum, long max, long end) {
         this.threadNum = threadNum;
         this.max = max;
         this.end = end;
