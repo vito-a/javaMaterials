@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * The Number test thread service.
  */
-public class SequentalNumberThreadService {
+public class SequentalNumberMultiThreadService {
     long threadsNumber;
     long max;
     long end;
@@ -23,7 +23,7 @@ public class SequentalNumberThreadService {
      * @param max            the max number
      * @param end            the end time
      */
-    public SequentalNumberThreadService(long threadsNumber, long max, long end) {
+    public SequentalNumberMultiThreadService(long threadsNumber, long max, long end) {
         this.threadsNumber = threadsNumber;
         this.max = max;
         this.end = end;
@@ -66,6 +66,7 @@ public class SequentalNumberThreadService {
          * @param threadID     the thread ID
          * @param max          the max number
          * @param end          the end time
+         * @param remainder    the division remainder
          */
         public SequentalThread(long threadID, long max, long end, int remainder) {
             this.threadID = threadID;
