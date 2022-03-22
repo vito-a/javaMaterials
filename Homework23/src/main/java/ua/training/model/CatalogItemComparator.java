@@ -1,6 +1,6 @@
 package ua.training.model;
 
-public class Comparator implements java.util.Comparator<CatalogItem> {
+public class CatalogItemComparator implements java.util.Comparator<CatalogItem> {
     private int comparisonAlgorithm = 1;
 
     public void setComparisonAlgorithm(int comparisonAlgorithm) {

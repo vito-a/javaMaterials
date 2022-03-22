@@ -1,6 +1,7 @@
 package ua.training;
 
 import ua.training.model.CatalogItem;
+import ua.training.model.CatalogItemComparator;
 import ua.training.model.PriceComparator;
 
 import java.io.File;
@@ -72,22 +73,41 @@ public class Catalog {
         printCatalog(catalog);
         System.out.println("\n Sorting with algorithm 3 took:" + (System.currentTimeMillis() - fetchStartTime) + " ms. \n");
 
-        System.out.println("\n\nComparator:");
+        System.out.println("\n\nPrice Comparator:");
         fetchStartTime = System.currentTimeMillis();
-        System.out.println("\n\n1. Comparator Sorted with Algorithm 1:");
+        System.out.println("\n\n1. Price Comparator Sorted with Algorithm 1:");
         PriceComparator comparator = new PriceComparator();
         comparator.setComparisonAlgorithm(1);
         Collections.sort(catalog, comparator);
-        catalog.sort(new PriceComparator());
+        catalog.sort(comparator);
         printCatalog(catalog);
         System.out.println("\n Sorting with algorithm 1 took:" + (System.currentTimeMillis() - fetchStartTime) + " ms. \n");
 
         fetchStartTime = System.currentTimeMillis();
-        System.out.println("\n\n2. Comparator Sorted with Algorithm 2:");
+        System.out.println("\n\n2. Price Comparator Sorted with Algorithm 2:");
         comparator = new PriceComparator();
         comparator.setComparisonAlgorithm(2);
         Collections.sort(catalog, comparator);
-        catalog.sort(new PriceComparator());
+        catalog.sort(comparator);
+        printCatalog(catalog);
+        System.out.println("\n Sorting with algorithm 2 took:" + (System.currentTimeMillis() - fetchStartTime) + " ms. \n");
+
+        System.out.println("\n\nGeneric Comparator:");
+        fetchStartTime = System.currentTimeMillis();
+        System.out.println("\n\n1. Price Comparator Sorted with Algorithm 1:");
+        CatalogItemComparator comparator2 = new CatalogItemComparator();
+        comparator2.setComparisonAlgorithm(1);
+        Collections.sort(catalog, comparator2);
+        catalog.sort(comparator2);
+        printCatalog(catalog);
+        System.out.println("\n Sorting with algorithm 1 took:" + (System.currentTimeMillis() - fetchStartTime) + " ms. \n");
+
+        fetchStartTime = System.currentTimeMillis();
+        System.out.println("\n\n2. Generic Comparator Sorted with Algorithm 2:");
+        comparator2 = new CatalogItemComparator();
+        comparator2.setComparisonAlgorithm(2);
+        Collections.sort(catalog, comparator2);
+        catalog.sort(comparator2);
         printCatalog(catalog);
         System.out.println("\n Sorting with algorithm 2 took:" + (System.currentTimeMillis() - fetchStartTime) + " ms. \n");
 
