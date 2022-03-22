@@ -1,12 +1,14 @@
 package ua.training.model;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 
 public class CatalogItem implements Comparable<CatalogItem> {
     private int id;
     private String name;
     private BigDecimal price;
     private String category;
+    private int comparisonAlgorithm = 1;
 
     public CatalogItem(int id, String name, BigDecimal price, String category) {
         this.id = id;
@@ -38,6 +40,41 @@ public class CatalogItem implements Comparable<CatalogItem> {
 
     @Override
     public int compareTo(CatalogItem o) {
+        switch (comparisonAlgorithm) {
+            case 1:
+                return Comparator.comparing(CatalogItem::getName)
+                        // .thenComparingBigDecimal(CatalogItem::getPrice)
+                        .thenComparing(CatalogItem::getCategory)
+                        .thenComparingInt(CatalogItem::getID)
+                        .compare(this, o);
+            case 2:
+                int i = name.compareTo(o.getName());
+                if (i != 0) return i;
+
+                i = price.compareTo(o.getPrice());
+                if (i != 0) return i;
+
+                i = category.compareTo(o.getCategory());
+                if (i != 0) return i;
+
+                return Integer.compare(this.id, o.getID());
+            case 3:
+                int[] comparisonResults = {
+                        this.name.compareTo(o.getName()), // name comparison
+                        this.price.compareTo(o.getPrice()), // price comparison
+                        this.category.compareTo(o.getCategory()), // category comparison
+                        Integer.compare(this.id, o.getID()) // id comparison
+                };
+                for (int j : comparisonResults) {
+                    if (j != 0) {
+                        return j;
+                    }
+                }
+                return 0;
+            default:
+                break;
+        }
+
         return 0;
     }
 }
