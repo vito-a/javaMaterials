@@ -44,7 +44,31 @@ public class Catalog {
 
         // TASK AREA START
 
+        long fetchStartTime = System.currentTimeMillis();
+        System.out.println("\n\nSorted with Algorithm 1:");
+        for (CatalogItem item : catalog) {
+            item.setComparisonAlgorithm(1);
+        }
+        Collections.sort(catalog);
+        printCatalog(catalog);
+        System.out.println("\n Sorting with algorithm 1 took:" + (System.currentTimeMillis() - fetchStartTime) + " ms. \n");
 
+        fetchStartTime = System.currentTimeMillis();
+        System.out.println("\n\nSorted with Algorithm 2:");
+        for (CatalogItem item : catalog) {
+            item.setComparisonAlgorithm(2);
+        }
+        Collections.sort(catalog);
+        printCatalog(catalog);
+        System.out.println("\n Sorting with algorithm 2 took:" + (System.currentTimeMillis() - fetchStartTime) + " ms. \n");
+
+        System.out.println("\n\nSorted with Algorithm 3:");
+        for (CatalogItem item : catalog) {
+            item.setComparisonAlgorithm(3);
+        }
+        Collections.sort(catalog);
+        printCatalog(catalog);
+        System.out.println("\n Sorting with algorithm 3 took:" + (System.currentTimeMillis() - fetchStartTime) + " ms. \n");
 
         // TASK ARE END
     }

@@ -17,6 +17,10 @@ public class CatalogItem implements Comparable<CatalogItem> {
         this.category = category;
     }
 
+    public void setComparisonAlgorithm(int comparisonAlgorithm) {
+        this.comparisonAlgorithm = comparisonAlgorithm;
+    }
+
     public int getID() {
         return this.id;
     }
