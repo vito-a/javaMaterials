@@ -47,7 +47,7 @@ public class CatalogItem implements Comparable<CatalogItem> {
         switch (comparisonAlgorithm) {
             case 1:
                 return Comparator.comparing(CatalogItem::getName)
-                        // .thenComparingBigDecimal(CatalogItem::getPrice)
+                        .thenComparing(CatalogItem::getPrice)
                         .thenComparing(CatalogItem::getCategory)
                         .thenComparingInt(CatalogItem::getID)
                         .compare(this, o);
