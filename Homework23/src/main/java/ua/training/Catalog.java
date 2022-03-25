@@ -111,7 +111,7 @@ public class Catalog {
         printCatalog(catalog);
         System.out.println("\n Sorting with algorithm 2 took:" + (System.currentTimeMillis() - fetchStartTime) + " ms. \n");
 
-        // TASK ARE END
+        // TASK AREA END
     }
 
     /**
