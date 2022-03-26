@@ -47,7 +47,7 @@ public class Main {
         for (Map.Entry<String, Integer> entry : testMap.entrySet()) {
             System.out.println("Item from the map: ID=" + entry.getValue() + ", Name=" + entry.getKey());
         }
-        
+
         LinkedHashMap<String, Integer> sortedMap = testMap.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
