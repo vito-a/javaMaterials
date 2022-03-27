@@ -19,5 +19,7 @@ public interface CustomMapInterface <K, V> {
         int hashValue = 0;
         K getKey();
         V getValue();
+        int getHashValue();
+        CustomEntryInterface <K, V> getNext();
     }
 }

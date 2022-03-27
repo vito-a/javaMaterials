@@ -114,17 +114,22 @@ public class Main {
     public void Task3 () {
         CustomMapClass<Integer, Integer> customHashMap = new CustomMapClass<Integer, Integer>();
         customHashMap.put(21, 12);
-
-        System.out.println(customHashMap.get(21));
-
         customHashMap.put(25, 121);
         customHashMap.put(30, 151);
         customHashMap.put(33, 15);
         customHashMap.put(35, 89);
+        customHashMap.put(11, 145);
+        customHashMap.put(41, 565);
+        customHashMap.put(28, 345);
+        customHashMap.put(59, 785);
+        customHashMap.put(63, 489);
+        System.out.println(customHashMap + "\n");
 
-        for (CustomMapInterface.CustomEntryInterface<Integer, Integer> currentEntry : customHashMap.getTable()) {
-            System.out.println("Entries from CustomMapClass: key=" + currentEntry.getKey() + ", value=" + currentEntry.getValue());
-        }
+        System.out.println("Removing 4 elements");
+        customHashMap.remove(25);
+        customHashMap.remove(35);
+        customHashMap.remove(41);
+        customHashMap.remove(63);
+        System.out.println(customHashMap);
     }
 }
-

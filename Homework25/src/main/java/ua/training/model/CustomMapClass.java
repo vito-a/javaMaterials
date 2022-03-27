@@ -1,5 +1,7 @@
 package ua.training.model;
 
+import java.util.Arrays;
+
 public class CustomMapClass <K,V> implements CustomMapInterface <K, V> {
 
     private final int DEFAULT_INITIAL_CAPACITY = 3;
@@ -7,13 +9,13 @@ public class CustomMapClass <K,V> implements CustomMapInterface <K, V> {
     private CustomEntryClass <K, V> [] table;
     private int size = 0;
 
-    static class CustomEntryClass<K, V> implements CustomEntryInterface <K,V> {
+    public static class CustomEntryClass<K, V> implements CustomEntryInterface <K,V> {
         K key;
         V value;
         int hashValue;
-        CustomEntryClass<K,V> next;
+        CustomEntryClass<K, V> next;
 
-        public CustomEntryClass(K key, V value, CustomEntryClass<K,V> next, int hashValue) {
+        public CustomEntryClass(K key, V value, CustomEntryClass<K, V> next, int hashValue) {
             this.hashValue = hashValue;
             this.key = key;
             this.value = value;
@@ -28,6 +30,21 @@ public class CustomMapClass <K,V> implements CustomMapInterface <K, V> {
         @Override
         public V getValue() {
             return this.value;
+        }
+
+        @Override
+        public int getHashValue() {
+            return hashValue;
+        }
+
+        @Override
+        public CustomEntryInterface<K, V> getNext() {
+            return this.next;
+        }
+
+        @Override
+        public String toString() {
+            return "{" + key + "=" + value + ",hash=" + hashValue + "}" + " ";
         }
     }
 
@@ -52,10 +69,12 @@ public class CustomMapClass <K,V> implements CustomMapInterface <K, V> {
         if (table[hashValue] == null) {
             return null;
         } else {
-            for (CustomEntryClass<K,V> currentEntry : table) {
-                if (currentEntry.key.equals(key) && (hashValue == currentEntry.hashValue)) {
+            CustomEntryClass<K,V> currentEntry = table[hashValue];
+            while (currentEntry != null) {
+                if (currentEntry.key.equals(key)) {
                     return currentEntry.value;
                 }
+                currentEntry = currentEntry.next;
             }
             return null;
         }
@@ -66,7 +85,7 @@ public class CustomMapClass <K,V> implements CustomMapInterface <K, V> {
     }
 
     private int hash(K key) {
-        return Math.abs(key.hashCode()) % size;
+        return (key == null) ? 0 : Math.abs(key.hashCode()) % size;
     }
 
     @Override
@@ -75,24 +94,45 @@ public class CustomMapClass <K,V> implements CustomMapInterface <K, V> {
             return;
         }
         int hashValue = hash(key);
-        CustomEntryClass<K, V> newEntry = new CustomEntryClass<K, V>(key, value, null, hashValue);
+        CustomEntryClass<K, V> newEntry = new CustomEntryClass<>(key, value, null, hashValue);
 
-        if (table[hashValue] == null) {
-            int itemsNum = 0;
-            for (CustomEntryClass<K,V> currentEntry : table) {
-                if (currentEntry != null) {
+        int itemsNum = 0;
+        CustomEntryClass<K,V> currentEntry = null;
+        for (int i = 0; i < size; i++){
+            if (table[i] != null) {
+                currentEntry = table[i];
+                while (currentEntry != null) {
+                    currentEntry = currentEntry.next;
                     itemsNum++;
                 }
-                if ((float) (itemsNum / DEFAULT_INITIAL_CAPACITY) > DEFAULT_LOAD_FACTOR) {
-                    size = size + DEFAULT_INITIAL_CAPACITY;
-                    CustomEntryClass[] newTable = new CustomEntryClass[size];
-                    System.arraycopy(table,0, newTable,0, table.length);
+            }
+        }
+        float currentLoad = (float) itemsNum / size;
+        System.out.println("itemsNum = " + itemsNum + ", current load = " + currentLoad);
+        if (currentLoad > DEFAULT_LOAD_FACTOR) {
+            System.out.println(this);
+            // System.out.println(Arrays.toString(table));
+            System.out.print("Current load = " + currentLoad + ", increased the buckets table, old size = " + size);
+            System.out.print(" new size = " + (size + DEFAULT_INITIAL_CAPACITY));
+            System.out.println("\n");
+            size = size + DEFAULT_INITIAL_CAPACITY;
+            CustomEntryClass[] newTable = new CustomEntryClass[size];
+            System.arraycopy(table,0, newTable,0, table.length);
+            /*
+            for (CustomEntryClass<K,V> tempEntry : table) {
+                if (tempEntry != null) {
+                    newTable[tempEntry.hashValue] = table[tempEntry.hashValue];
                 }
             }
+            */
+            table = newTable;
+        }
+
+        if (table[hashValue] == null) {
             table[hashValue] = newEntry;
         } else {
             CustomEntryClass<K,V> previousEntry = null;
-            CustomEntryClass<K,V> currentEntry = table[hashValue];
+            currentEntry = table[hashValue];
 
             while (currentEntry != null) {
                 if (currentEntry.key.equals(newEntry.key)) {
@@ -109,7 +149,6 @@ public class CustomMapClass <K,V> implements CustomMapInterface <K, V> {
                 previousEntry = currentEntry;
                 currentEntry = currentEntry.next;
             }
-
             previousEntry.next = newEntry;
         }
     }
@@ -139,5 +178,21 @@ public class CustomMapClass <K,V> implements CustomMapInterface <K, V> {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        String tableString = "";
+        for (int i = 0; i < size; i++){
+            if (table[i] != null) {
+                CustomEntryClass entry = table[i];
+                while (entry != null) {
+                    tableString += entry.toString();
+                    entry = (CustomMapClass.CustomEntryClass) entry.getNext();
+                }
+            }
+        }
+        // Arrays.toString(table)
+        return tableString;
     }
 }
