@@ -1,5 +1,8 @@
 package ua.training;
 
+import ua.training.model.CustomMapClass;
+import ua.training.model.CustomMapInterface;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,7 +11,8 @@ public class Main {
     public static void main(String[] args) {
         Main main = new Main();
         // main.Task1();
-        main.Task2();
+        // main.Task2();
+        main.Task3();
     }
 
     /**
@@ -48,7 +52,7 @@ public class Main {
         }
 
         for (Map.Entry<String, Integer> entry : testMap.entrySet()) {
-            System.out.println("CustomMapInterface from the map: ID=" + entry.getValue() + ", Name=" + entry.getKey());
+            System.out.println("Entries from the map: ID=" + entry.getValue() + ", Name=" + entry.getKey());
         }
 
         LinkedHashMap<String, Integer> sortedMap = testMap.entrySet()
@@ -58,7 +62,7 @@ public class Main {
 
         System.out.println("\n\n");
         for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
-            System.out.println("CustomMapInterface from sorted map: ID=" + entry.getValue() + ", Name=" + entry.getKey());
+            System.out.println("Entries from sorted map: ID=" + entry.getValue() + ", Name=" + entry.getKey());
         }
 
         Map.Entry<String, Integer>[] entryArray = null;
@@ -108,7 +112,19 @@ public class Main {
      * Task3: Implement a custom HashMap
      */
     public void Task3 () {
+        CustomMapClass<Integer, Integer> customHashMap = new CustomMapClass<Integer, Integer>();
+        customHashMap.put(21, 12);
 
+        System.out.println(customHashMap.get(21));
+
+        customHashMap.put(25, 121);
+        customHashMap.put(30, 151);
+        customHashMap.put(33, 15);
+        customHashMap.put(35, 89);
+
+        for (CustomMapInterface.CustomEntryInterface<Integer, Integer> currentEntry : customHashMap.getTable()) {
+            System.out.println("Entries from CustomMapClass: key=" + currentEntry.getKey() + ", value=" + currentEntry.getValue());
+        }
     }
 }
 
