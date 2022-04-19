@@ -30,13 +30,14 @@ public class CategoriesRepoTest {
      */
     @Test
     public void testCategoriesRepo() {
-
+        categoriesService = new CategoriesService();
         List<Category> categories = categoriesService.listAll("");
         // List<Category> categories = categoryRepo.findAll();
+
         Category category1 = categoryRepo.findByName("IT");
         Optional<Category> category2 = categoryRepo.findById(1L);
-        Category category = new Category();
 
+        Category category = new Category();
         category.setCatId(1L);
         category.setName("Test category 1");
 

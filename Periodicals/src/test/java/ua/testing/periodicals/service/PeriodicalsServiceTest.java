@@ -1,7 +1,9 @@
 package ua.testing.periodicals.service;
 
 import junit.framework.TestCase;
-import org.jooq.tools.jdbc.*;
+import org.jooq.tools.jdbc.MockConnection;
+import org.jooq.tools.jdbc.MockDataProvider;
+import org.jooq.tools.jdbc.MockFileDatabase;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -11,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import ua.testing.periodicals.model.dao.DBException;
 import ua.testing.periodicals.model.entity.Periodical;
-import ua.testing.periodicals.model.entity.Subscription;
 import ua.testing.periodicals.repository.PeriodicalsRepository;
 
 import java.io.File;
@@ -22,7 +23,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 public class PeriodicalsServiceTest extends TestCase {

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.training.config.Config;
 import ua.training.model.Company;
+import ua.training.model.entity.Employee;
 import ua.training.model.entity.Entity;
 import ua.training.repository.Color;
 
@@ -38,6 +39,8 @@ public class App {
         // Annotation context:
         //ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
         Company company = context.getBean("company", Company.class);
+        // Employee employee = new Employee();
+        // Company company = employee.getCompany();
 
         assert(Objects.equals(company.getAddress().getStreet(), "High Street"));
         assert(Objects.equals(company.getAddress().getNumber(), 1000));
