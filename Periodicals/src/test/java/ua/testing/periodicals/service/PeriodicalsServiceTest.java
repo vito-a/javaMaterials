@@ -27,12 +27,12 @@ import static org.mockito.Mockito.when;
 
 public class PeriodicalsServiceTest extends TestCase {
 
-    final PeriodicalsService periodicalsService = new PeriodicalsService();
     private PeriodicalsRepository periodicalsRepository;
+    final PeriodicalsService periodicalsService = new PeriodicalsService(periodicalsRepository);
 
     private static final Logger logger = LoggerFactory.getLogger(PeriodicalsServiceTest.class);
 
-    public void testListAllNonNull() {
+    public void testListAllNonNullOld() {
         List<Periodical> testList = new ArrayList<Periodical>();
 
         // Periodical periodical1 = mock(Periodical.class);
@@ -53,10 +53,12 @@ public class PeriodicalsServiceTest extends TestCase {
         periodical2.setCategoryId(5L);
         testList.add(periodical2);
 
+        // mock is a wrong name
         PeriodicalsService mock = org.mockito.Mockito.mock(PeriodicalsService.class);
 
         List<Periodical> result = null;
         try {
+            mock.listAll("");
             when(mock.listAll("latest")).thenReturn(testList);
             result = mock.listAll("latest");
         } catch (DBException e) {
@@ -73,6 +75,38 @@ public class PeriodicalsServiceTest extends TestCase {
         assertEquals(periodical1.getCategoryId(), 1L, 0);
         assertEquals(periodical1.toString(),"Periodical{id=1, name='Guardian', description='Latest news, sport, business, comment, analysis and reviews from the world's leading liberal voice', catId='1', price='200'}");
         assertEquals(periodical2.toString(),"Periodical{id=5, name='Janes', description='The latest defence and security news - the trusted source for defence intelligence', catId='5', price='600'}");
+    }
+
+    // try-catch not needed it is better to set the exceptions to method
+    // we are not checking the exceptions here
+    // THIS ONE iS COVERED
+    public void testListAllNullKeyword() throws DBException {
+        PeriodicalsRepository periodicalsRepositoryMock = org.mockito.Mockito.mock(PeriodicalsRepository.class);
+        PeriodicalsService periodicalsService = new PeriodicalsService(periodicalsRepositoryMock);
+        ArrayList<Periodical> periodicals = new ArrayList<>();
+        periodicals.add(new Periodical());
+        when(periodicalsRepositoryMock.findAll()).thenReturn(periodicals);
+
+        List<Periodical> result = periodicalsService.listAll(null);
+        assertEquals(result, periodicals);
+    }
+
+    // THIS ONE iS COVERED
+    // read about annotations
+    // there is a setUp method in the class that is called once
+    // PeriodicalsService is created in setUp once
+    // make everything with annotations
+    // in Java 11 how to create ArrayList and sent Periodicals
+    // ArgumentCaptor - read about them these are used often
+    public void testListAllNotNullKeyword() throws DBException {
+        PeriodicalsRepository periodicalsRepositoryMock = org.mockito.Mockito.mock(PeriodicalsRepository.class);
+        PeriodicalsService periodicalsService = new PeriodicalsService(periodicalsRepositoryMock);
+        ArrayList<Periodical> periodicals = new ArrayList<>();
+        periodicals.add(new Periodical());
+        when(periodicalsRepositoryMock.search("latest")).thenReturn(periodicals);
+
+        List<Periodical> result = periodicalsService.listAll("latest");
+        assertEquals(result, periodicals);
     }
 
     public void testListAllNull() {

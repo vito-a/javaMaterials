@@ -36,6 +36,10 @@ public class PeriodicalsService {
 
     private static final Logger logger = LoggerFactory.getLogger(PeriodicalsService.class);
 
+    public PeriodicalsService(PeriodicalsRepository periodicalsRepository) {
+        this.periodicalsRepository = periodicalsRepository;
+    }
+
     /**
      * List all periodicals.
      *
@@ -59,12 +63,19 @@ public class PeriodicalsService {
     public List<Periodical> listAll(String keyword) throws DBException {
         List<Periodical> result = null;
         try {
-            result = (keyword != null) && !keyword.isEmpty() ? periodicalsRepository.search(keyword) : periodicalsRepository.findAll();
+            // change to IF so Tests with Coverage will show
+            // grey squares show lines that are not covered
+            result = (keyword != null) && !keyword.isEmpty() ? periodicalsRepository.search(keyword + "123") : periodicalsRepository.findAll();
         } catch (NullPointerException e) {
+            // Catching NPE is strange so it is better to eliminate the problem that can return NPE
+            // For example if the DB returns NPE it is needed to eliminate the cause
             logger.error("listAll(String keyword) - cannot list periodicals for: " + keyword);
             throw new DBException("Cannot list periodicals", e);
         }
-
+        // when(periodicalsRepository.findAll()).then(...);
+        // we are not mocking the service itself, we are mocking the internal
+        // verify(periodicalsRepository.findAll()) - allows to check that method is called (when returns void)
+        // we need to make sure that what method returned is actually a result
         return result;
     }
 
@@ -135,6 +146,8 @@ public class PeriodicalsService {
      * @param startDate    the start date
      * @param endDate      the end date
      * @throws DBException the DB exception
+     *
+     * verify(periodicalsRepository.subscribe(id)) - check that it is called
      */
     public void subscribe(Long periodicalId, Long userId, LocalDate startDate, LocalDate endDate) throws DBException {
         try {
@@ -163,6 +176,8 @@ public class PeriodicalsService {
      * Delete.
      *
      * @param id the periodical id
+     *
+     * verify(periodicalsRepository.deleteById(id)) - check that it is called
      */
     public void delete(Long id) {
         periodicalsRepository.deleteById(id);
