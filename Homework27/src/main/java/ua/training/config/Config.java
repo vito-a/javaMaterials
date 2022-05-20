@@ -30,6 +30,11 @@ public class Config {
     }
 
     @Bean
+    public Company getCompany() {
+        return new Company(this.getAddress());
+    }
+
+    @Bean
     // @Qualifier("redBean")
     public Color redBean() { return new Red(); }
 }

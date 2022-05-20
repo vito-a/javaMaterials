@@ -38,9 +38,9 @@ public class App {
 
         // Annotation context:
         //ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-        Company company = context.getBean("company", Company.class);
-        // Employee employee = new Employee();
-        // Company company = employee.getCompany();
+        // Company company = context.getBean("company", Company.class);
+        Employee employee = new Employee();
+        Company company = employee.getCompany();
 
         assert(Objects.equals(company.getAddress().getStreet(), "High Street"));
         assert(Objects.equals(company.getAddress().getNumber(), 1000));
