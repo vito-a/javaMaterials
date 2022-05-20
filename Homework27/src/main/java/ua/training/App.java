@@ -1,6 +1,9 @@
 package ua.training;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ua.training.config.Config;
 import ua.training.model.entity.Address;
 import ua.training.model.entity.Company;
 import ua.training.model.entity.Employee;
@@ -27,13 +30,13 @@ public class App {
         // of the AnnotationConfigApplicationContext class to build up a container:
 
         // XML context:
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        // ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         // Employee employee = context.getBean("employee", Employee.class);
         // Company company = employee.getCompany();
         // Address address = company.getAddress();
 
         // Annotation context:
-        // ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
         Employee employee = context.getBean("employee", Employee.class);
         Company company = employee.getCompany();
         Address address = company.getAddress();
