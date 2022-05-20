@@ -1,12 +1,11 @@
 package ua.training.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import ua.training.model.Address;
-import ua.training.model.Company;
+import ua.training.model.entity.Address;
+import ua.training.model.entity.Company;
+import ua.training.model.entity.Employee;
 import ua.training.model.entity.Red;
 import ua.training.repository.Color;
 
@@ -20,18 +19,32 @@ import ua.training.repository.Color;
  * as they are managed by the IoC container.
  */
 @Configuration
-@ComponentScan(basePackageClasses = Company.class)
-@ComponentScan(basePackageClasses = Red.class)
+@ComponentScan("ua.training")
+//@ComponentScan(basePackageClasses = Company.class)
+//@ComponentScan(basePackageClasses = Address.class)
+//@ComponentScan(basePackageClasses = Employee.class)
+//@ComponentScan(basePackageClasses = Red.class)
 // @EnableSpringConfigured
 public class Config {
+//    @Value("High Street")
+//    public String street;
+
+//    @Value("1000")
+//    public int number;
+
     @Bean
     public Address getAddress() {
-        return new Address("High Street", 1000);
+        return new Address();
     }
 
     @Bean
     public Company getCompany() {
         return new Company(this.getAddress());
+    }
+
+    @Bean
+    public Employee createEmployee() {
+        return new Employee(this.getCompany());
     }
 
     @Bean

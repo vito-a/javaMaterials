@@ -1,19 +1,12 @@
 package ua.training;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ua.training.config.Config;
-import ua.training.model.Company;
+import ua.training.model.entity.Address;
+import ua.training.model.entity.Company;
 import ua.training.model.entity.Employee;
 import ua.training.model.entity.Entity;
 import ua.training.repository.Color;
 
-import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
@@ -35,18 +28,21 @@ public class App {
 
         // XML context:
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        // Employee employee = context.getBean("employee", Employee.class);
+        // Company company = employee.getCompany();
+        // Address address = company.getAddress();
 
         // Annotation context:
-        //ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-        // Company company = context.getBean("company", Company.class);
-        Employee employee = new Employee();
+        // ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+        Employee employee = context.getBean("employee", Employee.class);
         Company company = employee.getCompany();
+        Address address = company.getAddress();
 
-        assert(Objects.equals(company.getAddress().getStreet(), "High Street"));
-        assert(Objects.equals(company.getAddress().getNumber(), 1000));
+        assert(Objects.equals(address.getStreet(), "High Street"));
+        assert(Objects.equals(address.getNumber(), 1000));
 
-        System.out.println(company.getAddress().getStreet());
-        System.out.println(company.getAddress().getNumber());
+        System.out.println(address.getStreet());
+        System.out.println(address.getNumber());
 
         Entity entity = new Entity(context.getBean("redBean", Color.class));
         entity.draw();

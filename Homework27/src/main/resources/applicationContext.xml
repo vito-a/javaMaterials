@@ -12,11 +12,11 @@
 
     <bean id="redBean" class="ua.training.model.entity.Red"><property name="color" value="Red" /></bean>
     <bean id="blueBean" class="ua.training.model.entity.Red"><property name="color" value="Blue" /></bean>
-    <bean id="address" class="ua.training.model.Address">
+    <bean id="address" class="ua.training.model.entity.Address">
         <constructor-arg value="High Street" />
         <constructor-arg value="1000" />
     </bean>
-    <bean id="company" class="ua.training.model.Company">
+    <bean id="company" class="ua.training.model.entity.Company">
         <constructor-arg ref="address" />
     </bean>
 </beans>
